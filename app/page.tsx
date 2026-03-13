@@ -2,9 +2,12 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Home, TrendingUp, Award, Target, ChevronRight, Zap, Shield, Users } from 'lucide-react'
+import { useState } from 'react'
+import { Home, TrendingUp, Award, Target, ChevronRight, Zap, Shield, Users, Menu, X } from 'lucide-react'
 
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Navigation */}
@@ -15,7 +18,8 @@ export default function HomePage() {
               <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
               <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
             </Link>
-            <div className="flex items-center space-x-6">
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center space-x-6">
               <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium">
                 Browse Properties
               </Link>
@@ -29,8 +33,33 @@ export default function HomePage() {
                 Future Homeowner
               </Link>
             </div>
+            {/* Mobile hamburger */}
+            <button
+              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 bg-white px-4 py-4 flex flex-col space-y-4">
+            <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+              Browse Properties
+            </Link>
+            <Link href="/about" className="text-gray-700 hover:text-gray-900 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+              About
+            </Link>
+            <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+              Login
+            </Link>
+            <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition text-center" onClick={() => setMobileMenuOpen(false)}>
+              Future Homeowner
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
