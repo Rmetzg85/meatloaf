@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 export const metadata: Metadata = {
   title: 'Meatloaf - Stop Renting Forever',
   description: 'Turn rent into credit. Build your path to homeownership. Graduate from renting.',
+  metadataBase: new URL('https://Meatloaf.Rent'),
 }
 
 

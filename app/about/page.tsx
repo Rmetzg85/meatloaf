@@ -340,7 +340,12 @@ export default function AboutPage() {
 
             <div>
               <h4 className="font-bold mb-4">Contact</h4>
-              <p className="text-gray-400 text-sm mb-2">rmetzgar@remventures.tech</p>
+              <p className="text-gray-400 text-sm mb-2">
+                <a href="https://Meatloaf.Rent" className="hover:text-white transition">Meatloaf.Rent</a>
+              </p>
+              <p className="text-gray-400 text-sm mb-2">
+                <a href="mailto:RMetzgar@REMVentures.Tech" className="hover:text-white transition">RMetzgar@REMVentures.Tech</a>
+              </p>
               <p className="text-gray-400 text-sm">Baltimore, MD & Washington, DC</p>
             </div>
           </div>
