@@ -1,6 +1,8 @@
 // app/auth/signup/page.tsx
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
@@ -14,7 +16,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
-  const [userType, setUserType] = useState<'renter' | 'landlord' | 'lender' | 'realestateagent'>('renter')
+  const [userType, setUserType] = useState<'future homeowner' | 'landlord' | 'lender' | 'realestateagent'>('future homeowner')
   const [loading, setLoading] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
