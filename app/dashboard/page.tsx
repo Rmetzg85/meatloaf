@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase, getCurrentUser } from '@/lib/supabase'
-import { Home, LogOut, TrendingUp, FileText, Trophy, Loader2 } from 'lucide-react'
+import { Home, LogOut, TrendingUp, FileText, Trophy, Loader2, Info, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
@@ -28,11 +28,23 @@ interface Application {
   created_at: string
 }
 
+const motivationalQuotes = [
+  "Homeowners have 40x the net worth of renters. You're on the right path.",
+  "Your parents celebrated a diploma. Your kids will celebrate your equity.",
+  "Every rent payment is building your credit. Every credit point is building your future.",
+  "College debt: -$50K. Home equity at 30: +$60K. You chose wisely.",
+  "The diploma got you the job. The house builds generational wealth.",
+  "70% of millionaires built wealth through real estate. You're learning early.",
+]
+
+const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]
+
 export default function DashboardPage() {
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [applications, setApplications] = useState<Application[]>([])
   const [loading, setLoading] = useState(true)
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     checkUser()
@@ -128,12 +140,64 @@ export default function DashboardPage() {
         </div>
       </nav>
 
+      {/* Philosophy Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setModalOpen(false)} />
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 z-10">
+            <button
+              onClick={() => setModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-5 mb-6">
+              <h2 className="text-xl font-bold">Why Homeownership &gt; College Degree</h2>
+            </div>
+            <div className="space-y-3 text-gray-700">
+              <p>We believe homeownership is the new college degree. Here's why:</p>
+              <ul className="space-y-2 mt-3">
+                {[
+                  '70% of millionaires built wealth through real estate',
+                  'Homeowners have 40x the net worth of renters',
+                  'College: 4 years, $120K debt, uncertain ROI',
+                  'Homeownership: Forced savings, tax advantages, equity appreciation',
+                  'A home is an asset. A degree is credentials.',
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="text-blue-600 font-bold mt-0.5">•</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="pt-2 font-semibold text-gray-900">Education opens doors. Ownership builds generational wealth.</p>
+              <p className="text-gray-600 text-sm">
+                Your family should celebrate your first home closing with the same pride they'd celebrate a college graduation. That's the future we're building.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Welcome back, {profile.full_name}! 👋
-          </h1>
-          <p className="text-gray-600">Here's your journey to homeownership</p>
+        <div className="mb-6">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-4xl font-bold text-gray-900">
+              Welcome back, {profile.full_name}! 👋
+            </h1>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="text-blue-400 hover:text-blue-600 transition flex-shrink-0"
+              aria-label="Why homeownership matters"
+            >
+              <Info className="w-6 h-6" />
+            </button>
+          </div>
+          <p className="text-gray-600 mb-4">Here's your journey to homeownership</p>
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 rounded-xl px-5 py-4">
+            <p className="text-gray-600 text-sm italic">"{randomQuote}"</p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
