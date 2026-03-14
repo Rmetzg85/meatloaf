@@ -4,31 +4,31 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Home, TrendingUp, Users, Target, Shield, Zap } from 'lucide-react'
 
-export default function AboutPage() {
+export default function MimosaAboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
+            <Link href="/mimosa" className="flex items-center space-x-2">
+              <Image src="/logo.png" alt="Mimosa" width={40} height={40} className="h-10 w-auto" style={{filter: 'hue-rotate(300deg) saturate(1.5)'}} />
+              <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Mimosa</span>
             </Link>
             <div className="flex items-center space-x-6">
               <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium">
                 Browse Properties
               </Link>
-              <Link href="/about" className="text-gray-900 font-bold">
+              <Link href="/mimosa/about" className="text-gray-900 font-bold">
                 About
               </Link>
               <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium">
                 Login
               </Link>
-              <Link href="/mimosa" className="text-pink-500 hover:text-pink-700 font-medium text-sm border border-pink-200 px-3 py-1 rounded-full hover:bg-pink-50 transition">
-                Switch to Mimosa →
+              <Link href="/" className="text-pink-500 hover:text-pink-700 font-medium text-sm border border-pink-200 px-3 py-1 rounded-full hover:bg-pink-50 transition">
+                Switch to Meatloaf →
               </Link>
-              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">
+              <Link href="/auth/signup" className="bg-gradient-to-r from-pink-500 to-rose-400 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">
                 Get Started
               </Link>
             </div>
@@ -37,11 +37,11 @@ export default function AboutPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
+      <section className="bg-gradient-to-r from-pink-500 to-rose-400 text-white py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold mb-6">About Meatloaf</h1>
-          <p className="text-xl text-blue-100 leading-relaxed">
-            We're building the complete ecosystem to help 8 million men and women transition from mom's basement to homeownership.
+          <h1 className="text-5xl font-bold mb-6">About Mimosa</h1>
+          <p className="text-xl text-pink-100 leading-relaxed">
+            We're building the complete ecosystem to help women transition from renting to homeownership — building real wealth, on their own terms.
           </p>
         </div>
       </section>
@@ -58,23 +58,23 @@ export default function AboutPage() {
 
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              Right now, 15 million men ages 25-34 are stuck living with their parents. They're not lazy. They're not irresponsible. They make decent money and want to build a life. But the system is designed to keep them stuck.
+              Millions of women are stuck renting — not because they're irresponsible, but because the system was never designed with them in mind. They make decent money, pay their bills on time, and want to build a life. But the path to homeownership stays out of reach.
             </p>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              Living with parents means zero rent payments, which means zero credit building. Moving out and paying $2,000/month in rent? Those payments still don't count toward your credit score. The largest monthly expense most Americans have, and it's invisible to lenders.
+              Paying $2,000/month in rent on time for years? Those payments still don't count toward your credit score. The largest monthly expense most Americans have, and it's invisible to lenders.
             </p>
             <p className="text-gray-700 text-lg leading-relaxed">
-              <strong className="text-gray-900">Meatloaf changes that.</strong> We turn rent payments into credit scores, and credit scores into homes.
+              <strong className="text-gray-900">Mimosa changes that.</strong> We turn rent payments into credit scores, and credit scores into homes.
             </p>
           </div>
         </div>
       </section>
 
       {/* The Problem Section */}
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="py-20 bg-gradient-to-br from-pink-50 to-rose-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">The Broken System</h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white rounded-xl shadow-lg p-8">
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
@@ -134,12 +134,12 @@ export default function AboutPage() {
       {/* The Solution Section */}
       <section className="py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">The Meatloaf Solution</h2>
-          
+          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">The Mimosa Solution</h2>
+
           <div className="space-y-12">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12">
+            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 md:p-12">
               <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   1
                 </div>
                 <div>
@@ -151,9 +151,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12">
+            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 md:p-12">
               <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                <div className="w-16 h-16 bg-rose-400 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   2
                 </div>
                 <div>
@@ -165,9 +165,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12">
+            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 md:p-12">
               <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   3
                 </div>
                 <div>
@@ -182,9 +182,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12">
+            <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 md:p-12">
               <div className="flex items-start space-x-6">
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+                <div className="w-16 h-16 bg-rose-400 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   4
                 </div>
                 <div>
@@ -200,23 +200,23 @@ export default function AboutPage() {
       </section>
 
       {/* Why It Matters */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 to-blue-50">
+      <section className="py-20 bg-gradient-to-br from-rose-50 to-pink-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Why This Matters</h2>
-          
+
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-6">Homeownership Is the New College Degree</h3>
-            
+
             <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
               <p>
                 <strong className="text-gray-900">Traditional "Success" Path:</strong> 4-year college degree costs $120,000 in debt. Starting salary: $55,000/year. Time to break even: 10+ years. ROI: Uncertain.
               </p>
-              
+
               <p>
                 <strong className="text-gray-900">Homeownership Path:</strong> Down payment: $15,000 (5% on $300K home). Monthly payment: $2,000 (same as rent). Home appreciation: 4-6% annually. After 5 years: $60,000+ in equity. ROI: Tangible wealth.
               </p>
-              
-              <div className="bg-blue-50 border-l-4 border-blue-600 p-6 rounded my-8">
+
+              <div className="bg-pink-50 border-l-4 border-pink-500 p-6 rounded my-8">
                 <p className="font-semibold text-gray-900 text-xl mb-2">The Reality:</p>
                 <ul className="space-y-2">
                   <li>• 70% of millionaires built wealth through real estate</li>
@@ -225,13 +225,13 @@ export default function AboutPage() {
                   <li>• College debt cripples; home equity builds</li>
                 </ul>
               </div>
-              
+
               <p>
                 <strong className="text-gray-900">Yet 44 million Americans are stuck renting</strong> because the system is designed to keep them there.
               </p>
-              
+
               <p className="text-xl font-semibold text-gray-900 mt-8">
-                Education opens doors. Homeownership builds generational wealth.
+                Financial independence isn't just for guys. Your castle is waiting.
               </p>
             </div>
           </div>
@@ -242,25 +242,25 @@ export default function AboutPage() {
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">The Founder</h2>
-          
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12">
+
+          <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 md:p-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Ryan Metzgar</h3>
-            
+
             <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
               <p>
-                Ryan founded Meatloaf after watching friends pay $2,000/month in rent for years with nothing to show for it. Meanwhile, Credit Karma told them their scores were "good enough" — until they applied for mortgages and discovered their REAL FICO scores were 40-60 points lower.
+                Ryan founded this platform after watching friends — men and women alike — pay $2,000/month in rent for years with nothing to show for it. Meanwhile, Credit Karma told them their scores were "good enough" — until they applied for mortgages and discovered their REAL FICO scores were 40-60 points lower.
               </p>
-              
+
               <p>
-                Self-taught developer who went from zero coding experience to shipping production software in 12 months using AI assistance. Built the entire Meatloaf platform from scratch.
+                Self-taught developer who went from zero coding experience to shipping production software in 12 months using AI assistance. Built the entire platform from scratch.
               </p>
-              
+
               <p className="font-semibold text-gray-900 text-xl pt-4">
-                "The system is broken. We're fixing it."
+                "The system is broken. We're fixing it — for everyone."
               </p>
-              
+
               <p>
-                Meatloaf isn't just another rental site. It's a movement to help renters build wealth, credit, and stability — the same opportunities previous generations took for granted.
+                Mimosa isn't just another rental site. It's a movement to help renters build wealth, credit, and stability — the same opportunities previous generations took for granted.
               </p>
             </div>
           </div>
@@ -268,26 +268,26 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-pink-500 to-rose-400 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-12 text-center">By The Numbers</h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-5xl font-bold mb-2">15M</div>
-              <p className="text-blue-100">Men ages 25-34 with parents</p>
+              <p className="text-pink-100">Women ages 25-34 stuck renting</p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold mb-2">44M</div>
-              <p className="text-blue-100">Americans stuck renting</p>
+              <p className="text-pink-100">Americans stuck renting</p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold mb-2">$240K</div>
-              <p className="text-blue-100">Lifetime rent (zero equity)</p>
+              <p className="text-pink-100">Lifetime rent (zero equity)</p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold mb-2">40x</div>
-              <p className="text-blue-100">Homeowner vs renter net worth</p>
+              <p className="text-pink-100">Homeowner vs renter net worth</p>
             </div>
           </div>
         </div>
@@ -298,11 +298,11 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Join The Movement</h2>
           <p className="text-xl text-gray-700 mb-10 leading-relaxed">
-            Whether you're a renter tired of throwing money away, a landlord seeking quality tenants, an investor looking for opportunities, or a lender wanting better borrowers — Meatloaf connects you.
+            Whether you're a renter tired of throwing money away, a landlord seeking quality tenants, an investor looking for opportunities, or a lender wanting better borrowers — Mimosa connects you.
           </p>
           <Link
             href="/auth/signup"
-            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition transform hover:-translate-y-1 shadow-xl"
+            className="inline-block bg-gradient-to-r from-pink-500 to-rose-400 text-white px-10 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition transform hover:-translate-y-1 shadow-xl"
           >
             Get Started Free
           </Link>
@@ -316,8 +316,8 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Image src="/logo.png" alt="Meatloaf" width={32} height={32} className="h-8 w-auto" />
-                <span className="text-xl font-bold">Meatloaf</span>
+                <Image src="/logo.png" alt="Mimosa" width={32} height={32} className="h-8 w-auto" style={{filter: 'hue-rotate(300deg) saturate(1.5)'}} />
+                <span className="text-xl font-bold bg-gradient-to-r from-pink-400 to-rose-300 bg-clip-text text-transparent">Mimosa</span>
               </div>
               <p className="text-gray-400 text-sm">
                 Stop renting forever. Build credit. Own your home.
@@ -328,7 +328,7 @@ export default function AboutPage() {
               <h4 className="font-bold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li><Link href="/properties" className="hover:text-white transition">Browse Properties</Link></li>
-                <li><Link href="/about" className="hover:text-white transition">About</Link></li>
+                <li><Link href="/mimosa/about" className="hover:text-white transition">About</Link></li>
               </ul>
             </div>
 
