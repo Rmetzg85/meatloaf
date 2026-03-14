@@ -15,7 +15,7 @@ export default function MimosaHomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/mimosa" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Mimosa" width={40} height={40} className="h-10 w-auto" style={{filter: 'hue-rotate(300deg) saturate(1.5)'}} />
+              <Image src="/mimosa-logo.svg" alt="Mimosa" width={40} height={40} className="h-10 w-auto" />
               <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Mimosa</span>
             </Link>
             {/* Desktop nav */}
@@ -460,7 +460,7 @@ export default function MimosaHomePage() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Image src="/logo.png" alt="Mimosa" width={32} height={32} className="h-8 w-auto" style={{filter: 'hue-rotate(300deg) saturate(1.5)'}} />
+                <Image src="/mimosa-logo.svg" alt="Mimosa" width={32} height={32} className="h-8 w-auto" />
                 <span className="text-xl font-bold bg-gradient-to-r from-pink-400 to-rose-300 bg-clip-text text-transparent">Mimosa</span>
               </div>
               <p className="text-gray-400 text-sm">
