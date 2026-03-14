@@ -457,7 +457,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-5 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Image src="/logo.png" alt="Meatloaf" width={32} height={32} className="h-8 w-auto" />
@@ -473,6 +473,15 @@ export default function HomePage() {
               <ul className="space-y-2 text-gray-400 text-sm">
                 <li><Link href="/properties" className="hover:text-white transition">Browse Properties</Link></li>
                 <li><Link href="/about" className="hover:text-white transition">About</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">For Business</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><Link href="/landlords" className="hover:text-white transition">Landlords</Link></li>
+                <li><Link href="/agents" className="hover:text-white transition">Real Estate Agents</Link></li>
+                <li><Link href="/lenders" className="hover:text-white transition">Mortgage Lenders</Link></li>
               </ul>
             </div>
 
