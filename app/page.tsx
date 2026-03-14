@@ -64,18 +64,26 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                Stop Eating Mom's Meatloaf
+              <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+                Forget the Diploma.<br />Build the Down Payment.
               </h1>
-              <p className="text-xl md:text-2xl text-blue-100 mb-4">
-                The couch isn't a long-term plan.
+              <p className="text-xl md:text-2xl font-semibold text-yellow-300 mb-6">
+                Homeownership is the new college degree. $50,000 in student debt or $50,000 in home equity? The choice is yours.
               </p>
-              <p className="text-lg text-blue-100 mb-10">
-                Turn your rent payments into credit scores. Gamified credit building for the 15 million men stuck living with parents.
-              </p>
+              <div className="text-left bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 mb-10 space-y-4 text-blue-50 text-lg leading-relaxed">
+                <p>
+                  Imagine your family gathering to celebrate your first home closing at 22. Not walking across a stage with a piece of paper and $120,000 in debt, but holding keys to your own place with equity building from day one.
+                </p>
+                <p className="font-semibold text-white">
+                  For 50 years, America said: "Go to college, get a job, buy a house." That path is broken.
+                </p>
+                <p className="text-yellow-300 font-bold text-xl">
+                  We're building the new path: Build credit at 16. Launch at 26. Own by 30. No debt. Just wealth.
+                </p>
+              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/auth/signup"
@@ -89,6 +97,91 @@ export default function HomePage() {
                 >
                   Browse Properties
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Path Comparison Section */}
+      <section className="py-20 bg-gray-950 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
+            Two Paths. One Winner.
+          </h2>
+          <p className="text-center text-gray-400 text-xl mb-14">
+            Pick the one that builds wealth — not debt.
+          </p>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Traditional Path */}
+            <div className="bg-gray-900 border border-red-500/40 rounded-2xl p-8">
+              <div className="flex items-center gap-3 mb-8">
+                <span className="text-3xl">🎓</span>
+                <h3 className="text-2xl font-black text-red-400">The Traditional Path</h3>
+              </div>
+              <ul className="space-y-5">
+                <li className="flex gap-4">
+                  <span className="text-red-500 font-bold text-sm whitespace-nowrap pt-0.5">Age 18–22</span>
+                  <span className="text-gray-300">College <span className="text-red-400 font-semibold">(-$120,000 in debt)</span></span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-red-500 font-bold text-sm whitespace-nowrap pt-0.5">Age 22–25</span>
+                  <span className="text-gray-300">Paying off student loans</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-red-500 font-bold text-sm whitespace-nowrap pt-0.5">Age 25–30</span>
+                  <span className="text-gray-300">Renting, zero equity</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-red-500 font-bold text-sm whitespace-nowrap pt-0.5">Age 30</span>
+                  <span className="text-gray-300">Maybe thinking about buying</span>
+                </li>
+              </ul>
+              <div className="mt-8 pt-8 border-t border-gray-700 space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Total equity</span>
+                  <span className="text-red-400 font-black text-lg">$0</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Net worth impact</span>
+                  <span className="text-red-400 font-black text-lg">Negative for 10+ years</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Meatloaf Path */}
+            <div className="bg-gradient-to-br from-blue-900 to-purple-900 border border-blue-400/40 rounded-2xl p-8">
+              <div className="flex items-center gap-3 mb-8">
+                <span className="text-3xl">🏠</span>
+                <h3 className="text-2xl font-black text-blue-300">The Meatloaf Path</h3>
+              </div>
+              <ul className="space-y-5">
+                <li className="flex gap-4">
+                  <span className="text-blue-400 font-bold text-sm whitespace-nowrap pt-0.5">Age 16–18</span>
+                  <span className="text-gray-200">Credit Starters <span className="text-green-400 font-semibold">(2 years history)</span></span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-blue-400 font-bold text-sm whitespace-nowrap pt-0.5">Age 18–22</span>
+                  <span className="text-gray-200">Launch Pad + work / community college</span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-blue-400 font-bold text-sm whitespace-nowrap pt-0.5">Age 22</span>
+                  <span className="text-gray-200">680+ FICO, $3K saved, <span className="text-green-400 font-semibold">approved for first home</span></span>
+                </li>
+                <li className="flex gap-4">
+                  <span className="text-blue-400 font-bold text-sm whitespace-nowrap pt-0.5">Age 22–30</span>
+                  <span className="text-gray-200">Building equity in owned property</span>
+                </li>
+              </ul>
+              <div className="mt-8 pt-8 border-t border-blue-700/50 space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Total equity at 30</span>
+                  <span className="text-green-400 font-black text-lg">$60,000+</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Net worth impact</span>
+                  <span className="text-green-400 font-black text-lg">Positive from day one</span>
+                </div>
               </div>
             </div>
           </div>
