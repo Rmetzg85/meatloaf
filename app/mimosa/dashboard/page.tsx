@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase, getCurrentUser } from '@/lib/supabase'
-import { Home, LogOut, TrendingUp, FileText, Trophy, Loader2, Info, X } from 'lucide-react'
+import { Home, LogOut, TrendingUp, FileText, Trophy, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
@@ -28,23 +28,11 @@ interface Application {
   created_at: string
 }
 
-const motivationalQuotes = [
-  "Homeowners have 40x the net worth of renters. You're on the right path.",
-  "Your parents celebrated a diploma. Your kids will celebrate your equity.",
-  "Every rent payment is building your credit. Every credit point is building your future.",
-  "College debt: -$50K. Home equity at 30: +$60K. You chose wisely.",
-  "The diploma got you the job. The house builds generational wealth.",
-  "70% of millionaires built wealth through real estate. You're learning early.",
-]
-
-const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]
-
-export default function DashboardPage() {
+export default function MimosaDashboardPage() {
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [applications, setApplications] = useState<Application[]>([])
   const [loading, setLoading] = useState(true)
-  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     checkUser()
@@ -53,7 +41,7 @@ export default function DashboardPage() {
   const checkUser = async () => {
     try {
       const user = await getCurrentUser()
-      
+
       if (!user) {
         router.push('/auth/login')
         return
@@ -89,7 +77,7 @@ export default function DashboardPage() {
     try {
       await supabase.auth.signOut()
       toast.success('Logged out successfully')
-      router.push('/')
+      router.push('/mimosa')
     } catch (error) {
       toast.error('Failed to logout')
     }
@@ -97,8 +85,8 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
-        <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 flex items-center justify-center">
+        <Loader2 className="w-12 h-12 animate-spin text-pink-500" />
       </div>
     )
   }
@@ -115,19 +103,19 @@ export default function DashboardPage() {
 
   const currentMilestoneIndex = milestones.findIndex(m => m.name === profile.current_milestone)
   const nextMilestone = milestones[currentMilestoneIndex + 1]
-  const progressToNext = nextMilestone 
-    ? ((profile.homeownership_points - milestones[currentMilestoneIndex].points) / 
+  const progressToNext = nextMilestone
+    ? ((profile.homeownership_points - milestones[currentMilestoneIndex].points) /
        (nextMilestone.points - milestones[currentMilestoneIndex].points)) * 100
     : 100
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
+            <Link href="/mimosa" className="flex items-center space-x-2">
+              <Image src="/mimosa-logo.svg" alt="Mimosa" width={40} height={40} className="h-10 w-auto" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-400 bg-clip-text text-transparent">Mimosa</span>
             </Link>
             <button
               onClick={handleLogout}
@@ -140,71 +128,19 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      {/* Philosophy Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setModalOpen(false)} />
-          <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 z-10">
-            <button
-              onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-5 mb-6">
-              <h2 className="text-xl font-bold">Why Homeownership &gt; College Degree</h2>
-            </div>
-            <div className="space-y-3 text-gray-700">
-              <p>We believe homeownership is the new college degree. Here's why:</p>
-              <ul className="space-y-2 mt-3">
-                {[
-                  '70% of millionaires built wealth through real estate',
-                  'Homeowners have 40x the net worth of renters',
-                  'College: 4 years, $120K debt, uncertain ROI',
-                  'Homeownership: Forced savings, tax advantages, equity appreciation',
-                  'A home is an asset. A degree is credentials.',
-                ].map((point) => (
-                  <li key={point} className="flex items-start gap-2">
-                    <span className="text-blue-600 font-bold mt-0.5">•</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="pt-2 font-semibold text-gray-900">Education opens doors. Ownership builds generational wealth.</p>
-              <p className="text-gray-600 text-sm">
-                Your family should celebrate your first home closing with the same pride they'd celebrate a college graduation. That's the future we're building.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-4xl font-bold text-gray-900">
-              Welcome back, {profile.full_name}! 👋
-            </h1>
-            <button
-              onClick={() => setModalOpen(true)}
-              className="text-blue-400 hover:text-blue-600 transition flex-shrink-0"
-              aria-label="Why homeownership matters"
-            >
-              <Info className="w-6 h-6" />
-            </button>
-          </div>
-          <p className="text-gray-600 mb-4">Here's your journey to homeownership</p>
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 rounded-xl px-5 py-4">
-            <p className="text-gray-600 text-sm italic">"{randomQuote}"</p>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Track Her Progress — Welcome, {profile.full_name}! 👑
+          </h1>
+          <p className="text-gray-600">Here's your journey to homeownership</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-blue-100 p-3 rounded-lg">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
+              <div className="bg-pink-100 p-3 rounded-lg">
+                <TrendingUp className="w-6 h-6 text-pink-500" />
               </div>
               <span className="text-sm text-gray-500">Credit Score</span>
             </div>
@@ -218,8 +154,8 @@ export default function DashboardPage() {
 
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-purple-100 p-3 rounded-lg">
-                <FileText className="w-6 h-6 text-purple-600" />
+              <div className="bg-rose-100 p-3 rounded-lg">
+                <FileText className="w-6 h-6 text-rose-400" />
               </div>
               <span className="text-sm text-gray-500">Applications</span>
             </div>
@@ -231,8 +167,8 @@ export default function DashboardPage() {
 
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="bg-green-100 p-3 rounded-lg">
-                <Trophy className="w-6 h-6 text-green-600" />
+              <div className="bg-amber-100 p-3 rounded-lg">
+                <Trophy className="w-6 h-6 text-amber-500" />
               </div>
               <span className="text-sm text-gray-500">Points</span>
             </div>
@@ -245,7 +181,7 @@ export default function DashboardPage() {
 
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
+            <div className="bg-gradient-to-r from-pink-500 to-rose-400 p-2 rounded-lg">
               <Home className="w-6 h-6 text-white" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900">Path to Homeownership</h2>
@@ -264,7 +200,7 @@ export default function DashboardPage() {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-4">
               <div
-                className="bg-gradient-to-r from-blue-600 to-purple-600 h-4 rounded-full transition-all"
+                className="bg-gradient-to-r from-pink-500 to-rose-400 h-4 rounded-full transition-all"
                 style={{ width: `${Math.min(progressToNext, 100)}%` }}
               />
             </div>
@@ -277,12 +213,12 @@ export default function DashboardPage() {
             {milestones.map((milestone, index) => {
               const isCompleted = profile.homeownership_points >= milestone.points
               const isCurrent = milestone.name === profile.current_milestone
-              
+
               return (
                 <div
                   key={milestone.name}
                   className={`flex items-center space-x-4 p-4 rounded-lg ${
-                    isCompleted ? 'bg-green-50' : isCurrent ? 'bg-blue-50' : 'bg-gray-50'
+                    isCompleted ? 'bg-green-50' : isCurrent ? 'bg-pink-50' : 'bg-gray-50'
                   }`}
                 >
                   <div
@@ -290,7 +226,7 @@ export default function DashboardPage() {
                       isCompleted
                         ? 'bg-green-500 text-white'
                         : isCurrent
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-pink-500 text-white'
                         : 'bg-gray-300 text-gray-600'
                     }`}
                   >
@@ -311,12 +247,12 @@ export default function DashboardPage() {
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Applications</h2>
-          
+
           {applications.length === 0 ? (
             <div className="text-center py-12">
               <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 mb-4">No applications yet</p>
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition">
+              <button className="bg-gradient-to-r from-pink-500 to-rose-400 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition">
                 Browse Properties
               </button>
             </div>
@@ -360,4 +296,3 @@ export default function DashboardPage() {
     </div>
   )
 }
-

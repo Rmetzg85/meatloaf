@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- White rounded background -->
+  <rect width="200" height="200" rx="40" fill="white"/>
+
+  <!-- Champagne flute body -->
+  <!-- Upper bowl: tapered trapezoid -->
+  <path
+    d="M72 38 L128 38 L112 118 L88 118 Z"
+    stroke="#C9963A"
+    stroke-width="5"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <!-- Stem -->
+  <line x1="100" y1="118" x2="100" y2="155" stroke="#C9963A" stroke-width="5" stroke-linecap="round"/>
+  <!-- Base -->
+  <line x1="78" y1="155" x2="122" y2="155" stroke="#C9963A" stroke-width="5" stroke-linecap="round"/>
+  <!-- Rim curl at bottom of bowl -->
+  <path d="M88 118 Q84 124 88 128 Q96 132 100 128 Q104 132 112 128 Q116 124 112 118" stroke="#C9963A" stroke-width="4" stroke-linejoin="round" fill="none"/>
+
+  <!-- Pink bubbles inside the glass -->
+  <circle cx="95"  cy="105" r="6"   fill="#F9A8C9"/>
+  <circle cx="108" cy="90"  r="4.5" fill="#F9A8C9"/>
+  <circle cx="90"  cy="78"  r="3.5" fill="#F9A8C9"/>
+  <!-- Small bubbles rising above rim -->
+  <circle cx="103" cy="30"  r="4"   fill="#C9963A" opacity="0.7"/>
+  <circle cx="113" cy="22"  r="3"   fill="#C9963A" opacity="0.5"/>
+  <circle cx="95"  cy="20"  r="2"   fill="#C9963A" opacity="0.4"/>
+
+  <!-- Trending-up line chart overlaid on the glass -->
+  <polyline
+    points="84,108  95,90  108,75  122,55"
+    stroke="#F9A8C9"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <!-- Arrow head -->
+  <polyline
+    points="113,50  122,55  117,64"
+    stroke="#F9A8C9"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+  />
+  <!-- Data point dots on the line -->
+  <circle cx="84"  cy="108" r="3.5" fill="#F9A8C9"/>
+  <circle cx="95"  cy="90"  r="3.5" fill="#F9A8C9"/>
+  <circle cx="108" cy="75"  r="3.5" fill="#F9A8C9"/>
+</svg>

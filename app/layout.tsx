@@ -1,14 +1,12 @@
 // app/layout.tsx
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Meatloaf - Stop Renting Forever',
   description: 'Turn rent into credit. Build your path to homeownership. Graduate from renting.',
+  metadataBase: new URL('https://Meatloaf.Rent'),
 }
 
 
@@ -19,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         {children}
         <Toaster position="top-right" />
       </body>
