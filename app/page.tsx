@@ -32,6 +32,9 @@ export default function HomePage() {
               <Link href="/mimosa" className="text-pink-500 hover:text-pink-700 font-medium text-sm border border-pink-200 px-3 py-1 rounded-full hover:bg-pink-50 transition">
                 Switch to Mimosa →
               </Link>
+              <Link href="/outspend" className="text-red-600 hover:text-red-800 font-medium text-sm border border-red-200 px-3 py-1 rounded-full hover:bg-red-50 transition">
+                Outspend →
+              </Link>
               <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">
                 Future Homeowner
               </Link>
@@ -60,6 +63,9 @@ export default function HomePage() {
             </Link>
             <Link href="/mimosa" className="text-pink-500 hover:text-pink-700 font-medium text-sm border border-pink-200 px-3 py-2 rounded-full hover:bg-pink-50 transition text-center" onClick={() => setMobileMenuOpen(false)}>
               Switch to Mimosa →
+            </Link>
+            <Link href="/outspend" className="text-red-600 hover:text-red-800 font-medium text-sm border border-red-200 px-3 py-2 rounded-full hover:bg-red-50 transition text-center" onClick={() => setMobileMenuOpen(false)}>
+              Outspend →
             </Link>
             <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition text-center" onClick={() => setMobileMenuOpen(false)}>
               Future Homeowner
