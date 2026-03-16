@@ -74,20 +74,20 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
-                Forget the Diploma.<br />Build the Down Payment.
+                You're 30.<br />Mom's Making Meatloaf.<br />Again.
               </h1>
               <p className="text-xl md:text-2xl font-semibold text-yellow-300 mb-6">
-                Homeownership is the new college degree. $50,000 in student debt or $50,000 in home equity? The choice is yours.
+                Living in the basement wasn't the plan. Neither was zero equity, zero credit history, and zero path to a mortgage.
               </p>
               <div className="text-left bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 mb-10 space-y-4 text-blue-50 text-lg leading-relaxed">
                 <p>
-                  Imagine your family gathering to celebrate your first home closing at 22. Not walking across a stage with a piece of paper and $120,000 in debt, but holding keys to your own place with equity building from day one.
+                  You've got a job. You're responsible. But somehow you're still on the pullout couch while dad watches the game upstairs and mom calls down asking if you want seconds. This isn't who you are — it's what happens when the system has no on-ramp for people like you.
                 </p>
                 <p className="font-semibold text-white">
-                  For 50 years, America said: "Go to college, get a job, buy a house." That path is broken.
+                  AI is reshaping every career overnight. Higher ed is failing a generation. The $120K diploma that was supposed to unlock your life? It might be worth less than a 720 credit score.
                 </p>
                 <p className="text-yellow-300 font-bold text-xl">
-                  We're building the new path: Build credit at 16. Launch at 26. Own by 30. No debt. Just wealth.
+                  The new path to wealth is homeownership — and it starts with a credit score, not a degree. Own by 22. Be out of the basement for good.
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -200,21 +200,54 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                15M
+                15M+
               </div>
-              <p className="text-gray-600 text-lg">Men ages 25-34 living with parents</p>
+              <p className="text-gray-600 text-lg">Adults under 35 still living with their parents</p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                 $240K
               </div>
-              <p className="text-gray-600 text-lg">Average lifetime rent with $0 equity</p>
+              <p className="text-gray-600 text-lg">Average lifetime rent paid to build someone else's wealth</p>
             </div>
             <div className="text-center">
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                 44M
               </div>
-              <p className="text-gray-600 text-lg">Americans stuck renting forever</p>
+              <p className="text-gray-600 text-lg">Americans renting with zero equity to show for it</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Now Section */}
+      <section className="py-20 bg-gray-950 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <h2 className="text-4xl md:text-5xl font-black mb-4">The Old Playbook is Dead</h2>
+            <p className="text-gray-400 text-xl">AI, higher ed collapse, and a housing market that rewards early movers. Everything changed. Here's the new roadmap.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-gray-900 border border-gray-700 rounded-2xl p-8">
+              <div className="text-4xl mb-4">🤖</div>
+              <h3 className="text-xl font-black text-white mb-3">AI Rewrote Every Job</h3>
+              <p className="text-gray-400 leading-relaxed">
+                The careers that $120K degrees unlocked? AI does them in seconds. The people winning now aren't the most credentialed — they're the ones who own assets and build wealth early.
+              </p>
+            </div>
+            <div className="bg-gray-900 border border-gray-700 rounded-2xl p-8">
+              <div className="text-4xl mb-4">🎓</div>
+              <h3 className="text-xl font-black text-white mb-3">Higher Ed is Broken</h3>
+              <p className="text-gray-400 leading-relaxed">
+                Student debt hit $1.7 trillion. A 4-year degree costs more than a down payment. The smartest move isn't a diploma — it's a 720 credit score at 22 and keys to your first home.
+              </p>
+            </div>
+            <div className="bg-gray-900 border border-gray-700 rounded-2xl p-8">
+              <div className="text-4xl mb-4">📈</div>
+              <h3 className="text-xl font-black text-white mb-3">Ownership Compounds</h3>
+              <p className="text-gray-400 leading-relaxed">
+                Every year you rent, someone else builds equity on your payments. Every year you own, your net worth grows. Start at 22 instead of 32 and you're a decade ahead — for life.
+              </p>
             </div>
           </div>
         </div>
@@ -260,18 +293,18 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">How Meatloaf Works</h2>
             <p className="text-xl text-gray-700">
-              Four simple steps from mom's basement to homeownership
+              Three steps from the basement to owning your first home
             </p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 1
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Find a Rental</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Build Credit</h3>
               <p className="text-gray-600">
-                Browse verified properties in your city. Apply with one click.
+                Connect your bank once. Every rent payment reports to all 3 bureaus and builds your score. Years of rent history that should have been working for you? Now they do.
               </p>
             </div>
 
@@ -279,9 +312,9 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Build Credit</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Level Up</h3>
               <p className="text-gray-600">
-                Connect your bank. We verify rent payments and report to all 3 bureaus.
+                Your credit score is your game level. Daily missions, streaks, and AI coaching unlock the next tier. Watch your score climb like a leaderboard — because now it is one.
               </p>
             </div>
 
@@ -289,19 +322,9 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Level Up</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Buy a House</h3>
               <p className="text-gray-600">
-                Credit score = game level. Complete daily missions. Unlock achievements.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                4
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Get Pre-Approved</h3>
-              <p className="text-gray-600">
-                Hit 720 and unlock lender partnerships. Buy your first home.
+                Hit 720. Unlock our lender network. Get pre-approved in days, not months. Close on your first home. Be the person your family celebrates — not the one eating meatloaf in the basement.
               </p>
             </div>
           </div>
