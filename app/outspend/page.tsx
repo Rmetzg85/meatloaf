@@ -360,7 +360,7 @@ export default function OutspendPage() {
               {
                 icon: <TrendingUp className="w-7 h-7 text-red-600" />,
                 title: 'Real-Time Analytics',
-                desc: 'Track views, shares, and engagement across every platform from a single dashboard. Know what's working before you spend more.',
+                desc: "Track views, shares, and engagement across every platform from a single dashboard. Know what's working before you spend more.",
               },
               {
                 icon: <Zap className="w-7 h-7 text-red-600" />,
