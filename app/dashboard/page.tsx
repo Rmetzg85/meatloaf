@@ -119,7 +119,13 @@ export default function DashboardPage() {
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles').select('*').eq('id', user.id).single()
-      if (profileError) throw profileError
+      if (profileError) {
+        if (profileError.code === 'PGRST116') {
+          router.push('/auth/signup')
+          return
+        }
+        throw profileError
+      }
 
       profileRef.current = profileData
       setProfile(profileData)

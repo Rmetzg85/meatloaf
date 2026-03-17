@@ -38,15 +38,16 @@ export default function SignupPage() {
 
       if (authError) throw authError
 
-      // Update profile with additional info
+      // Upsert profile with additional info (handles cases where trigger hasn't run yet)
       if (authData.user) {
         const { error: profileError } = await supabase
           .from('profiles')
-          .update({
+          .upsert({
+            id: authData.user.id,
+            email: authData.user.email,
             full_name: fullName,
             user_type: userType,
           })
-          .eq('id', authData.user.id)
 
         if (profileError) throw profileError
       }
