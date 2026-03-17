@@ -269,7 +269,7 @@ export default function DashboardPage() {
   const dailyProgress = Math.min((dailyXP / DAILY_GOAL) * 100, 100)
   const dailyGoalMet = dailyXP >= DAILY_GOAL
 
-  const currentMilestoneIndex = MILESTONES.findIndex(m => m.name === profile.current_milestone)
+  const currentMilestoneIndex = Math.max(0, MILESTONES.findIndex(m => m.name === profile.current_milestone))
   const nextMilestone = MILESTONES[currentMilestoneIndex + 1]
   const progressToNext = nextMilestone
     ? ((profile.homeownership_points - MILESTONES[currentMilestoneIndex].points) /
@@ -399,7 +399,7 @@ export default function DashboardPage() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-1">
             <h1 className="text-3xl font-bold text-gray-900">
-              Hey, {profile.full_name.split(' ')[0]}! {streak > 1 ? '🔥' : '👋'}
+              Hey, {profile.full_name?.split(' ')[0] ?? 'there'}! {streak > 1 ? '🔥' : '👋'}
             </h1>
             <button
               onClick={() => setModalOpen(true)}
