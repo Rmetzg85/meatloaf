@@ -646,6 +646,26 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* AI Buyers Agent CTA */}
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg p-8 mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-2xl">🏡</span>
+              <h2 className="text-2xl font-bold">AI Buyers Agent</h2>
+            </div>
+            <p className="text-blue-100 max-w-md">
+              Ready to buy? Our AI agent helps you negotiate, analyze listings, and save the typical $10k+ buyer&apos;s commission — at zero cost to you.
+            </p>
+          </div>
+          <Link
+            href="/buyers-agent"
+            className="flex-shrink-0 bg-white text-blue-600 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition flex items-center gap-2"
+          >
+            Launch Agent
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+
         {/* Recent Applications */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Applications</h2>
