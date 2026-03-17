@@ -35,10 +35,23 @@ export default function AboutPage() {
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
+      {/* Hero with graduation photo layered */}
+      <section className="relative overflow-hidden">
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <Image
+            src="/graduation.jpg"
+            alt="Graduation ceremony"
+            fill
+            className="object-cover object-top"
+            priority
+          />
+          {/* Dark overlay with blue-purple gradient tint */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-purple-900/85" />
+        </div>
+        {/* Content */}
+        <div className="relative py-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-5xl md:text-6xl font-black mb-6 leading-tight text-white">
             I Graduated in 2008.<br />You Know What Happened Next.
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 leading-relaxed max-w-2xl">
