@@ -9,7 +9,7 @@ import { supabase } from '@/lib/supabase'
 import { Home, Mail, Lock, User, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import toast from 'react-hot-toast'
+import toast from 'react-hot-toast'h
 
 export default function SignupPage() {
   const router = useRouter()
@@ -145,7 +145,7 @@ export default function SignupPage() {
                       : 'border-gray-300 text-gray-700 hover:border-gray-400'
                   }`}
                 >
-                  Future Homeower
+                  Future Homeowner
                 </button>
                 <button
                   type="button"
