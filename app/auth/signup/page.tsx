@@ -9,7 +9,7 @@ import { supabase } from '@/lib/supabase'
 import { Home, Mail, Lock, User, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import toast from 'react-hot-toast'h
+import toast from 'react-hot-toast'
 
 export default function SignupPage() {
   const router = useRouter()
