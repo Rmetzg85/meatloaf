@@ -40,7 +40,7 @@ export default function AboutPage() {
         {/* Background photo */}
         <div className="absolute inset-0">
           <Image
-            src="/graduation.jpg"
+                          src="/graduation.png"
             alt="Graduation ceremony"
             fill
             className="object-cover object-top"
