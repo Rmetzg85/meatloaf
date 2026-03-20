@@ -47,7 +47,7 @@ export default function MimosaAboutPage() {
             priority
           />
           {/* Dark overlay with pink-rose gradient tint */}
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-900/90 to-rose-800/85" />
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-900/95 to-rose-800/95" />
         </div>
         {/* Content */}
         <div className="relative py-32 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

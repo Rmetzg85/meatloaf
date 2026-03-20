@@ -57,11 +57,19 @@ OFFER STRATEGY GUIDELINES (use these as starting points):
 
 TONE: Confident, direct, and on the buyer's side. Be specific with numbers. Don't hedge excessively — give real recommendations like a seasoned agent would. Keep responses concise and actionable.`
 
+    // Anthropic API requires messages to start with 'user' — strip any leading assistant messages
+    const firstUserIdx = messages.findIndex((m: { role: string }) => m.role === 'user')
+    const apiMessages = firstUserIdx === -1 ? [] : messages.slice(firstUserIdx)
+
+    if (apiMessages.length === 0) {
+      return NextResponse.json({ error: 'No user message found' }, { status: 400 })
+    }
+
     const response = await client.messages.create({
       model: 'claude-opus-4-6',
       max_tokens: 1024,
       system: systemPrompt,
-      messages: messages.map((m: { role: string; content: string }) => ({
+      messages: apiMessages.map((m: { role: string; content: string }) => ({
         role: m.role as 'user' | 'assistant',
         content: m.content,
       })),
