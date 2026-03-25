@@ -66,7 +66,7 @@ export default function LandlordsPage() {
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-black mb-4">For Landlords</h1>
-          <p className="text-xl text-blue-200 font-semibold">Launching Q3 2025</p>
+          <p className="text-xl text-blue-200 font-semibold">Launching Q2 2026</p>
         </div>
       </section>
 
@@ -178,7 +178,7 @@ export default function LandlordsPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            © 2025 REMVentures LLC. All rights reserved.
+            © 2026 REMVentures LLC. All rights reserved.
           </div>
         </div>
       </footer>

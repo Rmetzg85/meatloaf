@@ -76,7 +76,7 @@ export default function PropertiesPage() {
               <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium">
                 Login
               </Link>
-              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">
+              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition text-sm sm:text-base">
                 Sign Up
               </Link>
             </div>
@@ -88,7 +88,7 @@ export default function PropertiesPage() {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h1 className="text-5xl font-bold mb-4">Find Your Next Home</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Find Your Next Home</h1>
             <p className="text-xl text-blue-100">
               Rent smarter, build credit, achieve homeownership
             </p>

@@ -73,7 +73,7 @@ export default function HomePage() {
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
                 You're 30.<br />Mom's Making Meatloaf.<br />Again.
               </h1>
               <p className="text-xl md:text-2xl font-semibold text-yellow-300 mb-6">
@@ -465,7 +465,7 @@ export default function HomePage() {
             Ready to Level Up?
           </h2>
           <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
-            Join the waitlist for early access in Baltimore and Washington DC. Launching Q2 2025.
+            Join the waitlist for early access in Baltimore and Washington DC. Launching Q2 2026.
           </p>
           <Link
             href="/auth/signup"
@@ -530,7 +530,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            © 2025 REMVentures LLC. All rights reserved.
+            © 2026 REMVentures LLC. All rights reserved.
           </div>
         </div>
       </footer>
