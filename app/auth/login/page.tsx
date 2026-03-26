@@ -29,8 +29,21 @@ export default function LoginPage() {
 
       if (error) throw error
 
+      // Route to the correct dashboard based on user type
+      let destination = '/dashboard'
+      if (data.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('user_type')
+          .eq('id', data.user.id)
+          .single()
+        if (profile?.user_type === 'landlord' || profile?.user_type === 'realestateagent' || profile?.user_type === 'lender') {
+          destination = '/landlord/dashboard'
+        }
+      }
+
       toast.success('Welcome back!')
-      router.push('/dashboard')
+      router.push(destination)
     } catch (error: any) {
       toast.error(error.message || 'Failed to login')
     } finally {

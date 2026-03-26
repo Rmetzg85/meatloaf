@@ -38,9 +38,10 @@ export default function SignupPage() {
 
       if (authError) throw authError
 
-      // Upsert profile with additional info (handles cases where trigger hasn't run yet)
+      // Attempt to upsert profile — may fail if email confirmation is required
+      // (session not yet established). The DB trigger or first-login will handle it.
       if (authData.user) {
-        const { error: profileError } = await supabase
+        await supabase
           .from('profiles')
           .upsert({
             id: authData.user.id,
@@ -48,12 +49,15 @@ export default function SignupPage() {
             full_name: fullName,
             user_type: userType,
           })
-
-        if (profileError) throw profileError
+        // Ignore RLS / upsert errors here — profile is created by DB trigger or on first login
       }
 
       toast.success('Account created! Welcome to Meatloaf!')
-      router.push('/dashboard')
+      const destination =
+        userType === 'landlord' || userType === 'realestateagent' || userType === 'lender'
+          ? '/landlord/dashboard'
+          : '/dashboard'
+      router.push(destination)
     } catch (error: any) {
       toast.error(error.message || 'Failed to create account')
     } finally {

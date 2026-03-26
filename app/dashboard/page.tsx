@@ -127,14 +127,19 @@ export default function DashboardPage() {
         throw profileError
       }
 
+      // Redirect non-renters away from this dashboard
+      if (profileData.user_type === 'landlord' || profileData.user_type === 'realestateagent' || profileData.user_type === 'lender') {
+        router.push('/landlord/dashboard')
+        return
+      }
+
       profileRef.current = profileData
       setProfile(profileData)
 
-      const { data: appsData, error: appsError } = await supabase
+      const { data: appsData } = await supabase
         .from('applications').select('*')
         .eq('future_homeowner_id', user.id)
         .order('created_at', { ascending: false })
-      if (appsError) throw appsError
       setApplications(appsData || [])
 
       initDailyProgress(profileData)
