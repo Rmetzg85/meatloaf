@@ -149,7 +149,7 @@ export default function SignupPage() {
                       : 'border-gray-300 text-gray-700 hover:border-gray-400'
                   }`}
                 >
-                  Future Homeower
+                  Future Homeowner
                 </button>
                 <button
                   type="button"
