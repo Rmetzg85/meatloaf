@@ -465,7 +465,7 @@ export default function MimosaHomePage() {
             Ready to Build Your Castle?
           </h2>
           <p className="text-xl text-pink-100 mb-10 max-w-2xl mx-auto">
-            Join the waitlist for early access in Baltimore and Washington DC. Launching Q2 2025.
+            Join the waitlist for early access in Baltimore and Washington DC. Launching Q2 2026.
           </p>
           <Link
             href="/auth/signup"
@@ -521,7 +521,7 @@ export default function MimosaHomePage() {
           </div>
 
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
-            © 2025 REMVentures LLC. All rights reserved.
+            © 2026 REMVentures LLC. All rights reserved.
           </div>
         </div>
       </footer>
