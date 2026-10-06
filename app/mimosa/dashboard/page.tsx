@@ -97,7 +97,7 @@ export default function MimosaDashboardPage() {
     { name: 'Getting Started', points: 0 },
     { name: 'Building Credit', points: 100 },
     { name: 'Saving for Down Payment', points: 300 },
-    { name: 'Pre-Approved', points: 600 },
+    { name: 'Mortgage Basics Pro', points: 600 },
     { name: 'Ready to Buy', points: 1000 },
   ]
 
@@ -142,13 +142,13 @@ export default function MimosaDashboardPage() {
               <div className="bg-pink-100 p-3 rounded-lg">
                 <TrendingUp className="w-6 h-6 text-pink-500" />
               </div>
-              <span className="text-sm text-gray-500">Credit Score</span>
+              <span className="text-sm text-gray-500">Practice Score</span>
             </div>
             <p className="text-3xl font-bold text-gray-900">
-              {profile.credit_score || '680'}
+              —
             </p>
             <p className="text-sm text-gray-500 mt-1">
-              {profile.credit_score ? 'Keep it up!' : 'Add your credit score'}
+              Simulated for the game. Not your real credit.
             </p>
           </div>
 

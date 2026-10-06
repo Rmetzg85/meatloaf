@@ -90,7 +90,7 @@ export default function PropertiesPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Find Your Next Home</h1>
             <p className="text-xl text-blue-100">
-              Rent smarter, build credit, achieve homeownership
+              Starter homes and listings. Confirm details with the listing source.
             </p>
           </div>
 
