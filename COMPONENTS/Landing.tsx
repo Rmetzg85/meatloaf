@@ -28,8 +28,27 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className={`${t.gradient} text-white py-24`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className={`relative text-white py-24 ${theme === 'meatloaf' ? 'bg-gray-950' : t.gradient}`}>
+          {theme === 'meatloaf' && (
+            <>
+              {/* Decorative loop — muted, no captions needed */}
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/hero-basement.jpg"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <source src="/hero-basement.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-950/75 via-purple-950/70 to-gray-950/80" aria-hidden="true" />
+            </>
+          )}
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
                 {hero.h1[0]}<br />{hero.h1[1]}<br />{hero.h1[2]}
