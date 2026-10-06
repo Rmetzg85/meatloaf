@@ -97,7 +97,7 @@ export default function ContactPage() {
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Reach out about...</h3>
                 <div className="space-y-3">
                   {[
-                    { title: 'Partnership & Integrations', desc: 'Credit bureaus, lenders, property managers' },
+                    { title: 'Partnership & Integrations', desc: 'Real estate agents and housing partners' },
                     { title: 'Press & Media', desc: 'Interviews, stories, and media inquiries' },
                     { title: 'Investor Relations', desc: 'VC, angel, and strategic investment' },
                     { title: 'General Support', desc: 'Account help, bugs, and feedback' },

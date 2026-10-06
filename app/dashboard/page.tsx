@@ -35,14 +35,14 @@ const MILESTONES = [
   { name: 'Getting Started', points: 0 },
   { name: 'Building Credit', points: 100 },
   { name: 'Saving for Down Payment', points: 300 },
-  { name: 'Pre-Approved', points: 600 },
+  { name: 'Mortgage Basics Pro', points: 600 },
   { name: 'Ready to Buy', points: 1000 },
 ]
 
 const CREDIT_TIPS = [
   {
     title: 'Payment History is King',
-    body: '35% of your FICO score is payment history. Every on-time rent payment you report is building this foundation. Consistency beats perfection — one missed payment can drop your score 50–100 points.',
+    body: '35% of your FICO score is payment history. On-time payments build this foundation. Consistency beats perfection — one missed payment can drop your score 50–100 points.',
   },
   {
     title: 'The 30% Rule',
@@ -62,11 +62,11 @@ const CREDIT_TIPS = [
   },
   {
     title: 'The Homeowner Net Worth Gap',
-    body: 'The median homeowner has 40x the net worth of a renter ($255,000 vs $6,300). That gap starts with the down payment — even 3.5% FHA loans can get you in the game early.',
+    body: 'Homeowners build equity as they pay down a mortgage, while rent builds none. FHA loans allow down payments as low as 3.5% for eligible buyers, so it pays to learn the rules early.',
   },
   {
     title: 'Score → Rate → Savings',
-    body: 'Going from a 620 to a 740 credit score can save you 1–1.5% on your mortgage rate. On a $300K loan, that\'s $200+/month or $75,000+ over 30 years. Every point counts.',
+    body: 'A higher credit score generally qualifies for a lower mortgage rate, and even a small rate difference adds up over a 30-year loan. Ask a licensed lender how your situation works.',
   },
 ]
 
@@ -76,14 +76,14 @@ const ACHIEVEMENTS = [
   { id: 'points100', label: 'Point Scorer', description: 'Earned 100 points', emoji: '⭐', pointsRequired: 100 },
   { id: 'firstapp', label: 'House Hunter', description: 'Submitted first application', emoji: '📋', appsRequired: 1 },
   { id: 'points300', label: 'Credit Builder', description: 'Reached 300 points', emoji: '💳', pointsRequired: 300 },
-  { id: 'points600', label: 'Pre-Approved', description: 'Reached 600 points', emoji: '🎯', pointsRequired: 600 },
+  { id: 'points600', label: 'Mortgage Basics Pro', description: 'Reached 600 points', emoji: '🎯', pointsRequired: 600 },
   { id: 'streak30', label: 'Legendary', description: '30-day streak', emoji: '👑', streakRequired: 30 },
   { id: 'points1000', label: 'Homeowner Ready', description: 'Reached 1000 points', emoji: '🏆', pointsRequired: 1000 },
 ]
 
 function getLevelInfo(points: number) {
   if (points >= 1000) return { level: 5, name: 'Homeowner Ready', color: 'from-green-500 to-emerald-600', emoji: '🏠' }
-  if (points >= 600) return { level: 4, name: 'Pre-Approved', color: 'from-purple-500 to-indigo-600', emoji: '✅' }
+  if (points >= 600) return { level: 4, name: 'Mortgage Basics Pro', color: 'from-purple-500 to-indigo-600', emoji: '✅' }
   if (points >= 300) return { level: 3, name: 'Down Payment Saver', color: 'from-blue-500 to-cyan-600', emoji: '💰' }
   if (points >= 100) return { level: 2, name: 'Credit Builder', color: 'from-yellow-500 to-orange-500', emoji: '📈' }
   return { level: 1, name: 'House Hunter', color: 'from-gray-400 to-gray-500', emoji: '🔍' }
@@ -536,10 +536,10 @@ export default function DashboardPage() {
               <div className="bg-blue-100 p-3 rounded-lg">
                 <TrendingUp className="w-6 h-6 text-blue-600" />
               </div>
-              <span className="text-sm text-gray-500">Credit Score</span>
+              <span className="text-sm text-gray-500">Practice Score</span>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{profile.credit_score ?? '—'}</p>
-            <p className="text-sm text-gray-500 mt-1">{profile.credit_score ? 'Keep it up!' : 'Add your score'}</p>
+            <p className="text-3xl font-bold text-gray-900">—</p>
+            <p className="text-sm text-gray-500 mt-1">Simulated for the game. Not your real credit.</p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg p-6">

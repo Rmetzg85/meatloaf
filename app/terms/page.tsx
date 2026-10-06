@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import SiteFooter from '@/COMPONENTS/SiteFooter'
 
 export default function TermsPage() {
   return (
@@ -26,7 +27,7 @@ export default function TermsPage() {
       <section className="bg-gradient-to-r from-blue-900 to-purple-900 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-5xl font-black text-white mb-4">Terms of Service</h1>
-          <p className="text-blue-200 text-lg">Last updated: March 25, 2026</p>
+          <p className="text-blue-200 text-lg">Last updated: October 6, 2026</p>
         </div>
       </section>
 
@@ -45,15 +46,16 @@ export default function TermsPage() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Service</h2>
               <p className="mb-4">
-                Meatloaf is a housing and financial empowerment platform that connects renters, landlords, lenders, and real estate agents. Our services include:
+                Meatloaf is an educational and home-search platform operated by REMVentures LLC. Our services include:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>A rental property marketplace connecting renters and landlords</li>
-                <li>Credit-building tools through on-time rent payment reporting</li>
-                <li>Gamified financial literacy and homeownership coaching</li>
-                <li>AI-powered property search and buyers agent tools</li>
-                <li>Connections to mortgage lenders and real estate professionals</li>
+                <li>Free credit and homebuying education, including a credit game that uses simulated practice scores</li>
+                <li>Home and property listings provided by public sources and third-party agents</li>
+                <li>Connections to a listing agent, only when you ask</li>
               </ul>
+              <p className="mt-4">
+                We are not a credit repair organization, credit bureau, lender, mortgage broker, or real estate brokerage, and we do not report information to any credit reporting agency.
+              </p>
             </div>
 
             <div>
@@ -75,7 +77,7 @@ export default function TermsPage() {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Future Homeowners / Renters</h3>
               <ul className="list-disc pl-6 space-y-2 mb-4">
                 <li>You agree to provide truthful information on rental applications</li>
-                <li>Credit reporting is opt-in; you may withdraw consent at any time</li>
+                <li>We do not report any information to credit bureaus. Scores in the credit game are simulated practice scores, not your real credit score.</li>
                 <li>Gamification rewards (XP, milestones) are for motivational purposes only and do not constitute financial advice</li>
               </ul>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">Landlords</h3>
@@ -107,9 +109,9 @@ export default function TermsPage() {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">6. Credit Reporting</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">6. No Credit Reporting</h2>
               <p>
-                Rent payment reporting to credit bureaus is an opt-in feature. By enrolling, you authorize us to share your payment data with credit reporting agencies. You may revoke this authorization at any time by contacting us. We are not responsible for how credit bureaus process, score, or use reported data. Credit score improvements are not guaranteed.
+                We do not report information to any credit bureau or credit reporting agency, and we do not pull, check, or change your credit. The credit game uses simulated scores for education only. We make no guarantee of credit score changes, loan approval, or home purchase.
               </p>
             </div>
 
@@ -121,7 +123,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 space-y-2">
                 <li>The Service will be uninterrupted or error-free</li>
                 <li>Any property listing is accurate, available, or suitable for your needs</li>
-                <li>Credit scores will improve as a result of using our platform</li>
+                <li>Your credit score will change, or you will be approved for a loan or buy a home, as a result of using our platform</li>
                 <li>AI-generated advice is accurate or appropriate for your specific situation</li>
               </ul>
               <p className="mt-4">
@@ -172,17 +174,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
-          <div className="flex justify-center space-x-6 mb-4">
-            <Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link>
-            <Link href="/terms" className="text-white hover:text-gray-300">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-white transition">Contact</Link>
-          </div>
-          © 2026 REMVentures LLC. All rights reserved.
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
