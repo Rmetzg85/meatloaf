@@ -28,7 +28,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className={`relative text-white ${theme === 'mimosa' ? 'pt-64 pb-24 md:pt-80 lg:py-24 bg-rose-950' : 'py-24 bg-gray-950'}`}>
+        <div className={`relative text-white ${theme === 'mimosa' ? 'pt-64 pb-24 md:pt-80 xl:py-24 bg-rose-950' : 'py-24 bg-gray-950'}`}>
           {theme === 'meatloaf' && (
             <>
               {/* Decorative loop — muted, no captions needed */}
@@ -50,22 +50,23 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
           )}
           {theme === 'mimosa' && (
             <>
-              {/* Decorative photo; copy carries the meaning */}
-              <picture>
-                <source srcSet="/hero-mimosa.webp" type="image/webp" />
-                <img
-                  src="/hero-mimosa.jpg"
-                  alt=""
-                  aria-hidden="true"
-                  width={1600}
-                  height={900}
-                  fetchPriority="high"
-                  className="absolute inset-x-0 top-0 h-[480px] md:h-[560px] w-full object-cover object-[40%_20%] lg:inset-0 lg:h-full lg:object-[70%_25%] xl:object-[100%_25%]"
-                />
-              </picture>
-              {/* Mobile/tablet: photo band on top fading into the copy; desktop: full tint */}
-              <div className="absolute inset-x-0 top-0 h-[480px] md:h-[560px] bg-gradient-to-b from-rose-950/10 via-rose-950/60 to-rose-950 lg:hidden" aria-hidden="true" />
-              <div className="absolute inset-0 hidden lg:block bg-gradient-to-br from-rose-950/70 via-pink-900/55 to-gray-950/75" aria-hidden="true" />
+              {/* Decorative loop — muted, no captions needed (still at /hero-mimosa.jpg|.webp kept as spare) */}
+              <video
+                className="absolute inset-x-0 top-0 h-[480px] md:h-[560px] w-full object-cover object-[40%_20%] xl:inset-y-0 xl:left-0 xl:right-auto xl:h-full xl:w-[60%] xl:object-[55%_25%] xl:[mask-image:linear-gradient(to_right,black_60%,transparent)]"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/hero-mimosa-poster.jpg"
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                <source src="/hero-mimosa.mp4" type="video/mp4" />
+              </video>
+              {/* Below xl: video band on top fading into the copy. xl+: video fills the left 60% (fades right) so she sits beside the headline */}
+              <div className="absolute inset-x-0 top-0 h-[480px] md:h-[560px] bg-gradient-to-b from-rose-950/10 via-rose-950/60 to-rose-950 xl:hidden" aria-hidden="true" />
+              <div className="absolute inset-0 hidden xl:block bg-gradient-to-br from-rose-950/70 via-pink-900/55 to-gray-950/75" aria-hidden="true" />
             </>
           )}
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
