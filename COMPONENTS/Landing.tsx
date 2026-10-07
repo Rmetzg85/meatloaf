@@ -11,7 +11,7 @@ const HERO: Record<ThemeKey, { h1: [string, string, string]; sub: string; body: 
     body: "You've got a job. You're responsible. But the path from \u201cpullout couch\u201d to \u201cmy name on the deed\u201d never got explained to you.",
   },
   mimosa: {
-    h1: ['Hungover.', 'Childhood Bedroom.', "Dad's Texting Again."],
+    h1: ['Hungover.', 'Childhood Home.', "Dad's Texting Again."],
     sub: "Brunch got out of hand and you're back in your old room. Let's work on the way out.",
     body: "You've got a job. You're capable. But the path from \u201csame curtains since middle school\u201d to \u201cmy name on the deed\u201d never got explained to you.",
   },
