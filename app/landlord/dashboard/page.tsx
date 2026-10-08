@@ -183,7 +183,7 @@ export default function LandlordDashboardPage() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">Your Properties</h2>
             <Link
-              href="/landlord/properties/new"
+              href="/agent/listings/new"
               className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition flex items-center space-x-2"
             >
               <Plus className="w-5 h-5" />
@@ -196,7 +196,7 @@ export default function LandlordDashboardPage() {
               <Building2 className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 mb-4">No properties listed yet</p>
               <Link
-                href="/landlord/properties/new"
+                href="/agent/listings/new"
                 className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition"
               >
                 List Your First Property

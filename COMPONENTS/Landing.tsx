@@ -322,6 +322,12 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
           >
             List a Home
           </a>
+          <p className="text-gray-700 mt-5">
+            Already have a Real Estate Agent account?{' '}
+            <Link href="/agent/listings/new" className={`${t.labelText} font-semibold underline hover:no-underline`}>Create your listing</Link>
+            {' '}or{' '}
+            <Link href={`/auth/signup?role=agent&next=${encodeURIComponent('/agent/listings/new')}`} className={`${t.labelText} font-semibold underline hover:no-underline`}>sign up as an agent</Link>.
+          </p>
           <p className="text-gray-600 text-sm mt-4">Online listing checkout is coming soon. Email us to reserve the founding rate.</p>
           <p className="text-gray-600 text-xs mt-4">
             Listing fee is a flat advertising fee. It&apos;s not contingent on leads, showings, or closings. No guarantee of inquiries or sales. Listings must comply with fair housing law.
