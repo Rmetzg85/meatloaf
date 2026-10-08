@@ -14,6 +14,7 @@ import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { readThemeCookie, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { landingFor } from '@/lib/auth'
+import { brandHomeUrl } from '@/lib/seo'
 import { THEMES } from '@/COMPONENTS/theme'
 
 interface Profile {
@@ -240,7 +241,7 @@ export default function DashboardPage() {
     }
 
     if (missionId === 'share') {
-      const url = siteTheme === 'mimosa' ? 'https://meatloaf.rent/mimosa' : 'https://meatloaf.rent'
+      const url = brandHomeUrl(siteTheme)
       if (navigator.share) {
         navigator.share({ title: brand, text: 'Build credit, own your first home.', url })
       } else {
