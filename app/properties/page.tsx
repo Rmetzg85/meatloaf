@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase'
 import { Home, Search, Bed, Bath, MapPin, DollarSign, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import SiteFooter from '@/COMPONENTS/SiteFooter'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 
@@ -216,6 +217,7 @@ export default function PropertiesPage() {
           </>
         )}
       </div>
+      <SiteFooter />
     </div>
   )
 }

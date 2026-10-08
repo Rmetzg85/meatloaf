@@ -5,9 +5,11 @@ import { useState } from 'react'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import ShareButtons from '@/COMPONENTS/ShareButtons'
 
 export default function ContactPage() {
-  const siteBg = THEMES[useSiteTheme()].sectionBg
+  const siteTheme = useSiteTheme()
+  const siteBg = THEMES[siteTheme].sectionBg
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
@@ -216,6 +218,7 @@ export default function ContactPage() {
             <Link href="/terms" className="hover:text-white transition">Terms of Service</Link>
             <Link href="/contact" className="text-white hover:text-gray-300">Contact</Link>
           </div>
+          <ShareButtons theme={siteTheme} className="justify-center mb-4" />
           © 2026 REMVentures LLC. All rights reserved.
         </div>
       </footer>
