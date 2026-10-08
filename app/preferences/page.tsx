@@ -184,7 +184,7 @@ export default function PreferencesPage() {
   }
 
   const label = 'block text-sm font-semibold text-gray-800 mb-1'
-  const hint = 'text-xs text-gray-500 mt-1'
+  const hint = 'text-xs text-gray-600 mt-1'
   const section = `${ui.card} p-6 space-y-4`
   const radio = (on: boolean) => `flex items-start gap-3 rounded-lg border px-3 py-2 cursor-pointer ${on ? ui.chipOn : 'border-gray-200 bg-white text-gray-800'}`
 
@@ -270,7 +270,7 @@ export default function PreferencesPage() {
                 ] as const).map(([v, title, sub]) => (
                   <label key={v} className={radio(form.move_scope === v)}>
                     <input type="radio" name="move_scope" className={`${ui.check} mt-1`} checked={form.move_scope === v} onChange={() => set('move_scope', v)} />
-                    <span><span className="font-semibold">{title}</span><span className="block text-xs text-gray-500">{sub}</span></span>
+                    <span><span className="font-semibold">{title}</span><span className="block text-xs text-gray-600">{sub}</span></span>
                   </label>
                 ))}
               </div>

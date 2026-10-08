@@ -7,6 +7,8 @@ import { supabase } from '@/lib/supabase'
 import { Home, Search, Bed, Bath, MapPin, DollarSign, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import { THEMES } from '@/COMPONENTS/theme'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 
 interface Property {
   id: string
@@ -23,6 +25,7 @@ interface Property {
 }
 
 export default function PropertiesPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
   const [searchCity, setSearchCity] = useState('')
@@ -63,7 +66,7 @@ export default function PropertiesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className={`min-h-screen ${siteBg}`}>
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

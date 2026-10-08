@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import ThemeBg from '@/COMPONENTS/ThemeBg'
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <ThemeBg className="min-h-screen">
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,7 +160,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact Us</h2>
               <p>For questions about these Terms, contact us:</p>
-              <div className="mt-4 bg-gray-50 rounded-xl p-6">
+              <div className="mt-4 bg-white/85 ring-1 ring-black/5 rounded-xl p-6">
                 <p className="font-semibold text-gray-900">REMVentures LLC</p>
                 <p className="text-gray-600">Operating as Meatloaf.Rent</p>
                 <p className="text-gray-600">Baltimore, MD</p>
@@ -172,6 +173,6 @@ export default function TermsPage() {
       </section>
 
       <SiteFooter />
-    </div>
+    </ThemeBg>
   )
 }

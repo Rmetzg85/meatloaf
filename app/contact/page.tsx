@@ -3,8 +3,11 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import { THEMES } from '@/COMPONENTS/theme'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 
 export default function ContactPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
@@ -15,7 +18,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`min-h-screen ${siteBg}`}>
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,11 +102,11 @@ export default function ContactPage() {
                     { title: 'Investor Relations', desc: 'VC, angel, and strategic investment' },
                     { title: 'General Support', desc: 'Account help, bugs, and feedback' },
                   ].map((item) => (
-                    <div key={item.title} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div key={item.title} className="flex items-start space-x-3 p-3 bg-white/85 ring-1 ring-black/5 rounded-lg">
                       <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
                       <div>
                         <p className="font-semibold text-gray-900 text-sm">{item.title}</p>
-                        <p className="text-gray-500 text-sm">{item.desc}</p>
+                        <p className="text-gray-600 text-sm">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -114,7 +117,7 @@ export default function ContactPage() {
             {/* Contact form */}
             <div>
               {submitted ? (
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-10 text-center">
+                <div className="bg-white/85 ring-1 ring-black/5 shadow-sm rounded-2xl p-10 text-center">
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -193,7 +196,7 @@ export default function ContactPage() {
                     Send Message
                   </button>
 
-                  <p className="text-gray-500 text-sm text-center">
+                  <p className="text-gray-600 text-sm text-center">
                     We respond within 1–2 business days. For urgent matters email us directly at{' '}
                     <a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a>.
                   </p>

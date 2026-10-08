@@ -9,6 +9,8 @@ import { Home, MapPin, Bed, Bath, Ruler, DollarSign, Calendar, ArrowLeft, Loader
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import { THEMES } from '@/COMPONENTS/theme'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 
 interface Property {
   id: string
@@ -33,6 +35,7 @@ interface Profile {
 }
 
 export default function PropertyDetailPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const params = useParams()
   const propertyId = params.id as string
@@ -133,7 +136,7 @@ export default function PropertyDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className={`min-h-screen ${siteBg} flex items-center justify-center`}>
         <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
       </div>
     )
@@ -141,7 +144,7 @@ export default function PropertyDetailPage() {
 
   if (!property) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className={`min-h-screen ${siteBg} flex items-center justify-center`}>
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Property not found</h2>
           <Link href="/properties" className="text-blue-600 hover:text-blue-700">
@@ -153,7 +156,7 @@ export default function PropertyDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className={`min-h-screen ${siteBg}`}>
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

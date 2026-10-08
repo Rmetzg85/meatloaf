@@ -9,8 +9,11 @@ import { Home, ArrowLeft, Building2, DollarSign, Bed, Bath, Ruler, Loader2 } fro
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
+import { THEMES } from '@/COMPONENTS/theme'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 
 export default function NewPropertyPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   
@@ -83,7 +86,7 @@ export default function NewPropertyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className={`min-h-screen ${siteBg}`}>
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">

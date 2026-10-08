@@ -12,7 +12,7 @@ import {
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
-import { readThemeCookie } from '@/COMPONENTS/useSiteTheme'
+import { readThemeCookie, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
 
 interface Message {
@@ -50,6 +50,7 @@ const PROPERTY_TYPES = [
 ]
 
 export default function BuyersAgentPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [buyerName, setBuyerName] = useState('')
@@ -170,7 +171,7 @@ export default function BuyersAgentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col">
+    <div className={`min-h-screen ${siteBg} flex flex-col`}>
       {/* Nav */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
