@@ -6,10 +6,24 @@ import toast from 'react-hot-toast'
 import { THEMES, type ThemeKey } from './theme'
 import { brandHomeUrl } from '@/lib/seo'
 
-// "Share Meatloaf/Mimosa" row for the footers. Always shares the brand homepage.
-export default function ShareButtons({ theme, className = '' }: { theme: ThemeKey; className?: string }) {
+// "Share Meatloaf/Mimosa" row. Shares the brand homepage unless `url` is given (e.g. a home's page).
+// `variant="light"` is for light backgrounds; the default suits the dark footer.
+export default function ShareButtons({
+  theme,
+  className = '',
+  url: shareUrl,
+  label,
+  variant = 'dark',
+}: {
+  theme: ThemeKey
+  className?: string
+  url?: string
+  label?: React.ReactNode
+  variant?: 'dark' | 'light'
+}) {
   const t = THEMES[theme]
-  const url = brandHomeUrl(theme)
+  const url = shareUrl ?? brandHomeUrl(theme)
+  const subject = shareUrl ? 'this home' : t.name
   const [copied, setCopied] = useState(false)
 
   const copyLink = async (hint?: string) => {
@@ -40,7 +54,7 @@ export default function ShareButtons({ theme, className = '' }: { theme: ThemeKe
   const shareNative = async () => {
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
       try {
-        await navigator.share({ title: `${t.name} - Stop Renting Forever`, text: 'Starter homes under $300K + a free credit game.', url })
+        await navigator.share(shareUrl ? { title: `A starter home on ${t.name}`, url } : { title: `${t.name} - Stop Renting Forever`, text: 'Starter homes under $300K + a free credit game.', url })
         return
       } catch (err) {
         if ((err as DOMException)?.name === 'AbortError') return // user closed the sheet
@@ -49,19 +63,23 @@ export default function ShareButtons({ theme, className = '' }: { theme: ThemeKe
     copyLink('Paste it into an Instagram story, post or DM.')
   }
 
-  const btn = `inline-flex h-10 w-10 items-center justify-center rounded-full ${t.gradient} text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900`
+  const btn = `inline-flex h-10 w-10 items-center justify-center rounded-full ${t.gradient} text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 focus:outline-none focus-visible:ring-2 ${variant === 'light' ? 'focus-visible:ring-gray-900 focus-visible:ring-offset-white' : 'focus-visible:ring-white focus-visible:ring-offset-gray-900'} focus-visible:ring-offset-2`
 
   return (
     <div className={`flex flex-col sm:flex-row items-center gap-3 sm:gap-4 ${className}`}>
-      <p className="text-sm text-gray-300">
-        Know someone stuck at home? <span className="font-semibold text-white">Share {t.name}</span>
+      <p className={`text-sm ${variant === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>
+        {label ?? (
+          <>
+            Know someone stuck at home? <span className={`font-semibold ${variant === 'light' ? 'text-gray-900' : 'text-white'}`}>Share {t.name}</span>
+          </>
+        )}
       </p>
       <div className="flex items-center gap-3">
         <a
           href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Share ${t.name} on Facebook (opens in a new tab)`}
+          aria-label={`Share ${subject} on Facebook (opens in a new tab)`}
           title="Share on Facebook"
           className={btn}
         >
@@ -70,7 +88,7 @@ export default function ShareButtons({ theme, className = '' }: { theme: ThemeKe
         <button
           type="button"
           onClick={shareNative}
-          aria-label={`Share ${t.name} on Instagram or another app`}
+          aria-label={`Share ${subject} on Instagram or another app`}
           title="Share (Instagram, messages and more)"
           className={btn}
         >
@@ -79,7 +97,7 @@ export default function ShareButtons({ theme, className = '' }: { theme: ThemeKe
         <button
           type="button"
           onClick={() => copyLink()}
-          aria-label={copied ? 'Link copied' : `Copy link to ${t.name}`}
+          aria-label={copied ? 'Link copied' : `Copy link to ${subject}`}
           title={copied ? 'Link copied!' : 'Copy link'}
           className={btn}
         >

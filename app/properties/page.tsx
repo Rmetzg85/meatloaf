@@ -10,6 +10,7 @@ import SiteNav from '@/COMPONENTS/SiteNav'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { PRICE_CAP, isListablePrice } from '@/lib/listing'
 
 interface Property {
   id: string
@@ -27,12 +28,8 @@ interface Property {
   property_sale_info: { list_price: number } | null
 }
 
-// The site only shows starter homes: a known sale price at or under $300K.
-const PRICE_CAP = 300_000
-const underCap = (p: Property) => {
-  const price = p.property_sale_info?.list_price
-  return typeof price === 'number' && price > 0 && price <= PRICE_CAP
-}
+// The site only shows starter homes: a known sale price at or under $300K (rules in lib/listing.ts).
+const underCap = (p: Property) => isListablePrice(p.property_sale_info?.list_price)
 
 export default function PropertiesPage() {
   const theme = useSiteTheme()
@@ -215,9 +212,9 @@ export default function PropertiesPage() {
                     )}
 
                     {/* View Details Button */}
-                    <button className={`w-full ${t.gradient} text-white py-2 rounded-lg font-semibold hover:opacity-90 transition`}>
+                    <span className={`block text-center w-full ${t.gradient} text-white py-2 rounded-lg font-semibold hover:opacity-90 transition`}>
                       View Details
-                    </button>
+                    </span>
                   </div>
                 </Link>
               ))}

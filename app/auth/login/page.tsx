@@ -13,7 +13,7 @@ import BrandLink from '@/COMPONENTS/BrandLink'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import ResendConfirmButton from '@/COMPONENTS/ResendConfirmButton'
-import { authErrorMessage, ensureProfile, isEmailNotConfirmed, landingFor, userRole } from '@/lib/auth'
+import { authErrorMessage, ensureProfile, isEmailNotConfirmed, landingFor, nextFromUrl, userRole } from '@/lib/auth'
 
 export default function LoginPage() {
   const siteTheme = useSiteTheme()
@@ -50,7 +50,8 @@ export default function LoginPage() {
       let destination = '/dashboard'
       if (data.user) {
         await ensureProfile(data.user)
-        destination = landingFor(await userRole(data.user), siteTheme)
+        // ?next= (e.g. a home page that asked them to log in) wins over the role landing.
+        destination = nextFromUrl() ?? landingFor(await userRole(data.user), siteTheme)
       }
 
       toast.success('Welcome back!')

@@ -13,7 +13,7 @@ import BrandLink from '@/COMPONENTS/BrandLink'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
 import ResendConfirmButton from '@/COMPONENTS/ResendConfirmButton'
-import { authCallbackUrl, authErrorMessage, ensureProfile, landingFor } from '@/lib/auth'
+import { authCallbackUrl, authErrorMessage, ensureProfile, landingFor, nextFromUrl, rememberNext } from '@/lib/auth'
 
 export default function SignupPage() {
   const siteTheme = useSiteTheme()
@@ -33,6 +33,7 @@ export default function SignupPage() {
     e.preventDefault()
     setLoading(true)
 
+    const next = nextFromUrl()
     try {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
@@ -56,9 +57,12 @@ export default function SignupPage() {
         toast.success(`Welcome to ${brand}!`)
         // Non-blocking: the DB trigger or the next sign-in fills it in.
         if (!profileSaved) toast("We'll finish setting up your profile when you sign in.", { icon: '👋' })
-        router.push(landingFor(userType, siteTheme))
+        router.push(next ?? landingFor(userType, siteTheme))
         return
       }
+
+      // Bring them back to the page that sent them here (e.g. a home) after they confirm.
+      rememberNext(next)
 
       // Confirmation required. The profile row comes from the DB trigger.
       setSentTo(email)
