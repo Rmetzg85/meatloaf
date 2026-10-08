@@ -136,6 +136,18 @@ export default function MimosaDashboardPage() {
           <p className="text-gray-600">Here's your journey to homeownership</p>
         </div>
 
+        {/* Home matching (Phase 1) */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Home matching</h2>
+            <p className="text-gray-600 text-sm">Tell us your budget and where you&apos;d live, then opt in to see homes that fit.</p>
+          </div>
+          <div className="flex gap-3">
+            <Link href="/preferences" className="px-5 py-2 rounded-lg border border-gray-300 font-semibold text-gray-800 hover:bg-gray-50">Preferences</Link>
+            <Link href="/matches" className="bg-gradient-to-r from-pink-500 to-rose-400 text-white px-5 py-2 rounded-lg font-semibold hover:opacity-90">Your matches</Link>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
