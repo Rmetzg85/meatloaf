@@ -6,23 +6,31 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { Home, Mail, Lock, Loader2 } from 'lucide-react'
+import { Mail, Lock, Loader2, MailWarning } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import ResendConfirmButton from '@/COMPONENTS/ResendConfirmButton'
+import { authErrorMessage, ensureProfile, isEmailNotConfirmed, landingFor, userRole } from '@/lib/auth'
 
 export default function LoginPage() {
-  const siteBg = THEMES[useSiteTheme()].sectionBg
+  const siteTheme = useSiteTheme()
+  const t = THEMES[siteTheme]
+  const siteBg = t.sectionBg
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  // Email of an account that exists but hasn't confirmed yet (keeps the notice on screen).
+  const [unconfirmed, setUnconfirmed] = useState<string | null>(null)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+
+    setUnconfirmed(null)
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -30,25 +38,25 @@ export default function LoginPage() {
         password,
       })
 
-      if (error) throw error
+      if (error) {
+        if (isEmailNotConfirmed(error)) {
+          setUnconfirmed(email)
+          return
+        }
+        throw error
+      }
 
-      // Route to the correct dashboard based on user type
+      // Same landing as signup and /auth/callback.
       let destination = '/dashboard'
       if (data.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('user_type')
-          .eq('id', data.user.id)
-          .single()
-        if (profile?.user_type === 'landlord' || profile?.user_type === 'realestateagent' || profile?.user_type === 'lender') {
-          destination = '/landlord/dashboard'
-        }
+        await ensureProfile(data.user)
+        destination = landingFor(await userRole(data.user), siteTheme)
       }
 
       toast.success('Welcome back!')
       router.push(destination)
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to login')
+    } catch (error: unknown) {
+      toast.error(authErrorMessage(error, 'Failed to login'))
     } finally {
       setLoading(false)
     }
@@ -64,6 +72,21 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8">
+          {unconfirmed && (
+            <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900" role="alert">
+              <div className="flex items-start gap-3">
+                <MailWarning className="w-5 h-5 mt-0.5 shrink-0" aria-hidden="true" />
+                <div className="space-y-3">
+                  <p>
+                    <strong>Please confirm your email first.</strong> We sent a confirmation link to{' '}
+                    <span className="break-words">{unconfirmed}</span> when you signed up. Click it, then sign in here.
+                  </p>
+                  <ResendConfirmButton email={unconfirmed} className={`${t.gradient} text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition`} />
+                </div>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -88,7 +111,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <Link href="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+                <Link href="/auth/forgot-password" className={`text-sm ${t.labelText} hover:underline`}>
                   Forgot password?
                 </Link>
               </div>
@@ -109,7 +132,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center"
+              className={`w-full ${t.gradient} text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center`}
             >
               {loading ? (
                 <>
@@ -124,8 +147,8 @@ export default function LoginPage() {
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
-              <Link href="/auth/signup" className="text-blue-600 font-semibold hover:underline">
+              Don&apos;t have an account?{' '}
+              <Link href="/auth/signup" className={`${t.labelText} font-semibold hover:underline`}>
                 Sign up
               </Link>
             </p>

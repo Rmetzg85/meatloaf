@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Home, Search, Bed, Bath, MapPin, DollarSign, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import BrandLink from '@/COMPONENTS/BrandLink'
+import SiteNav from '@/COMPONENTS/SiteNav'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
@@ -69,21 +69,7 @@ export default function PropertiesPage() {
   return (
     <div className={`min-h-screen ${siteBg}`}>
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
-            <div className="flex items-center space-x-4">
-              <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium">
-                Login
-              </Link>
-              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition text-sm sm:text-base">
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
@@ -98,13 +84,14 @@ export default function PropertiesPage() {
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Search by city or state..."
+                aria-label="Search homes by city or state"
                 value={searchCity}
                 onChange={(e) => setSearchCity(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 rounded-lg text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-white"
+                className="w-full pl-12 pr-4 py-4 rounded-lg bg-white text-gray-900 placeholder:text-gray-500 text-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
               />
             </div>
           </div>

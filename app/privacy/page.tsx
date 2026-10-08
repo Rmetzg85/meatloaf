@@ -1,25 +1,16 @@
-import Link from 'next/link'
+import { pageMetadata } from '@/lib/seo'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
-import BrandLink from '@/COMPONENTS/BrandLink'
+import SiteNav from '@/COMPONENTS/SiteNav'
 import ThemeBg from '@/COMPONENTS/ThemeBg'
+
+export const generateMetadata = () =>
+  pageMetadata({ title: 'Privacy Policy', path: '/privacy', describe: (brand) => `How ${brand} collects, uses and protects your information.` })
 
 export default function PrivacyPage() {
   return (
     <ThemeBg className="min-h-screen">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
-            <div className="hidden md:flex items-center space-x-6">
-              <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium">Browse Properties</Link>
-              <Link href="/about" className="text-gray-700 hover:text-gray-900 font-medium">About</Link>
-              <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium">Login</Link>
-              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">Get Started</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Header */}
       <section className="bg-gradient-to-r from-blue-900 to-purple-900 py-16">

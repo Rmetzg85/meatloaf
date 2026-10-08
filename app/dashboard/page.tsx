@@ -12,7 +12,8 @@ import {
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
-import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { readThemeCookie, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { landingFor } from '@/lib/auth'
 import { THEMES } from '@/COMPONENTS/theme'
 
 interface Profile {
@@ -134,7 +135,8 @@ export default function DashboardPage() {
 
       // Redirect non-renters away from this dashboard
       if (profileData.user_type === 'landlord' || profileData.user_type === 'realestateagent' || profileData.user_type === 'lender') {
-        router.push('/landlord/dashboard')
+        // Same landing as signup, login and /auth/callback.
+        router.push(landingFor(profileData.user_type, readThemeCookie()))
         return
       }
 

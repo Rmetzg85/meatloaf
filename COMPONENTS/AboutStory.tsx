@@ -42,7 +42,7 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
                   <source srcSet="/charlie-story.webp" type="image/webp" />
                   <img
                     src="/charlie-story.jpg"
-                    alt="Charlie, founder of Meatloaf"
+                    alt="Ryan Metzgar, founder of Meatloaf"
                     width={800}
                     height={1000}
                     loading="lazy"
