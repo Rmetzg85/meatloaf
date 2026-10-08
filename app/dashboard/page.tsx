@@ -658,6 +658,18 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Home matching (Phase 1) */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900">Home matching</h2>
+            <p className="text-gray-600 text-sm">Tell us your budget and where you&apos;d live, then opt in to see homes that fit.</p>
+          </div>
+          <div className="flex gap-3">
+            <Link href="/preferences" className="px-5 py-2 rounded-lg border border-gray-300 font-semibold text-gray-800 hover:bg-gray-50">Preferences</Link>
+            <Link href="/matches" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2 rounded-lg font-semibold hover:opacity-90">Your matches</Link>
+          </div>
+        </div>
+
         {/* AI Buyers Agent CTA */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg p-8 mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-white">
