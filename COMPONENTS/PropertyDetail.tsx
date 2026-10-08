@@ -49,7 +49,7 @@ function ContactAgent({ home }: { home: ListingDetail }) {
   const mailto = (to: string) => `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
   return (
-    <div className="rounded-2xl bg-white shadow-lg p-6">
+    <div id="contact-agent" className="rounded-2xl bg-white shadow-lg p-6 scroll-mt-6">
       <h2 className="text-lg font-bold text-gray-900 mb-1">Contact the agent</h2>
       {home.agent_name && (
         <p className="flex items-center gap-2 text-gray-700 mb-4">
@@ -109,7 +109,7 @@ export default function PropertyDetail({ home, shareUrl }: { home: ListingDetail
     home.bedrooms != null && { icon: BedDouble, label: 'Bedrooms', value: String(home.bedrooms) },
     baths && { icon: Bath, label: 'Bathrooms', value: baths },
     home.square_feet && { icon: Ruler, label: 'Size', value: `${home.square_feet.toLocaleString('en-US')} sq ft` },
-    home.property_type && { icon: Home, label: 'Type', value: home.property_type },
+    home.property_type && { icon: Home, label: 'Type', value: home.property_type.charAt(0).toUpperCase() + home.property_type.slice(1) },
     perSqft && { icon: Tag, label: 'Price per sq ft', value: formatPrice(perSqft) },
   ].filter(Boolean) as { icon: typeof Home; label: string; value: string }[]
 
@@ -144,11 +144,15 @@ export default function PropertyDetail({ home, shareUrl }: { home: ListingDetail
                       <dt className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-600">
                         <f.icon className={`w-4 h-4 ${t.accentText}`} aria-hidden="true" /> {f.label}
                       </dt>
-                      <dd className="mt-1 text-lg font-bold text-gray-900 capitalize">{f.value}</dd>
+                      <dd className="mt-1 text-lg font-bold text-gray-900">{f.value}</dd>
                     </div>
                   ))}
                 </dl>
               )}
+              {/* On phones the contact card sits below the details; jump to it. */}
+              <a href="#contact-agent" className={`lg:hidden mt-5 block text-center ${t.gradient} text-white py-3 rounded-lg font-semibold hover:opacity-90 transition`}>
+                Contact the agent
+              </a>
             </div>
 
             {home.description && (
