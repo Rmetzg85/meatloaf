@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import type { ThemeKey } from '@/COMPONENTS/theme'
 
-// Canonical origin (the apex 308-redirects here).
-export const SITE_URL = 'https://www.meatloaf.rent'
+import { SITE_URL } from './site'
+
+// Canonical origin: https://www.meatloafhomes.com (defined in lib/site.ts).
+export { SITE_URL }
 
 export const SITE_DESCRIPTION =
   'Starter homes under $300K and a free credit game with a practice score. No credit pulls, no bureau reporting.'

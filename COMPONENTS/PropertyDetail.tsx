@@ -9,6 +9,7 @@ import ShareButtons from './ShareButtons'
 import { ListingGallery } from './ListingPhoto'
 import { supabase } from '@/lib/supabase'
 import { formatBaths, formatPrice } from '@/lib/listing'
+import { SITE_URL } from '@/lib/site'
 import type { ListingDetail } from '@/lib/listing-server'
 
 type Viewer = { status: 'unknown' } | { status: 'out' } | { status: 'in'; userId: string }
@@ -44,7 +45,7 @@ function ContactAgent({ home }: { home: ListingDetail }) {
 
   const here = `/properties/${home.id}`
   const subject = `Question about ${home.address}, ${home.city}, ${home.state} (via ${t.name})`
-  const body = `Hi${home.agent_name ? ` ${home.agent_name.split(' ')[0]}` : ''},\n\nI saw ${home.address} (${formatPrice(home.list_price)}) on ${t.name} and would like to learn more.\n\n${typeof window !== 'undefined' ? window.location.origin : 'https://www.meatloaf.rent'}${here}\n`
+  const body = `Hi${home.agent_name ? ` ${home.agent_name.split(' ')[0]}` : ''},\n\nI saw ${home.address} (${formatPrice(home.list_price)}) on ${t.name} and would like to learn more.\n\n${SITE_URL}${here}\n`
   const mailto = (to: string) => `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
   return (

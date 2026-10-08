@@ -3,9 +3,9 @@ import type { EmailOtpType, Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { THEMES, type ThemeKey } from '@/COMPONENTS/theme'
 
-const FALLBACK_SITE_URL = 'https://www.meatloaf.rent'
+import { SITE_URL as FALLBACK_SITE_URL } from './site'
 
-/** Origin for auth email links: this tab's origin, else NEXT_PUBLIC_SITE_URL, else www.meatloaf.rent. */
+/** Origin for auth email links: this tab's origin, else NEXT_PUBLIC_SITE_URL, else www.meatloafhomes.com. */
 export function siteOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) return window.location.origin
   return (process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_SITE_URL).replace(/\/+$/, '')
