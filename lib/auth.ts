@@ -54,18 +54,23 @@ export async function userRole(user: User): Promise<string | null> {
 
 /**
  * Make sure a profile row exists (the DB trigger normally creates it).
- * Never overwrites an existing profile, and never blocks the caller: errors are only logged.
+ * Never overwrites an existing profile, and never throws: errors are logged and it resolves false.
  */
-export async function ensureProfile(user: User): Promise<void> {
+export async function ensureProfile(user: User): Promise<boolean> {
   try {
     const meta = user.user_metadata ?? {}
     const { error } = await supabase.from('profiles').upsert(
       { id: user.id, email: user.email, full_name: meta.full_name ?? null, user_type: meta.user_type ?? 'future homeowner' },
       { onConflict: 'id', ignoreDuplicates: true },
     )
-    if (error) console.warn('[auth] profile upsert skipped', error)
+    if (error) {
+      console.warn('[auth] profile upsert skipped', error)
+      return false
+    }
+    return true
   } catch (err) {
     console.warn('[auth] profile upsert failed', err)
+    return false
   }
 }
 

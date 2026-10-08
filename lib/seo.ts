@@ -83,3 +83,9 @@ export async function pageMetadata(opts: {
     ...(opts.noindex ? { robots: { index: false, follow: true } } : {}),
   }
 }
+
+/** Signed-in / utility pages: their own title, kept out of search results. No canonical needed. */
+export async function privatePageMetadata(title: string, theme?: ThemeKey): Promise<Metadata> {
+  const brand = BRAND_NAMES[theme ?? (await cookieTheme())]
+  return { title: `${title} | ${brand}`, robots: { index: false, follow: false } }
+}
