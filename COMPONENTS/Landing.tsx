@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Home, Award, Shield, Users, BookOpen, Calculator, Check, X as XIcon } from 'lucide-react'
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
+import ThemeSetter from './ThemeSetter'
 import { THEMES, CONTACT_EMAIL, MARKET_STAT, type ThemeKey } from './theme'
 
 const HERO: Record<ThemeKey, { h1: [string, string, string]; sub: string; body: string }> = {
@@ -23,7 +24,8 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
   const other = theme === 'meatloaf' ? THEMES.mimosa : THEMES.meatloaf
 
   return (
-    <div className={`min-h-screen ${t.pageBg}`}>
+    <div data-theme={theme} className={`min-h-screen ${t.pageBg}`}>
+      <ThemeSetter theme={theme} />
       <SiteNav theme={theme} />
 
       {/* Hero */}

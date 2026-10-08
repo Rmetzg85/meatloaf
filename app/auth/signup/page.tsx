@@ -7,12 +7,15 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Home, Mail, Lock, User, Loader2 } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import BrandLink from '@/COMPONENTS/BrandLink'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { THEMES } from '@/COMPONENTS/theme'
 
 export default function SignupPage() {
   const router = useRouter()
+  const brand = THEMES[useSiteTheme()].name
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
@@ -52,7 +55,7 @@ export default function SignupPage() {
         // Ignore RLS / upsert errors here — profile is created by DB trigger or on first login
       }
 
-      toast.success('Account created! Welcome to Meatloaf!')
+      toast.success(`Account created! Welcome to ${brand}!`)
       const destination =
         userType === 'landlord' || userType === 'realestateagent' || userType === 'lender'
           ? '/landlord/dashboard'
@@ -69,12 +72,9 @@ export default function SignupPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Image src="/logo.png" alt="Meatloaf" width={48} height={48} className="w-12 h-auto" />
-            <span className="text-3xl font-bold text-gray-900">Meatloaf</span>
-          </Link>
+          <BrandLink className="inline-flex items-center space-x-2 mb-6" size={48} imgClassName="w-12 h-auto" nameClassName="text-3xl font-bold text-gray-900" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-          <p className="text-gray-600">Join Meatloaf today</p>
+          <p className="text-gray-600">Join {brand} today</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-8">

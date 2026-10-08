@@ -10,8 +10,10 @@ import {
   Bath, Building2, ChevronRight, LogOut, Sparkles, ArrowLeft,
 } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import toast from 'react-hot-toast'
+import BrandLink from '@/COMPONENTS/BrandLink'
+import { readThemeCookie } from '@/COMPONENTS/useSiteTheme'
+import { THEMES } from '@/COMPONENTS/theme'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -156,7 +158,7 @@ export default function BuyersAgentPage() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
-    router.push('/')
+    router.push(THEMES[readThemeCookie()].home)
   }
 
   if (loading) {
@@ -179,10 +181,7 @@ export default function BuyersAgentPage() {
                 Dashboard
               </Link>
               <div className="h-5 w-px bg-gray-200" />
-              <Link href="/" className="flex items-center space-x-2">
-                <Image src="/logo.png" alt="Meatloaf" width={32} height={32} className="h-8 w-auto" />
-                <span className="text-xl font-bold text-gray-900 hidden sm:inline">Meatloaf</span>
-              </Link>
+              <BrandLink className="flex items-center space-x-2" size={32} imgClassName="h-8 w-auto" nameClassName="text-xl font-bold text-gray-900 hidden sm:inline" />
               <div className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                 <Sparkles className="w-3.5 h-3.5" />
                 AI Buyers Agent

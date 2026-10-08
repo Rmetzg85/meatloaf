@@ -1,9 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { THEMES, CONTACT_EMAIL, FOOTER_DISCLAIMER, type ThemeKey } from './theme'
+import { useSiteTheme } from './useSiteTheme'
 
-export default function SiteFooter({ theme = 'meatloaf' }: { theme?: ThemeKey }) {
-  const t = THEMES[theme]
+// Pass `theme` on brand pages; leave it out to follow the visitor's site theme.
+export default function SiteFooter({ theme }: { theme?: ThemeKey }) {
+  const siteTheme = useSiteTheme()
+  const t = THEMES[theme ?? siteTheme]
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,6 +54,8 @@ export default function SiteFooter({ theme = 'meatloaf' }: { theme?: ThemeKey })
 
         <div className="text-center text-gray-400 text-sm">
           © 2026 REMVentures LLC. All rights reserved.
+          <span className="mx-2" aria-hidden>·</span>
+          <Link href={t.switchHref} className="hover:text-white transition">{t.switchLabel}</Link>
         </div>
       </div>
     </footer>

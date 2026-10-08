@@ -6,9 +6,9 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { Mail, Loader2, ArrowLeft, CheckCircle } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import BrandLink from '@/COMPONENTS/BrandLink'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
@@ -38,10 +38,7 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center space-x-2 mb-6">
-            <Image src="/logo.png" alt="Meatloaf" width={48} height={48} className="w-12 h-auto" />
-            <span className="text-3xl font-bold text-gray-900">Meatloaf</span>
-          </Link>
+          <BrandLink className="inline-flex items-center space-x-2 mb-6" size={48} imgClassName="w-12 h-auto" nameClassName="text-3xl font-bold text-gray-900" />
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Forgot Password</h1>
           <p className="text-gray-600">
             {sent ? "Check your inbox" : "We'll send you a reset link"}

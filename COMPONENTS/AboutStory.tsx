@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
+import ThemeSetter from './ThemeSetter'
 import { THEMES, type ThemeKey } from './theme'
 
 export default function AboutStory({ theme }: { theme: ThemeKey }) {
   const t = THEMES[theme]
   const label = `text-sm font-bold uppercase tracking-widest ${t.accentText} mb-4`
   return (
-    <div className="min-h-screen bg-white">
+    <div data-theme={theme} className="min-h-screen bg-white">
+      <ThemeSetter theme={theme} />
       <SiteNav theme={theme} active="about" />
 
       {/* Hero */}
