@@ -39,17 +39,17 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
               </p>
               <figure className="mx-auto w-56 sm:w-64 md:float-right md:ml-8 md:mb-4 md:mt-1 md:w-60">
                 <picture>
-                  <source srcSet="/charlie-grad-2008.webp" type="image/webp" />
+                  <source srcSet="/charlie-story.webp" type="image/webp" />
                   <img
-                    src="/charlie-grad-2008.jpg"
-                    alt="Charlie at his college graduation in 2008"
+                    src="/charlie-story.jpg"
+                    alt="Charlie, founder of Meatloaf"
                     width={800}
                     height={1000}
                     loading="lazy"
                     className="w-full h-auto rounded-2xl shadow-lg ring-1 ring-blue-100"
                   />
                 </picture>
-                <figcaption className="mt-2 text-center text-sm text-gray-600">Graduation, 2008</figcaption>
+                <figcaption className="mt-2 text-center text-sm text-gray-600">My Story</figcaption>
               </figure>
               <p>
                 I graduated in 2008. If you remember that year, you know what I&apos;m talking about. The housing market collapsed. The economy tanked. Jobs disappeared. And millions of us — degree in hand, debt on our backs — moved home.
