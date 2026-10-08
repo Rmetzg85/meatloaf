@@ -37,6 +37,20 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
               <p>
                 FAFSA nights were treated like senior milestones — more important than teaching about wealth, ownership, or financial literacy. Student loans were handed out like candy on Halloween. Meanwhile, the higher education industrial complex was pushing graduates right back to their parents&apos; basements.
               </p>
+              <figure className="mx-auto w-56 sm:w-64 md:float-right md:ml-8 md:mb-4 md:mt-1 md:w-60">
+                <picture>
+                  <source srcSet="/charlie-grad-2008.webp" type="image/webp" />
+                  <img
+                    src="/charlie-grad-2008.jpg"
+                    alt="Charlie at his college graduation in 2008"
+                    width={800}
+                    height={1000}
+                    loading="lazy"
+                    className="w-full h-auto rounded-2xl shadow-lg ring-1 ring-blue-100"
+                  />
+                </picture>
+                <figcaption className="mt-2 text-center text-sm text-gray-500">Graduation, 2008</figcaption>
+              </figure>
               <p>
                 I graduated in 2008. If you remember that year, you know what I&apos;m talking about. The housing market collapsed. The economy tanked. Jobs disappeared. And millions of us — degree in hand, debt on our backs — moved home.
               </p>
@@ -44,6 +58,7 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
                 Next thing you know, millennials in their mid-20s and 30s were screaming &quot;MA! THE MEATLOAF!&quot; like Will Ferrell in <em>Wedding Crashers</em>. Except it wasn&apos;t funny. It was our reality.
               </p>
             </div>
+            <div className="clear-both" />
           </div>
 
           <div className="mb-12 md:mb-16">
