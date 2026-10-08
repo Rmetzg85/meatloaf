@@ -6,12 +6,14 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { Home, Mail, Lock, User, Loader2 } from 'lucide-react'
+import { Mail, MailCheck, Lock, User, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
+import ResendConfirmButton from '@/COMPONENTS/ResendConfirmButton'
+import { authCallbackUrl, authErrorMessage, ensureProfile, landingFor } from '@/lib/auth'
 
 export default function SignupPage() {
   const siteTheme = useSiteTheme()
@@ -24,50 +26,82 @@ export default function SignupPage() {
   const [fullName, setFullName] = useState('')
   const [userType, setUserType] = useState<'future homeowner' | 'realestateagent'>('future homeowner')
   const [loading, setLoading] = useState(false)
+  // Set once signUp succeeds without a session, i.e. the email still needs confirming.
+  const [sentTo, setSentTo] = useState<string | null>(null)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
     try {
-      // Sign up the user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
+          emailRedirectTo: authCallbackUrl(),
           data: {
             full_name: fullName,
             user_type: userType,
+            // Lets /auth/callback restore the brand even if the link opens in another browser.
+            site_theme: siteTheme,
           },
         },
       })
 
       if (authError) throw authError
 
-      // Attempt to upsert profile — may fail if email confirmation is required
-      // (session not yet established). The DB trigger or first-login will handle it.
-      if (authData.user) {
-        await supabase
-          .from('profiles')
-          .upsert({
-            id: authData.user.id,
-            email: authData.user.email,
-            full_name: fullName,
-            user_type: userType,
-          })
-        // Ignore RLS / upsert errors here — profile is created by DB trigger or on first login
+      if (authData.session && authData.user) {
+        // Email confirmation is off: they're signed in already.
+        await ensureProfile(authData.user)
+        toast.success(`Welcome to ${brand}!`)
+        router.push(landingFor(userType, siteTheme))
+        return
       }
 
-      toast.success(`Account created! Welcome to ${brand}!`)
-      // Agents go to the "List a Home" section of their brand's homepage
-      // (listing is handled by email at the founding rate for now).
-      const destination = userType === 'realestateagent' ? `${t.home}#agents` : '/dashboard'
-      router.push(destination)
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to create account')
+      // Confirmation required. The profile row comes from the DB trigger.
+      setSentTo(email)
+    } catch (error: unknown) {
+      toast.error(authErrorMessage(error, 'Failed to create account'))
     } finally {
       setLoading(false)
     }
+  }
+
+  if (sentTo) {
+    return (
+      <div className={`min-h-screen ${siteBg} flex items-center justify-center p-4`}>
+        <div className="max-w-md w-full">
+          <div className="text-center mb-8">
+            <BrandLink className="inline-flex items-center space-x-2 mb-6" size={48} imgClassName="w-12 h-auto" nameClassName="text-3xl font-bold text-gray-900" />
+          </div>
+          <div className="bg-white rounded-2xl shadow-xl p-8 text-center" role="status" aria-live="polite">
+            <div className={`mx-auto mb-5 w-16 h-16 rounded-full ${t.gradient} flex items-center justify-center`}>
+              <MailCheck className="w-8 h-8 text-white" aria-hidden="true" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-3">Check your email to confirm your account</h1>
+            <p className="text-gray-700 mb-2">
+              We sent a confirmation link to <strong className="break-words">{sentTo}</strong>.
+            </p>
+            <p className="text-gray-600 text-sm mb-6">
+              Click the link in that email to finish creating your {brand} account. It can take a minute to arrive, so check your spam or promotions folder too.
+            </p>
+            <ResendConfirmButton email={sentTo} className={`w-full ${t.gradient} text-white py-3 rounded-lg font-semibold hover:opacity-90 transition`} />
+            <div className="mt-6 text-sm text-gray-600 space-y-2">
+              <p>
+                Already confirmed?{' '}
+                <Link href="/auth/login" className={`${t.labelText} font-semibold hover:underline`}>Sign in</Link>
+              </p>
+              <p>
+                Wrong email?{' '}
+                <button type="button" onClick={() => setSentTo(null)} className={`${t.labelText} font-semibold hover:underline`}>
+                  Start over
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -134,7 +168,7 @@ export default function SignupPage() {
                   placeholder="••••••••"
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+              <p className="text-xs text-gray-600 mt-1">Minimum 6 characters</p>
             </div>
 
             <div>
@@ -181,6 +215,11 @@ export default function SignupPage() {
                 'Create Account'
               )}
             </button>
+            <p className="text-xs text-gray-600 text-center">
+              By creating an account you agree to our{' '}
+              <Link href="/terms" className={`${t.labelText} font-medium underline`}>Terms</Link> and{' '}
+              <Link href="/privacy" className={`${t.labelText} font-medium underline`}>Privacy Policy</Link>.
+            </p>
           </form>
 
           <div className="mt-6 text-center">

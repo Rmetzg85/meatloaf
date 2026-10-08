@@ -1,11 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
-import BrandLink from '@/COMPONENTS/BrandLink'
+import SiteNav from '@/COMPONENTS/SiteNav'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
-import ShareButtons from '@/COMPONENTS/ShareButtons'
+import SiteFooter from '@/COMPONENTS/SiteFooter'
 
 export default function ContactPage() {
   const siteTheme = useSiteTheme()
@@ -22,19 +21,7 @@ export default function ContactPage() {
   return (
     <div className={`min-h-screen ${siteBg}`}>
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
-            <div className="hidden md:flex items-center space-x-6">
-              <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium">Browse Properties</Link>
-              <Link href="/about" className="text-gray-700 hover:text-gray-900 font-medium">About</Link>
-              <Link href="/auth/login" className="text-gray-700 hover:text-gray-900 font-medium">Login</Link>
-              <Link href="/auth/signup" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition">Get Started</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Header */}
       <section className="bg-gradient-to-r from-blue-900 to-purple-900 py-16">
@@ -173,7 +160,7 @@ export default function ContactPage() {
                       <option value="partnership">Partnership & Integrations</option>
                       <option value="investor">Investor Relations</option>
                       <option value="press">Press & Media</option>
-                      <option value="landlord">Landlord Inquiry</option>
+                      <option value="agent">Agent Inquiry</option>
                       <option value="support">General Support</option>
                       <option value="other">Other</option>
                     </select>
@@ -210,18 +197,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400 text-sm">
-          <div className="flex justify-center space-x-6 mb-4">
-            <Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white transition">Terms of Service</Link>
-            <Link href="/contact" className="text-white hover:text-gray-300">Contact</Link>
-          </div>
-          <ShareButtons theme={siteTheme} className="justify-center mb-4" />
-          © 2026 REMVentures LLC. All rights reserved.
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

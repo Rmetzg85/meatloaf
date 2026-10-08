@@ -3,7 +3,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Lock, Loader2, CheckCircle } from 'lucide-react'
@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { completeAuthFromUrl } from '@/lib/auth'
 
 export default function ResetPasswordPage() {
   const siteBg = THEMES[useSiteTheme()].sectionBg
@@ -20,6 +21,15 @@ export default function ResetPasswordPage() {
   const [confirm, setConfirm] = useState('')
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
+
+  // Recovery links arrive as #access_token (picked up by supabase-js), ?code= or ?token_hash=.
+  useEffect(() => {
+    const href = window.location.href
+    if (!/[?&#](code|token_hash|error_description|access_token)=/.test(href)) return
+    completeAuthFromUrl(href).then((r) => {
+      if (!r.ok) toast.error(`${r.message} Request a new reset link.`)
+    })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

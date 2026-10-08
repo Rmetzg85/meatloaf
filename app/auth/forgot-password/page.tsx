@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { authErrorMessage, passwordResetUrl } from '@/lib/auth'
 
 export default function ForgotPasswordPage() {
   const siteBg = THEMES[useSiteTheme()].sectionBg
@@ -24,14 +25,14 @@ export default function ForgotPasswordPage() {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
+        redirectTo: passwordResetUrl(),
       })
 
       if (error) throw error
 
       setSent(true)
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send reset email')
+    } catch (error: unknown) {
+      toast.error(authErrorMessage(error, 'Failed to send reset email'))
     } finally {
       setLoading(false)
     }

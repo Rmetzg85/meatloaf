@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { THEMES, CONTACT_EMAIL, FOOTER_DISCLAIMER, type ThemeKey } from './theme'
+import { THEMES, CONTACT_EMAIL, footerDisclaimer, type ThemeKey } from './theme'
 import { useSiteTheme } from './useSiteTheme'
 import ShareButtons from './ShareButtons'
 
@@ -54,7 +54,7 @@ export default function SiteFooter({ theme }: { theme?: ThemeKey }) {
 
         <ShareButtons theme={active} className="justify-center border-t border-gray-800 pt-6 mb-6" />
 
-        <p className="text-gray-500 text-xs leading-relaxed border-t border-gray-800 pt-6 mb-6">{FOOTER_DISCLAIMER}</p>
+        <p className="text-gray-500 text-xs leading-relaxed border-t border-gray-800 pt-6 mb-6">{footerDisclaimer(t.name)}</p>
 
         <div className="text-center text-gray-400 text-sm">
           © 2026 REMVentures LLC. All rights reserved.

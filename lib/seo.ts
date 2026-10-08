@@ -28,23 +28,58 @@ export function brandHomeUrl(theme: ThemeKey) {
 }
 
 /** Title + Open Graph + Twitter card for a brand. Pass `path` for the page's own URL. */
-export function brandMetadata(theme: ThemeKey, path?: string): Metadata {
+export function brandMetadata(theme: ThemeKey, path?: string, page?: { title: string; description: string }): Metadata {
   const b = BRAND[theme]
-  const title = `${b.name} - Stop Renting Forever`
+  const title = page ? `${page.title} | ${b.name}` : `${b.name} - Stop Renting Forever`
+  const description = page?.description ?? SITE_DESCRIPTION
   const image = { url: b.image, width: 1200, height: 630, alt: b.alt }
   return {
     title,
-    description: SITE_DESCRIPTION,
+    description: description,
     openGraph: {
       type: 'website',
       siteName: b.name,
       title,
-      description: SITE_DESCRIPTION,
+      description: description,
       ...(path ? { url: path } : {}),
       images: [image],
       locale: 'en_US',
     },
-    twitter: { card: 'summary_large_image', title, description: SITE_DESCRIPTION, images: [image.url] },
+    twitter: { card: 'summary_large_image', title, description: description, images: [image.url] },
     ...(path ? { alternates: { canonical: path } } : {}),
+  }
+}
+
+const BRAND_NAMES: Record<ThemeKey, string> = { meatloaf: 'Meatloaf', mimosa: 'Mimosa' }
+
+/** Server-only: the visitor's brand from the ml_theme cookie (inner pages follow it). */
+export async function cookieTheme(): Promise<ThemeKey> {
+  const { cookies } = await import('next/headers')
+  return (await cookies()).get('ml_theme')?.value === 'mimosa' ? 'mimosa' : 'meatloaf'
+}
+
+/**
+ * Metadata for inner pages: unique title + description, canonical, og:url and og:site_name.
+ * `describe` gets the brand name so the copy matches the theme the visitor is on.
+ */
+export async function pageMetadata(opts: {
+  title: string
+  describe: (brand: string) => string
+  path: string
+  noindex?: boolean
+}): Promise<Metadata> {
+  const theme = await cookieTheme()
+  const brand = BRAND_NAMES[theme]
+  const title = `${opts.title} | ${brand}`
+  const description = opts.describe(brand)
+  const b = BRAND[theme]
+  const image = { url: b.image, width: 1200, height: 630, alt: b.alt }
+  return {
+    title,
+    description,
+    alternates: { canonical: opts.path },
+    openGraph: { type: 'website', siteName: brand, title, description, url: opts.path, images: [image], locale: 'en_US' },
+    twitter: { card: 'summary_large_image', title, description, images: [image.url] },
+    ...(opts.noindex ? { robots: { index: false, follow: true } } : {}),
   }
 }
