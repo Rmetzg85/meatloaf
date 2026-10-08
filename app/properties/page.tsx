@@ -10,7 +10,8 @@ import SiteNav from '@/COMPONENTS/SiteNav'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
-import { PRICE_CAP, isListablePrice } from '@/lib/listing'
+import { PRICE_CAP, isListablePrice, sortPhotos, type PhotoRow } from '@/lib/listing'
+import { ListingPhoto } from '@/COMPONENTS/ListingPhoto'
 
 interface Property {
   id: string
@@ -26,6 +27,7 @@ interface Property {
   available_date: string | null
   // One-to-one embed (property_sale_info.property_id is the PK), so PostgREST returns an object.
   property_sale_info: { list_price: number } | null
+  property_photos: PhotoRow[] | null
 }
 
 // The site only shows starter homes: a known sale price at or under $300K (rules in lib/listing.ts).
@@ -59,7 +61,7 @@ export default function PropertiesPage() {
       const { data, error } = await supabase
         .from('properties')
         // !inner: homes without a sale-price row are dropped, and the filters below apply to the parent rows.
-        .select('*, property_sale_info!inner(list_price)')
+        .select('*, property_sale_info!inner(list_price), property_photos(storage_path, position)')
         .eq('status', 'active')
         .eq('property_sale_info.is_test', false)
         .gt('property_sale_info.list_price', 0)
@@ -158,10 +160,13 @@ export default function PropertiesPage() {
                   href={`/properties/${property.id}`}
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all transform hover:-translate-y-1"
                 >
-                  {/* Property Image Placeholder */}
-                  <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                    <Home className="w-16 h-16 text-white opacity-50" />
-                  </div>
+                  {/* Cover photo, or the themed placeholder */}
+                  <ListingPhoto
+                    path={sortPhotos(property.property_photos)[0]?.storage_path}
+                    alt={`${property.address}, ${property.city}, ${property.state}`}
+                    className="h-48 w-full"
+                    label=""
+                  />
 
                   {/* Property Details */}
                   <div className="p-6">

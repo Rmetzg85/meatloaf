@@ -12,6 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         '/dashboard',
         '/mimosa/dashboard',
         '/landlord/',
+        '/agent/',
         '/preferences',
         '/matches',
         '/buyers-agent',

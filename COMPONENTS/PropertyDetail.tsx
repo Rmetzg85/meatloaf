@@ -6,6 +6,7 @@ import { ArrowLeft, Bath, BedDouble, Home, Mail, MapPin, Ruler, Tag, UserRound }
 import { THEMES, CONTACT_EMAIL } from './theme'
 import { useSiteTheme } from './useSiteTheme'
 import ShareButtons from './ShareButtons'
+import { ListingGallery } from './ListingPhoto'
 import { supabase } from '@/lib/supabase'
 import { formatBaths, formatPrice } from '@/lib/listing'
 import type { ListingDetail } from '@/lib/listing-server'
@@ -29,19 +30,17 @@ function ContactAgent({ home }: { home: ListingDetail }) {
   const [agentEmail, setAgentEmail] = useState<string | null | undefined>(undefined)
   const signedIn = viewer.status === 'in'
 
-  // The agent's email is only fetched for signed-in visitors (RLS allows reading owners of active listings).
+  // The agent's email is never public: listing_agent_contact only answers signed-in users, for active listings.
   useEffect(() => {
     if (!signedIn) return
     supabase
-      .from('profiles')
-      .select('email')
-      .eq('id', home.landlord_id)
-      .maybeSingle()
+      .rpc('listing_agent_contact', { p_property_id: home.id })
       .then(({ data, error }) => {
         if (error) console.warn('[listing] agent contact lookup failed', error.code)
-        setAgentEmail(data?.email ?? null)
+        const row = (Array.isArray(data) ? data[0] : data) as { email?: string | null } | null | undefined
+        setAgentEmail(row?.email?.trim() || null)
       })
-  }, [signedIn, home.landlord_id])
+  }, [signedIn, home.id])
 
   const here = `/properties/${home.id}`
   const subject = `Question about ${home.address}, ${home.city}, ${home.state} (via ${t.name})`
@@ -78,7 +77,7 @@ function ContactAgent({ home }: { home: ListingDetail }) {
       {viewer.status === 'in' && viewer.userId === home.landlord_id && (
         <p className="text-sm text-gray-700">
           This is your listing.{' '}
-          <Link href="/landlord/dashboard" className={`${t.labelText} font-semibold hover:underline`}>Manage it</Link>
+          <Link href={`/agent/listings/${home.id}/edit`} className={`${t.labelText} font-semibold hover:underline`}>Manage it</Link>
         </p>
       )}
 
@@ -122,12 +121,7 @@ export default function PropertyDetail({ home, shareUrl }: { home: ListingDetail
 
         <div className="grid lg:grid-cols-[1fr_360px] gap-6 lg:gap-8 items-start">
           <div className="space-y-6 min-w-0">
-            {/* No photo storage yet: themed placeholder. */}
-            <div className={`relative aspect-[16/9] rounded-2xl ${t.gradient} flex flex-col items-center justify-center text-white shadow-lg overflow-hidden`}>
-              <Home className="w-16 h-16 md:w-20 md:h-20 opacity-60" aria-hidden="true" />
-              <p className="mt-2 text-sm font-medium opacity-90">Photos coming soon</p>
-              <span className="absolute top-3 left-3 bg-white/90 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">For sale</span>
-            </div>
+            <ListingGallery photos={home.photos} address={`${home.address}, ${home.city}, ${home.state}`} />
 
             <div className="rounded-2xl bg-white shadow-lg p-6">
               <p className={`text-3xl md:text-4xl font-black ${t.gradientText}`}>{formatPrice(home.list_price)}</p>

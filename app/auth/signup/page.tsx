@@ -3,7 +3,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Mail, MailCheck, Lock, User, Loader2 } from 'lucide-react'
@@ -25,6 +25,10 @@ export default function SignupPage() {
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
   const [userType, setUserType] = useState<'future homeowner' | 'realestateagent'>('future homeowner')
+  // /auth/signup?role=agent (from the agent pitch) preselects the Real Estate Agent account type.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('role') === 'agent') setUserType('realestateagent')
+  }, [])
   const [loading, setLoading] = useState(false)
   // Set once signUp succeeds without a session, i.e. the email still needs confirming.
   const [sentTo, setSentTo] = useState<string | null>(null)

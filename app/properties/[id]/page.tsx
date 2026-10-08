@@ -5,7 +5,7 @@ import SiteNav from '@/COMPONENTS/SiteNav'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import PropertyDetail from '@/COMPONENTS/PropertyDetail'
 import { getListing } from '@/lib/listing-server'
-import { formatPrice } from '@/lib/listing'
+import { formatPrice, photoUrl } from '@/lib/listing'
 import { cookieTheme, SITE_URL } from '@/lib/seo'
 
 type Params = { params: Promise<{ id: string }> }
@@ -27,7 +27,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   ].filter(Boolean).join(', ')
   const description = `${specs ? `${specs} ` : ''}${home.property_type ?? 'home'} for sale at ${formatPrice(home.list_price)} in ${home.city}, ${home.state}. A starter home under $300K on ${brand}. Confirm details with the listing agent.`
   const path = `/properties/${home.id}`
-  const image = { url: theme === 'mimosa' ? '/og-mimosa.jpg' : '/og-meatloaf.jpg', width: 1200, height: 630, alt: `${brand}: starter homes under $300K` }
+  const image = home.photos[0]
+    ? { url: photoUrl(home.photos[0]), alt: `${home.address}, ${home.city}, ${home.state}` }
+    : { url: theme === 'mimosa' ? '/og-mimosa.jpg' : '/og-meatloaf.jpg', width: 1200, height: 630, alt: `${brand}: starter homes under $300K` }
   return {
     title,
     description,

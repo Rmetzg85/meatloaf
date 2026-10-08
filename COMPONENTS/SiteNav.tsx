@@ -10,7 +10,7 @@ import type { User } from '@supabase/supabase-js'
 import { THEMES, type ThemeKey } from './theme'
 import { useSiteTheme } from './useSiteTheme'
 import { supabase } from '@/lib/supabase'
-import { landingFor, userRole } from '@/lib/auth'
+import { canListHomes, landingFor, userRole } from '@/lib/auth'
 
 type AuthState = { status: 'unknown' | 'out' } | { status: 'in'; role: string | null }
 
@@ -49,7 +49,10 @@ export default function SiteNav({ theme, active }: { theme?: ThemeKey; active?: 
     { href: `${t.home}#credit-game`, label: 'The Credit Game' },
     { href: `${t.home}#path`, label: 'The Path' },
     { href: t.about, label: 'About', key: 'about' },
-    { href: `${t.home}#agents`, label: 'List a Home (Agents)' },
+    // Signed-in agents get their listing tools; everyone else sees the agent pitch.
+    signedIn && canListHomes(auth.role)
+      ? { href: '/agent/listings', label: 'My Listings' }
+      : { href: `${t.home}#agents`, label: 'List a Home (Agents)' },
   ]
   const account = signedIn
     ? { href: landingFor(auth.role, themeKey), label: 'Dashboard' }

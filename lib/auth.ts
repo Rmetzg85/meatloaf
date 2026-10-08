@@ -20,6 +20,12 @@ export const passwordResetUrl = () => `${siteOrigin()}/auth/reset-password`
  * Agents: the "List a Home" (#agents) section of their brand's homepage.
  * Legacy landlord/lender accounts: /landlord/dashboard. Everyone else: /dashboard.
  */
+/** Roles allowed to create listings (mirrors private.is_business_user in the database). */
+export const LISTING_ROLES = ['realestateagent', 'landlord', 'lender'] as const
+export function canListHomes(userType: string | null | undefined): boolean {
+  return !!userType && (LISTING_ROLES as readonly string[]).includes(userType)
+}
+
 export function landingFor(userType: string | null | undefined, theme: ThemeKey): string {
   if (userType === 'realestateagent') return `${THEMES[theme].home}#agents`
   if (userType === 'landlord' || userType === 'lender') return '/landlord/dashboard'
