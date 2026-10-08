@@ -5,6 +5,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import SiteThemeProvider from '@/COMPONENTS/SiteThemeProvider'
 import type { ThemeKey } from '@/COMPONENTS/theme'
+import { brandMetadata, SITE_URL } from '@/lib/seo'
 
 async function siteTheme(): Promise<ThemeKey> {
   // Cookie name matches THEME_COOKIE in COMPONENTS/useSiteTheme.ts.
@@ -13,11 +14,8 @@ async function siteTheme(): Promise<ThemeKey> {
 
 export async function generateMetadata(): Promise<Metadata> {
   const theme = await siteTheme()
-  return {
-    title: `${theme === 'mimosa' ? 'Mimosa' : 'Meatloaf'} - Stop Renting Forever`,
-    description: 'Starter homes under $300K and a free credit game with a practice score. No credit pulls, no bureau reporting.',
-    metadataBase: new URL('https://Meatloaf.Rent'),
-  }
+  // Default share card follows the visitor's brand; brand pages set their own.
+  return { ...brandMetadata(theme), metadataBase: new URL(SITE_URL) }
 }
 
 
