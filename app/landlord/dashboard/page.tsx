@@ -57,8 +57,10 @@ export default function LandlordDashboardPage() {
 
       if (profileError) throw profileError
 
-      // Check if user is a landlord
-      if (profileData.user_type !== 'landlord') {
+      // Business accounts only (same roles the database lets list homes).
+      // Was landlord-only, which bounced agents/lenders between here and
+      // /dashboard in a redirect loop.
+      if (!['landlord', 'realestateagent', 'lender'].includes(profileData.user_type)) {
         toast.error('Access denied: Landlord account required')
         router.push('/dashboard')
         return

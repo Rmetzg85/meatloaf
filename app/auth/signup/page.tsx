@@ -14,13 +14,15 @@ import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
 
 export default function SignupPage() {
-  const siteBg = THEMES[useSiteTheme()].sectionBg
+  const siteTheme = useSiteTheme()
+  const t = THEMES[siteTheme]
+  const siteBg = t.sectionBg
   const router = useRouter()
-  const brand = THEMES[useSiteTheme()].name
+  const brand = t.name
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
-  const [userType, setUserType] = useState<'future homeowner' | 'landlord' | 'lender' | 'realestateagent'>('future homeowner')
+  const [userType, setUserType] = useState<'future homeowner' | 'realestateagent'>('future homeowner')
   const [loading, setLoading] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -57,10 +59,9 @@ export default function SignupPage() {
       }
 
       toast.success(`Account created! Welcome to ${brand}!`)
-      const destination =
-        userType === 'landlord' || userType === 'realestateagent' || userType === 'lender'
-          ? '/landlord/dashboard'
-          : '/dashboard'
+      // Agents go to the "List a Home" section of their brand's homepage
+      // (listing is handled by email at the founding rate for now).
+      const destination = userType === 'realestateagent' ? `${t.home}#agents` : '/dashboard'
       router.push(destination)
     } catch (error: any) {
       toast.error(error.message || 'Failed to create account')
@@ -146,7 +147,7 @@ export default function SignupPage() {
                   onClick={() => setUserType('future homeowner')}
                   className={`py-3 px-4 rounded-lg border-2 font-medium transition ${
                     userType === 'future homeowner'
-                      ? 'border-blue-600 bg-blue-50 text-blue-600'
+                      ? `${t.accentBorder} ${t.softBg} ${t.labelText}`
                       : 'border-gray-300 text-gray-700 hover:border-gray-400'
                   }`}
                 >
@@ -154,32 +155,10 @@ export default function SignupPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setUserType('landlord')}
-                  className={`py-3 px-4 rounded-lg border-2 font-medium transition ${
-                    userType === 'landlord'
-                      ? 'border-blue-600 bg-blue-50 text-blue-600'
-                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
-                  }`}
-                >
-                  Landlord
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setUserType('lender')}
-                  className={`py-3 px-4 rounded-lg border-2 font-medium transition ${
-                    userType === 'lender'
-                      ? 'border-blue-600 bg-blue-50 text-blue-600'
-                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
-                  }`}
-                >
-                  Lender
-                </button>
-                <button
-                  type="button"
                   onClick={() => setUserType('realestateagent')}
                   className={`py-3 px-4 rounded-lg border-2 font-medium transition ${
                     userType === 'realestateagent'
-                      ? 'border-blue-600 bg-blue-50 text-blue-600'
+                      ? `${t.accentBorder} ${t.softBg} ${t.labelText}`
                       : 'border-gray-300 text-gray-700 hover:border-gray-400'
                   }`}
                 >
@@ -191,7 +170,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center"
+              className={`w-full ${t.gradient} text-white py-3 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-50 flex items-center justify-center`}
             >
               {loading ? (
                 <>
@@ -207,7 +186,7 @@ export default function SignupPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-blue-600 font-semibold hover:underline">
+              <Link href="/auth/login" className={`${t.labelText} font-semibold hover:underline`}>
                 Sign in
               </Link>
             </p>
