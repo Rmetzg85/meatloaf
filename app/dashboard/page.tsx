@@ -94,6 +94,7 @@ function getLevelInfo(points: number) {
 const DAILY_GOAL = 50
 
 export default function DashboardPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [applications, setApplications] = useState<Application[]>([])
@@ -272,7 +273,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className={`min-h-screen ${siteBg} flex items-center justify-center`}>
         <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
       </div>
     )
@@ -309,7 +310,7 @@ export default function DashboardPage() {
   const unlockedCount = ACHIEVEMENTS.filter(isAchievementUnlocked).length
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className={`min-h-screen ${siteBg}`}>
       {/* Nav */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

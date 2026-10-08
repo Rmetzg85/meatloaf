@@ -154,7 +154,7 @@ export default function MatchesPage() {
                   </article>
                 ))
               )}
-              <p className="text-xs text-gray-500 pt-2">
+              <p className="text-xs text-gray-600 pt-2">
                 Matches use only your stated budget, size, location and commute settings. Commute is estimated by straight-line distance.
                 Transit, walkability and school-rating data are coming soon. Listings may be inaccurate or unavailable.
               </p>

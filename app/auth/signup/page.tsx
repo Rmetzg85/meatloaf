@@ -14,6 +14,7 @@ import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
 
 export default function SignupPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const brand = THEMES[useSiteTheme()].name
   const [email, setEmail] = useState('')
@@ -69,7 +70,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+    <div className={`min-h-screen ${siteBg} flex items-center justify-center p-4`}>
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <BrandLink className="inline-flex items-center space-x-2 mb-6" size={48} imgClassName="w-12 h-auto" nameClassName="text-3xl font-bold text-gray-900" />

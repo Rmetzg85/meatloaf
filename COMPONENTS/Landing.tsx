@@ -102,14 +102,14 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
       </section>
 
       {/* Market stat */}
-      <section className="bg-white border-b border-gray-100">
+      <section className={`${t.sectionBg} border-b border-black/5`}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 text-center">
           <p className="text-lg md:text-2xl font-semibold text-gray-900 leading-snug">
             About{' '}
             <span className={`font-black ${t.gradientText}`}>{MARKET_STAT.homes.toLocaleString('en-US')}</span>{' '}
             homes are for sale under $300K across the US right now.
           </p>
-          <p className="mt-2 text-xs md:text-sm text-gray-500">
+          <p className="mt-2 text-xs md:text-sm text-gray-600">
             Estimate based on {MARKET_STAT.source}, {MARKET_STAT.asOf}.
           </p>
         </div>
@@ -147,29 +147,29 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
               <Calculator className="w-5 h-5" /> The Path calculator: coming soon
             </span>
           </div>
-          <p className="text-center text-gray-500 text-sm mt-6 max-w-3xl mx-auto">
+          <p className="text-center text-gray-600 text-sm mt-6 max-w-3xl mx-auto">
             The calculator is illustrative and uses the assumptions you enter. Home values can fall as well as rise. Owning has costs that renting doesn&apos;t (taxes, insurance, repairs, HOA). It isn&apos;t financial advice and doesn&apos;t predict your results.
           </p>
         </div>
       </section>
 
       {/* Homes Under $300K */}
-      <section className="py-20 bg-white">
+      <section className={`py-20 ${t.sectionBg}`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Starter homes under $300K. Real listings, real links.</h2>
           <p className="text-xl text-gray-700 mb-10 leading-relaxed">
             We&apos;re building a board of public, government-owned homes for sale plus homes listed by licensed local agents. Every card links to the official listing, so you&apos;re always dealing with the real source.
           </p>
           <div className="grid md:grid-cols-3 gap-6 text-left mb-10">
-            <div className={`${t.softBg} rounded-xl p-6`}>
+            <div className="bg-white/85 ring-1 ring-black/5 shadow-sm rounded-xl p-6">
               <Home className={`w-8 h-8 ${t.accentText} mb-3`} />
               <p className="text-gray-700"><strong>Coming soon:</strong> government-owned homes from HUD&apos;s public inventory, updated from HUD&apos;s open data</p>
             </div>
-            <div className={`${t.softBg} rounded-xl p-6`}>
+            <div className="bg-white/85 ring-1 ring-black/5 shadow-sm rounded-xl p-6">
               <Users className={`w-8 h-8 ${t.accentText} mb-3`} />
               <p className="text-gray-700"><strong>Coming soon:</strong> homes listed directly by licensed agents, with the brokerage shown on every listing</p>
             </div>
-            <div className={`${t.softBg} rounded-xl p-6`}>
+            <div className="bg-white/85 ring-1 ring-black/5 shadow-sm rounded-xl p-6">
               <BookOpen className={`w-8 h-8 ${t.accentText} mb-3`} />
               <p className="text-gray-700">
                 Links to official boards:{' '}
@@ -182,17 +182,17 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
           <Link href="/properties" className={`inline-block ${t.gradient} text-white px-8 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition`}>
             Search homes by state or ZIP
           </Link>
-          <p className="text-gray-500 text-sm mt-4">
+          <p className="text-gray-600 text-sm mt-4">
             The board is just getting started, so you may see only a few homes (or none) for now.
           </p>
-          <p className="text-gray-500 text-xs mt-4 max-w-3xl mx-auto">
+          <p className="text-gray-600 text-xs mt-4 max-w-3xl mx-auto">
             {t.name} isn&apos;t affiliated with HUD, Fannie Mae, Freddie Mac, or USDA. Listings come from public sources or the listing agent and may be out of date. Confirm price and availability with the listing source. HUD homes must be bid on through a HUD-registered broker. Equal Housing Opportunity.
           </p>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className={`py-20 ${t.softBg}`}>
+      <section className={`py-20 ${t.altSectionBg}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">From the basement to the open house, in three steps.</h2>
@@ -214,7 +214,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
       </section>
 
       {/* The Credit Game */}
-      <section id="credit-game" className="py-20 bg-white scroll-mt-4">
+      <section id="credit-game" className={`py-20 ${t.sectionBg} scroll-mt-4`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -222,7 +222,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
               <p className="text-xl text-gray-700 mb-6 leading-relaxed">
                 Your level goes up when you learn something, not when your score moves. The game uses a <strong>practice score</strong>, a pretend number that reacts to the choices you make in the game, so you can see how things like on-time payments or high balances tend to affect a score without risking your real one.
               </p>
-              <div className={`border-l-4 ${t.accentBorder} bg-gray-50 p-4 rounded mb-8 text-gray-700`}>
+              <div className={`border-l-4 ${t.accentBorder} bg-white/85 p-4 rounded mb-8 text-gray-700`}>
                 Your practice score is not your real credit score. We never ask for your SSN, never pull your credit, and never report anything to any bureau. You can get your real reports free at{' '}
                 <a href="https://www.annualcreditreport.com" className="underline" target="_blank" rel="noopener noreferrer">AnnualCreditReport.com</a>.
               </div>
@@ -261,7 +261,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
       </section>
 
       {/* Straight Talk */}
-      <section className={`py-20 ${t.softBg}`}>
+      <section className={`py-20 ${t.altSectionBg}`}>
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">What we do, and what we don&apos;t.</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -310,7 +310,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
       </section>
 
       {/* For Agents */}
-      <section id="agents" className="py-20 bg-white scroll-mt-4">
+      <section id="agents" className={`py-20 ${t.sectionBg} scroll-mt-4`}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Have a home under $300K? Put it in front of first-time buyers.</h2>
           <p className="text-xl text-gray-700 mb-8 leading-relaxed">
@@ -322,8 +322,8 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
           >
             List a Home
           </a>
-          <p className="text-gray-500 text-sm mt-4">Online listing checkout is coming soon. Email us to reserve the founding rate.</p>
-          <p className="text-gray-500 text-xs mt-4">
+          <p className="text-gray-600 text-sm mt-4">Online listing checkout is coming soon. Email us to reserve the founding rate.</p>
+          <p className="text-gray-600 text-xs mt-4">
             Listing fee is a flat advertising fee. It&apos;s not contingent on leads, showings, or closings. No guarantee of inquiries or sales. Listings must comply with fair housing law.
           </p>
         </div>

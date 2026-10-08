@@ -6,9 +6,9 @@ import { THEMES, type ThemeKey } from './theme'
 
 export default function AboutStory({ theme }: { theme: ThemeKey }) {
   const t = THEMES[theme]
-  const label = `text-sm font-bold uppercase tracking-widest ${t.accentText} mb-4`
+  const label = `text-sm font-bold uppercase tracking-widest ${t.labelText} mb-4`
   return (
-    <div data-theme={theme} className="min-h-screen bg-white">
+    <div data-theme={theme} className={`min-h-screen ${t.sectionBg}`}>
       <ThemeSetter theme={theme} />
       <SiteNav theme={theme} active="about" />
 
@@ -25,7 +25,7 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
       </section>
 
       {/* Main story */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className={`py-12 md:py-20 ${t.sectionBg}`}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="mb-12 md:mb-16">
@@ -49,7 +49,7 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
                     className="w-full h-auto rounded-2xl shadow-lg ring-1 ring-blue-100"
                   />
                 </picture>
-                <figcaption className="mt-2 text-center text-sm text-gray-500">Graduation, 2008</figcaption>
+                <figcaption className="mt-2 text-center text-sm text-gray-600">Graduation, 2008</figcaption>
               </figure>
               <p>
                 I graduated in 2008. If you remember that year, you know what I&apos;m talking about. The housing market collapsed. The economy tanked. Jobs disappeared. And millions of us — degree in hand, debt on our backs — moved home.
@@ -115,13 +115,13 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
           </div>
 
           <div className="mb-4">
-            <p className={`text-sm font-bold uppercase tracking-widest ${t.accentText} mb-6`}>The Invitation</p>
+            <p className={`text-sm font-bold uppercase tracking-widest ${t.labelText} mb-6`}>The Invitation</p>
             <div className="space-y-3 text-gray-700 text-base md:text-lg leading-relaxed mb-10">
               <p>If you&apos;re living at home and tired of feeling stuck, <strong className="text-gray-900">this is for you.</strong></p>
               <p>If you&apos;re renting and wondering how anyone saves for a down payment, <strong className="text-gray-900">this is for you.</strong></p>
               <p>If you&apos;re a parent watching your kid struggle with the same broken system you did, <strong className="text-gray-900">this is for you.</strong></p>
             </div>
-            <div className={`${t.softBg} rounded-2xl p-6 md:p-8 space-y-3 text-gray-700 text-base md:text-lg leading-relaxed`}>
+            <div className={`bg-white/85 ring-1 ring-black/5 shadow-sm rounded-2xl p-6 md:p-8 space-y-3 text-gray-700 text-base md:text-lg leading-relaxed`}>
               <p>Let&apos;s build something different.</p>
               <p>Let&apos;s learn how credit actually works.</p>
               <p>Let&apos;s find real starter homes.</p>

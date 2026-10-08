@@ -9,7 +9,7 @@ import { Home, LogOut, Building2, Users, FileText, Plus, Loader2 } from 'lucide-
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import BrandLink from '@/COMPONENTS/BrandLink'
-import { readThemeCookie } from '@/COMPONENTS/useSiteTheme'
+import { readThemeCookie, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { THEMES } from '@/COMPONENTS/theme'
 
 interface Profile {
@@ -30,6 +30,7 @@ interface Property {
 }
 
 export default function LandlordDashboardPage() {
+  const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [properties, setProperties] = useState<Property[]>([])
@@ -98,7 +99,7 @@ export default function LandlordDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
+      <div className={`min-h-screen ${siteBg} flex items-center justify-center`}>
         <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
       </div>
     )
@@ -110,7 +111,7 @@ export default function LandlordDashboardPage() {
   const totalApplications = 0 // We'll add this when we build applications
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className={`min-h-screen ${siteBg}`}>
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">

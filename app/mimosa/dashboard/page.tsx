@@ -10,6 +10,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import ThemeSetter from '@/COMPONENTS/ThemeSetter'
+import { THEMES } from '@/COMPONENTS/theme'
 
 interface Profile {
   id: string
@@ -86,7 +87,7 @@ export default function MimosaDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50 flex items-center justify-center">
+      <div className={`min-h-screen ${THEMES.mimosa.sectionBg} flex items-center justify-center`}>
         <Loader2 className="w-12 h-12 animate-spin text-pink-500" />
       </div>
     )
@@ -110,7 +111,7 @@ export default function MimosaDashboardPage() {
     : 100
 
   return (
-    <div data-theme="mimosa" className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
+    <div data-theme="mimosa" className={`min-h-screen ${THEMES.mimosa.sectionBg}`}>
       <ThemeSetter theme="mimosa" />
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
