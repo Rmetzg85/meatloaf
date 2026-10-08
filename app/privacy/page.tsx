@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
+import BrandLink from '@/COMPONENTS/BrandLink'
 
 export default function PrivacyPage() {
   return (
@@ -9,10 +9,7 @@ export default function PrivacyPage() {
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
-            </Link>
+            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
             <div className="hidden md:flex items-center space-x-6">
               <Link href="/properties" className="text-gray-700 hover:text-gray-900 font-medium">Browse Properties</Link>
               <Link href="/about" className="text-gray-700 hover:text-gray-900 font-medium">About</Link>

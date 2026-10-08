@@ -5,9 +5,12 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { THEMES, type ThemeKey } from './theme'
+import { useSiteTheme } from './useSiteTheme'
 
-export default function SiteNav({ theme = 'meatloaf', active }: { theme?: ThemeKey; active?: 'about' }) {
-  const t = THEMES[theme]
+// Pass `theme` on brand pages; leave it out to follow the visitor's site theme.
+export default function SiteNav({ theme, active }: { theme?: ThemeKey; active?: 'about' }) {
+  const siteTheme = useSiteTheme()
+  const t = THEMES[theme ?? siteTheme]
   const [open, setOpen] = useState(false)
   const links = [
     { href: '/properties', label: 'Homes Under $300K' },
