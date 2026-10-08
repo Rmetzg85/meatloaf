@@ -23,10 +23,21 @@ interface Property {
   property_type: string
   description: string | null
   available_date: string | null
+  // One-to-one embed (property_sale_info.property_id is the PK), so PostgREST returns an object.
+  property_sale_info: { list_price: number } | null
+}
+
+// The site only shows starter homes: a known sale price at or under $300K.
+const PRICE_CAP = 300_000
+const underCap = (p: Property) => {
+  const price = p.property_sale_info?.list_price
+  return typeof price === 'number' && price > 0 && price <= PRICE_CAP
 }
 
 export default function PropertiesPage() {
-  const siteBg = THEMES[useSiteTheme()].sectionBg
+  const theme = useSiteTheme()
+  const t = THEMES[theme]
+  const siteBg = t.sectionBg
   const [properties, setProperties] = useState<Property[]>([])
   const [loading, setLoading] = useState(true)
   const [searchCity, setSearchCity] = useState('')
@@ -37,28 +48,31 @@ export default function PropertiesPage() {
   }, [])
 
   useEffect(() => {
-    if (searchCity.trim() === '') {
-      setFilteredProperties(properties)
-    } else {
-      const filtered = properties.filter(p => 
-        p.city.toLowerCase().includes(searchCity.toLowerCase()) ||
-        p.state.toLowerCase().includes(searchCity.toLowerCase())
-      )
-      setFilteredProperties(filtered)
-    }
+    // The cap is enforced in the query; re-checked here so search can never surface anything above it.
+    const q = searchCity.trim().toLowerCase()
+    setFilteredProperties(
+      properties.filter(
+        (p) => underCap(p) && (q === '' || p.city.toLowerCase().includes(q) || p.state.toLowerCase().includes(q)),
+      ),
+    )
   }, [searchCity, properties])
 
   const fetchProperties = async () => {
     try {
       const { data, error } = await supabase
         .from('properties')
-        .select('*')
+        // !inner: homes without a sale-price row are dropped, and the filters below apply to the parent rows.
+        .select('*, property_sale_info!inner(list_price)')
         .eq('status', 'active')
+        .eq('property_sale_info.is_test', false)
+        .gt('property_sale_info.list_price', 0)
+        .lte('property_sale_info.list_price', PRICE_CAP)
         .order('created_at', { ascending: false })
 
       if (error) throw error
-      setProperties(data || [])
-      setFilteredProperties(data || [])
+      const rows = ((data || []) as Property[]).filter(underCap)
+      setProperties(rows)
+      setFilteredProperties(rows)
     } catch (error) {
       console.error('Error fetching properties:', error)
     } finally {
@@ -102,26 +116,34 @@ export default function PropertiesPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+            <Loader2 className={`w-12 h-12 animate-spin ${t.accentText}`} />
           </div>
         ) : filteredProperties.length === 0 ? (
-          <div className="text-center py-20">
-            <Home className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              {searchCity ? 'No properties found' : 'No properties available yet'}
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {searchCity 
-                ? 'Try searching for a different location' 
-                : 'Check back soon for new listings'}
-            </p>
-            {searchCity && (
-              <button
-                onClick={() => setSearchCity('')}
-                className="text-blue-600 hover:text-blue-700 font-medium"
-              >
-                Clear search
-              </button>
+          <div className="text-center py-20 max-w-xl mx-auto">
+            <div className={`w-16 h-16 rounded-full ${t.gradient} flex items-center justify-center mx-auto mb-5`}>
+              <Home className="w-8 h-8 text-white" aria-hidden="true" />
+            </div>
+            {searchCity ? (
+              <>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">No homes in that area yet</h2>
+                <p className="text-gray-700 mb-6">Try a different city or state, or check back soon.</p>
+                <button onClick={() => setSearchCity('')} className={`${t.labelText} font-semibold hover:underline`}>
+                  Clear search
+                </button>
+              </>
+            ) : (
+              <>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">New starter homes are on the way.</h2>
+                <p className="text-gray-700 mb-6">
+                  Every home here will be under $300K.{' '}
+                  <Link href={`${t.home}#agents`} className={`${t.labelText} font-semibold underline hover:no-underline`}>
+                    Agents: list yours for $29.
+                  </Link>
+                </p>
+                <Link href={`${t.home}#agents`} className={`inline-block ${t.gradient} text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition`}>
+                  List a Home
+                </Link>
+              </>
             )}
           </div>
         ) : (
@@ -148,12 +170,11 @@ export default function PropertiesPage() {
                   <div className="p-6">
                     {/* Price */}
                     <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center text-blue-600">
-                        <DollarSign className="w-5 h-5" />
+                      <div className={`flex items-center ${t.labelText}`}>
+                        <DollarSign className="w-5 h-5" aria-hidden="true" />
                         <span className="text-2xl font-bold">
-                          {property.monthly_rent.toLocaleString()}
+                          {property.property_sale_info!.list_price.toLocaleString('en-US')}
                         </span>
-                        <span className="text-gray-600 ml-1">/mo</span>
                       </div>
                       <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold capitalize">
                         {property.property_type}
@@ -194,7 +215,7 @@ export default function PropertiesPage() {
                     )}
 
                     {/* View Details Button */}
-                    <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg font-semibold hover:opacity-90 transition">
+                    <button className={`w-full ${t.gradient} text-white py-2 rounded-lg font-semibold hover:opacity-90 transition`}>
                       View Details
                     </button>
                   </div>

@@ -63,7 +63,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Website</p>
-                    <a href="https://Meatloaf.Rent" className="text-blue-600 hover:underline">Meatloaf.Rent</a>
+                    <a href="https://www.meatloaf.rent" className="text-blue-600 hover:underline">Meatloaf.Rent</a>
                   </div>
                 </div>
 

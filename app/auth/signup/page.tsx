@@ -52,8 +52,10 @@ export default function SignupPage() {
 
       if (authData.session && authData.user) {
         // Email confirmation is off: they're signed in already.
-        await ensureProfile(authData.user)
+        const profileSaved = await ensureProfile(authData.user)
         toast.success(`Welcome to ${brand}!`)
+        // Non-blocking: the DB trigger or the next sign-in fills it in.
+        if (!profileSaved) toast("We'll finish setting up your profile when you sign in.", { icon: '👋' })
         router.push(landingFor(userType, siteTheme))
         return
       }
