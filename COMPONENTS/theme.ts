@@ -90,3 +90,11 @@ export const CONTACT_EMAIL = 'RMetzgar@REMVentures.Tech'
 
 export const FOOTER_DISCLAIMER =
   'Meatloaf is an educational and home-search platform operated by REMVentures LLC. We are not a credit repair organization, credit bureau, lender, mortgage broker, or real estate brokerage, and we do not report information to any credit reporting agency. The credit game uses simulated scores for education only. Nothing on this site is financial, legal, tax, or real estate advice, and we make no guarantee of credit score changes, loan approval, or home purchase. Listings are provided by public sources and third-party agents and may be inaccurate or unavailable. Not affiliated with HUD, Fannie Mae, Freddie Mac, or USDA. Equal Housing Opportunity.'
+
+// Market stat shown under the homepage hero on both themes.
+// Update `homes` and `asOf` together when the estimate is refreshed.
+export const MARKET_STAT = {
+  homes: 345_000,
+  asOf: 'Sept 2026',
+  source: 'Realtor.com listing data',
+}
