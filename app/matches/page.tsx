@@ -140,7 +140,9 @@ export default function MatchesPage() {
                     <div className={`shrink-0 w-12 h-12 rounded-full ${t.gradient} text-white flex items-center justify-center font-bold`}>#{i + 1}</div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <h2 className="text-lg font-bold text-gray-900">{m.property.address}</h2>
+                        <h2 className="text-lg font-bold text-gray-900">
+                          {m.property.is_test ? m.property.address : <Link href={`/properties/${m.property.id}`} className="hover:underline">{m.property.address}</Link>}
+                        </h2>
                         <span className={`text-xl font-bold ${t.accentText}`}>${m.property.list_price.toLocaleString()}</span>
                       </div>
                       <p className="text-gray-600 flex items-center gap-1 text-sm"><MapPin size={14} /> {m.property.city}, {m.property.state} {m.property.zip_code ?? ''}</p>
@@ -150,6 +152,12 @@ export default function MatchesPage() {
                         {m.property.is_test && <span className="px-2 rounded bg-yellow-100 text-yellow-800 text-xs font-semibold">TEST LISTING</span>}
                       </div>
                       <p className="text-sm text-gray-800 mt-3"><span className="font-semibold">Why it matches:</span> {m.reasons.join(' · ')}</p>
+                      {/* TEST rows aren't public, so they have no detail page. */}
+                      {!m.property.is_test && (
+                        <Link href={`/properties/${m.property.id}`} className={`mt-3 inline-block ${t.gradient} text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition`}>
+                          View home
+                        </Link>
+                      )}
                     </div>
                   </article>
                 ))

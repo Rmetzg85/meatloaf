@@ -110,3 +110,30 @@ export async function completeAuthFromUrl(href: string): Promise<CallbackResult>
   if (error || !data.session) return { ok: false, message: error?.message || 'This link is invalid or has expired.' }
   return { ok: true, session: data.session, recovery }
 }
+
+/** Only same-site paths (e.g. /properties/<id>) are allowed as post-auth destinations. */
+export function safeNext(value: string | null | undefined): string | null {
+  if (!value || !value.startsWith('/') || value.startsWith('//') || value.startsWith('/auth/')) return null
+  return value
+}
+
+export const nextFromUrl = () =>
+  typeof window === 'undefined' ? null : safeNext(new URLSearchParams(window.location.search).get('next'))
+
+const NEXT_KEY = 'ml_next'
+/** Remember where to return after email confirmation (same browser only). */
+export function rememberNext(next: string | null) {
+  try {
+    if (next) localStorage.setItem(NEXT_KEY, next)
+    else localStorage.removeItem(NEXT_KEY)
+  } catch {}
+}
+export function takeRememberedNext(): string | null {
+  try {
+    const v = safeNext(localStorage.getItem(NEXT_KEY))
+    localStorage.removeItem(NEXT_KEY)
+    return v
+  } catch {
+    return null
+  }
+}

@@ -13,7 +13,7 @@ import BrandLink from '@/COMPONENTS/BrandLink'
 import ResendConfirmButton from '@/COMPONENTS/ResendConfirmButton'
 import { THEMES, type ThemeKey } from '@/COMPONENTS/theme'
 import { SiteThemeContext, THEME_COOKIE, parseTheme, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
-import { completeAuthFromUrl, ensureProfile, landingFor, userRole } from '@/lib/auth'
+import { completeAuthFromUrl, ensureProfile, landingFor, takeRememberedNext, userRole } from '@/lib/auth'
 
 function themeCookieIsSet() {
   return new RegExp(`(?:^|;\\s*)${THEME_COOKIE}=`).test(document.cookie)
@@ -50,8 +50,9 @@ export default function AuthCallbackPage() {
       }
       await ensureProfile(user) // logs and continues on failure
       const role = await userRole(user)
+      const next = takeRememberedNext()
       toast.success('Email confirmed. Welcome!')
-      router.replace(landingFor(role, theme))
+      router.replace(next ?? landingFor(role, theme))
     })
   }, [router, siteTheme, themeCtx])
 
