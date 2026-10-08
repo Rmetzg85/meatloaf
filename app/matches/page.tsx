@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { Bath, Bed, Loader2, Lock, MapPin, RefreshCw, SlidersHorizontal } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -38,6 +39,7 @@ async function fetchMatches(): Promise<State> {
 }
 
 export default function MatchesPage() {
+  const router = useRouter()
   const theme = useSiteTheme()
   const t = THEMES[theme]
   const ui = MATCH_UI[theme]
@@ -50,9 +52,13 @@ export default function MatchesPage() {
 
   useEffect(() => {
     let live = true
-    fetchMatches().then((s) => { if (live) setState(s) })
+    fetchMatches().then((s) => {
+      if (!live) return
+      if (s.kind === 'signed_out') router.replace('/auth/login')
+      else setState(s)
+    })
     return () => { live = false }
-  }, [])
+  }, [router])
 
   const optOut = async () => {
     const { data: { user } } = await supabase.auth.getUser()

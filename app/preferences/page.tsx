@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { Loader2, Lock, Sparkles, Trash2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -53,6 +54,7 @@ const toInt = (v: string) => (v.trim() === '' ? null : Math.round(Number(v)))
 const STATE_CODES = Object.keys(US_STATES)
 
 export default function PreferencesPage() {
+  const router = useRouter()
   const theme = useSiteTheme()
   const t = THEMES[theme]
   const ui = MATCH_UI[theme]
@@ -68,7 +70,7 @@ export default function PreferencesPage() {
   useEffect(() => {
     ;(async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { setLoading(false); return }
+      if (!user) { router.replace('/auth/login'); return }
       setUserId(user.id)
       const { data } = await supabase.from('buyer_preferences').select('*').eq('user_id', user.id).maybeSingle()
       if (data) {
@@ -100,7 +102,7 @@ export default function PreferencesPage() {
       }
       setLoading(false)
     })()
-  }, [])
+  }, [router])
 
   const commuteDefault = useMemo(() => defaultCommuteMinutes(toInt(form.office_days_per_week)), [form.office_days_per_week])
 
