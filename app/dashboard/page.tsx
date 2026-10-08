@@ -10,8 +10,10 @@ import {
   Flame, Zap, CheckCircle, Circle, Award, Lock
 } from 'lucide-react'
 import Link from 'next/link'
-import Image from 'next/image'
 import toast from 'react-hot-toast'
+import BrandLink from '@/COMPONENTS/BrandLink'
+import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
+import { THEMES } from '@/COMPONENTS/theme'
 
 interface Profile {
   id: string
@@ -102,6 +104,8 @@ export default function DashboardPage() {
   const [completedMissions, setCompletedMissions] = useState<string[]>([])
   const [activeTip, setActiveTip] = useState<number | null>(null)
   const profileRef = useRef<Profile | null>(null)
+  const siteTheme = useSiteTheme()
+  const brand = THEMES[siteTheme].name
   const completedRef = useRef<string[]>([])
   const dailyXPRef = useRef(0)
 
@@ -233,9 +237,9 @@ export default function DashboardPage() {
     }
 
     if (missionId === 'share') {
-      const url = 'https://meatloaf.rent'
+      const url = siteTheme === 'mimosa' ? 'https://meatloaf.rent/mimosa' : 'https://meatloaf.rent'
       if (navigator.share) {
-        navigator.share({ title: 'Meatloaf', text: 'Build credit, own your first home.', url })
+        navigator.share({ title: brand, text: 'Build credit, own your first home.', url })
       } else {
         await navigator.clipboard.writeText(url)
         toast.success('Link copied!', { icon: '🔗' })
@@ -260,7 +264,7 @@ export default function DashboardPage() {
     try {
       await supabase.auth.signOut()
       toast.success('Logged out successfully')
-      router.push('/')
+      router.push(THEMES[siteTheme].home)
     } catch {
       toast.error('Failed to logout')
     }
@@ -291,7 +295,7 @@ export default function DashboardPage() {
     { id: 'checkin', label: 'Daily Check-in', description: 'Open your dashboard', xp: 10, icon: '📅' },
     { id: 'learn', label: 'Read Credit Tip', description: CREDIT_TIPS[tipIndex].title, xp: 15, icon: '📚' },
     { id: 'browse', label: 'Browse Properties', description: 'Explore rental listings', xp: 20, icon: '🏘️' },
-    { id: 'share', label: 'Spread the Word', description: 'Share Meatloaf with a friend', xp: 25, icon: '🔗' },
+    { id: 'share', label: 'Spread the Word', description: `Share ${brand} with a friend`, xp: 25, icon: '🔗' },
   ]
 
   const isAchievementUnlocked = (a: typeof ACHIEVEMENTS[0]) => {
@@ -310,10 +314,7 @@ export default function DashboardPage() {
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
-            </Link>
+            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
             {/* Desktop stats strip */}
             <div className="hidden md:flex items-center gap-5">
               <div className="flex items-center gap-1.5">
@@ -460,8 +461,8 @@ export default function DashboardPage() {
                 />
                 <defs>
                   <linearGradient id="xpGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#3B82F6" />
-                    <stop offset="100%" stopColor="#A855F7" />
+                    <stop offset="0%" style={{ stopColor: 'var(--color-blue-500)' }} />
+                    <stop offset="100%" style={{ stopColor: 'var(--color-purple-500)' }} />
                   </linearGradient>
                 </defs>
               </svg>
@@ -649,7 +650,7 @@ export default function DashboardPage() {
                     {achievement.label}
                   </p>
                   <p className={`text-xs mt-1 ${unlocked ? 'text-gray-500' : 'text-gray-400'}`}>
-                    {achievement.description}
+                    {achievement.description.replace('Meatloaf', brand)}
                   </p>
                 </div>
               )

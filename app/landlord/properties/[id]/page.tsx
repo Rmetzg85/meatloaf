@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { supabase, getCurrentUser } from '@/lib/supabase'
 import { Home, MapPin, Bed, Bath, Ruler, DollarSign, Calendar, ArrowLeft, Loader2 } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import BrandLink from '@/COMPONENTS/BrandLink'
 
 interface Property {
   id: string
@@ -158,10 +158,7 @@ export default function PropertyDetailPage() {
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.png" alt="Meatloaf" width={40} height={40} className="h-10 w-auto" />
-              <span className="text-2xl font-bold text-gray-900">Meatloaf</span>
-            </Link>
+            <BrandLink className="flex items-center space-x-2" size={40} imgClassName="h-10 w-auto" nameClassName="text-2xl font-bold text-gray-900" />
             <div className="flex items-center space-x-4">
               {currentUser ? (
                 <Link href="/dashboard" className="text-gray-700 hover:text-gray-900 font-medium">
