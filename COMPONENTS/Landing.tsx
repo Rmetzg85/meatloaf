@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Home, Award, Shield, Users, BookOpen, Calculator, Check, X as XIcon } from 'lucide-react'
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
-import { THEMES, CONTACT_EMAIL, type ThemeKey } from './theme'
+import { THEMES, CONTACT_EMAIL, MARKET_STAT, type ThemeKey } from './theme'
 
 const HERO: Record<ThemeKey, { h1: [string, string, string]; sub: string; body: string }> = {
   meatloaf: {
@@ -96,6 +96,20 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Market stat */}
+      <section className="bg-white border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 text-center">
+          <p className="text-lg md:text-2xl font-semibold text-gray-900 leading-snug">
+            About{' '}
+            <span className={`font-black ${t.gradientText}`}>{MARKET_STAT.homes.toLocaleString('en-US')}</span>{' '}
+            homes are for sale under $300K across the US right now.
+          </p>
+          <p className="mt-2 text-xs md:text-sm text-gray-500">
+            Estimate based on {MARKET_STAT.source}, {MARKET_STAT.asOf}.
+          </p>
         </div>
       </section>
 
