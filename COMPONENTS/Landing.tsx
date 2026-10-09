@@ -3,7 +3,8 @@ import { Home, Award, Shield, Users, BookOpen, Calculator, Check, X as XIcon } f
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
 import ThemeSetter from './ThemeSetter'
-import { THEMES, CONTACT_EMAIL, MARKET_STAT, type ThemeKey } from './theme'
+import AgentsCTA from './AgentsCTA'
+import { THEMES, MARKET_STAT, type ThemeKey } from './theme'
 
 const HERO: Record<ThemeKey, { h1: [string, string, string]; sub: string; body: string }> = {
   meatloaf: {
@@ -316,19 +317,7 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
           <p className="text-xl text-gray-700 mb-8 leading-relaxed">
             Founding rate: <strong>$29 per home for 90 days.</strong> List it with your brokerage and the official listing link. Buyers who ask about your home come straight to you.
           </p>
-          <a
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('List a home (founding rate)')}`}
-            className={`inline-block ${t.gradient} text-white px-8 py-4 rounded-lg font-bold text-lg hover:opacity-90 transition`}
-          >
-            List a Home
-          </a>
-          <p className="text-gray-700 mt-5">
-            Already have a Real Estate Agent account?{' '}
-            <Link href="/agent/listings/new" className={`${t.labelText} font-semibold underline hover:no-underline`}>Create your listing</Link>
-            {' '}or{' '}
-            <Link href={`/auth/signup?role=agent&next=${encodeURIComponent('/agent/listings/new')}`} className={`${t.labelText} font-semibold underline hover:no-underline`}>sign up as an agent</Link>.
-          </p>
-          <p className="text-gray-600 text-sm mt-4">Online listing checkout is coming soon. Email us to reserve the founding rate.</p>
+          <AgentsCTA theme={theme} />
           <p className="text-gray-600 text-xs mt-4">
             Listing fee is a flat advertising fee. It&apos;s not contingent on leads, showings, or closings. No guarantee of inquiries or sales. Listings must comply with fair housing law.
           </p>

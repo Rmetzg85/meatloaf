@@ -15,7 +15,8 @@ import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { completeAuthFromUrl } from '@/lib/auth'
 
 export default function ResetPasswordPage() {
-  const siteBg = THEMES[useSiteTheme()].sectionBg
+  const t = THEMES[useSiteTheme()]
+  const siteBg = t.sectionBg
   const router = useRouter()
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
@@ -52,9 +53,9 @@ export default function ResetPasswordPage() {
       if (error) throw error
 
       setDone(true)
-      setTimeout(() => router.push('/auth/login'), 2500)
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to reset password')
+      setTimeout(() => router.push('/auth/login'), 2000)
+    } catch (error: unknown) {
+      toast.error((error as Error)?.message || 'Failed to reset password')
     } finally {
       setLoading(false)
     }
@@ -74,7 +75,10 @@ export default function ResetPasswordPage() {
             <div className="text-center space-y-4">
               <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
               <p className="text-gray-700 font-semibold">Password updated!</p>
-              <p className="text-sm text-gray-500">Redirecting you to sign in...</p>
+              <p className="text-sm text-gray-600" role="status">Taking you to sign in…</p>
+              <Link href="/auth/login" className={`inline-block w-full ${t.gradient} text-white py-3 rounded-lg font-semibold hover:opacity-90 transition`}>
+                Sign in now
+              </Link>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">

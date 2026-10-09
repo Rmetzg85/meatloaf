@@ -3,36 +3,15 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import toast from 'react-hot-toast'
-import type { User } from '@supabase/supabase-js'
 import { THEMES, type ThemeKey } from './theme'
 import { useSiteTheme } from './useSiteTheme'
 import { supabase } from '@/lib/supabase'
-import { canListHomes, landingFor, userRole } from '@/lib/auth'
+import { canListHomes, landingFor } from '@/lib/auth'
+import { useAuthState } from './useAuthState'
 
-type AuthState = { status: 'unknown' | 'out' } | { status: 'in'; role: string | null }
-
-// Signed-in state for the header: Dashboard + Log out instead of Login + Play Free.
-function useAuthState(): AuthState {
-  const [state, setState] = useState<AuthState>({ status: 'unknown' })
-  useEffect(() => {
-    let alive = true
-    const apply = (user: User | null) => {
-      if (!user) { if (alive) setState({ status: 'out' }); return }
-      setState({ status: 'in', role: (user.user_metadata?.user_type as string | undefined) ?? null })
-      userRole(user).then((role) => { if (alive) setState({ status: 'in', role }) })
-    }
-    supabase.auth.getSession().then(({ data }) => apply(data.session?.user ?? null))
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      // Defer: supabase-js warns against awaiting other calls inside this callback.
-      setTimeout(() => apply(session?.user ?? null), 0)
-    })
-    return () => { alive = false; sub.subscription.unsubscribe() }
-  }, [])
-  return state
-}
 
 // Pass `theme` on brand pages; leave it out to follow the visitor's site theme.
 export default function SiteNav({ theme, active }: { theme?: ThemeKey; active?: 'about' }) {
