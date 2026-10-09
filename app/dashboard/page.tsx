@@ -95,6 +95,24 @@ function getLevelInfo(points: number) {
 
 const DAILY_GOAL = 50
 
+// Daily quest progress lives in this browser, per account: keys are namespaced by user id so two
+// accounts on one device (or a family computer) never share "XP today" or completed quests.
+const progressKey = (userId: string) => (name: string) => `ml_${userId}_${name}`
+
+/** YYYY-MM-DD in the visitor's local time zone (days roll over at their midnight, not UTC's). */
+function localDay(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/** Remove the old shared (not per-account) progress keys. */
+function dropLegacyProgressKeys() {
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (k === 'ml_lastLogin' || k === 'ml_streak' || /^ml_(xp|missions)_\d{4}-\d{2}-\d{2}$/.test(k)) localStorage.removeItem(k)
+    }
+  } catch {}
+}
+
 export default function DashboardPage() {
   const siteBg = THEMES[useSiteTheme()].sectionBg
   const router = useRouter()
@@ -112,7 +130,7 @@ export default function DashboardPage() {
   const completedRef = useRef<string[]>([])
   const dailyXPRef = useRef(0)
 
-  const todayKey = new Date().toISOString().split('T')[0]
+  const todayKey = localDay()
   const tipIndex = new Date().getDate() % CREDIT_TIPS.length
 
   useEffect(() => {
@@ -160,11 +178,13 @@ export default function DashboardPage() {
   }
 
   const initDailyProgress = (profileData: Profile) => {
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
-    const lastLogin = localStorage.getItem('ml_lastLogin')
-    const currentStreak = parseInt(localStorage.getItem('ml_streak') || '0')
-    const todayXP = parseInt(localStorage.getItem(`ml_xp_${todayKey}`) || '0')
-    const todayMissions: string[] = JSON.parse(localStorage.getItem(`ml_missions_${todayKey}`) || '[]')
+    dropLegacyProgressKeys()
+    const key = progressKey(profileData.id)
+    const yesterday = localDay(new Date(Date.now() - 86400000))
+    const lastLogin = localStorage.getItem(key('lastLogin'))
+    const currentStreak = parseInt(localStorage.getItem(key('streak')) || '0')
+    const todayXP = parseInt(localStorage.getItem(key(`xp_${todayKey}`)) || '0')
+    const todayMissions: string[] = JSON.parse(localStorage.getItem(key(`missions_${todayKey}`)) || '[]')
 
     let newStreak = currentStreak
     if (lastLogin === todayKey) {
@@ -175,8 +195,8 @@ export default function DashboardPage() {
       newStreak = 1
     }
 
-    localStorage.setItem('ml_streak', newStreak.toString())
-    localStorage.setItem('ml_lastLogin', todayKey)
+    localStorage.setItem(key('streak'), newStreak.toString())
+    localStorage.setItem(key('lastLogin'), todayKey)
     setStreak(newStreak)
     setDailyXP(todayXP)
     dailyXPRef.current = todayXP
@@ -197,24 +217,32 @@ export default function DashboardPage() {
   ) => {
     if (currentMissions.includes(missionId)) return
 
-    const newMissions = [...currentMissions, missionId]
-    localStorage.setItem(`ml_missions_${todayKey}`, JSON.stringify(newMissions))
-    setCompletedMissions(newMissions)
-    completedRef.current = newMissions
-
-    const newXP = currentXP + xp
-    localStorage.setItem(`ml_xp_${todayKey}`, newXP.toString())
-    setDailyXP(newXP)
-    dailyXPRef.current = newXP
-
     const newPoints = profileData.homeownership_points + xp
     const newMilestone = MILESTONES.reduce((best, m) =>
       newPoints >= m.points ? m : best, MILESTONES[0])
 
-    await supabase.from('profiles').update({
+    // Save points first; today's XP/missions are only recorded once the profile has them,
+    // so "XP today", the level card and the path bar can't disagree.
+    const { error } = await supabase.from('profiles').update({
       homeownership_points: newPoints,
       current_milestone: newMilestone.name,
     }).eq('id', profileData.id)
+    if (error) {
+      console.warn('[dashboard] could not save XP', error.code)
+      if (missionId !== 'checkin') toast.error("Couldn't save your XP. Try again.")
+      return
+    }
+
+    const key = progressKey(profileData.id)
+    const newMissions = [...currentMissions, missionId]
+    localStorage.setItem(key(`missions_${todayKey}`), JSON.stringify(newMissions))
+    setCompletedMissions(newMissions)
+    completedRef.current = newMissions
+
+    const newXP = currentXP + xp
+    localStorage.setItem(key(`xp_${todayKey}`), newXP.toString())
+    setDailyXP(newXP)
+    dailyXPRef.current = newXP
 
     const updatedProfile = { ...profileData, homeownership_points: newPoints, current_milestone: newMilestone.name }
     profileRef.current = updatedProfile
