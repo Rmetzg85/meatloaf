@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/seo'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import SiteNav from '@/COMPONENTS/SiteNav'
 import ThemeBg from '@/COMPONENTS/ThemeBg'
+import { CONTACT_EMAIL } from '@/lib/site'
 
 export const generateMetadata = () =>
   pageMetadata({ title: 'Privacy Policy', path: '/privacy', describe: (brand) => `How ${brand} collects, uses and protects your information.` })
@@ -93,7 +94,7 @@ export default function PrivacyPage() {
                 <li>Request deletion of your account and associated data</li>
                 <li>Opt out of marketing communications at any time</li>
               </ul>
-              <p className="mt-4">To exercise these rights, contact us at <a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a>.</p>
+              <p className="mt-4">To exercise these rights, contact us at <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a>.</p>
             </div>
 
             <div>
@@ -124,7 +125,7 @@ export default function PrivacyPage() {
                 <p className="font-semibold text-gray-900">REMVentures LLC</p>
                 <p className="text-gray-600">Operating as Meatloaf.Rent</p>
                 <p className="text-gray-600">Baltimore, MD</p>
-                <p className="mt-2"><a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a></p>
+                <p className="mt-2"><a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a></p>
               </div>
             </div>
 

@@ -2,6 +2,7 @@ import { pageMetadata } from '@/lib/seo'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
 import SiteNav from '@/COMPONENTS/SiteNav'
 import ThemeBg from '@/COMPONENTS/ThemeBg'
+import { CONTACT_EMAIL } from '@/lib/site'
 
 export const generateMetadata = () =>
   pageMetadata({ title: 'Terms of Service', path: '/terms', describe: (brand) => `The terms for using ${brand}, an educational credit game and starter-home search. No credit pulls and no bureau reporting.` })
@@ -155,7 +156,7 @@ export default function TermsPage() {
                 <p className="font-semibold text-gray-900">REMVentures LLC</p>
                 <p className="text-gray-600">Operating as Meatloaf.Rent</p>
                 <p className="text-gray-600">Baltimore, MD</p>
-                <p className="mt-2"><a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a></p>
+                <p className="mt-2"><a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a></p>
               </div>
             </div>
 
