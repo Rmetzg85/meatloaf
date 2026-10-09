@@ -7,6 +7,7 @@ import { createClient } from '@supabase/supabase-js'
 import { runMatching } from '@/lib/matching/match'
 import { zipPoint, milesBetween } from '@/lib/matching/geo'
 import { RULES_VERSION, type BuyerPreferences, type Candidate } from '@/lib/matching/types'
+import { isPublished } from '@/lib/listing-fee'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,6 +24,7 @@ type SaleRow = {
     bathrooms: number | null
     property_type: string | null
     status: string
+    payment_status: string
   } | null
 }
 
@@ -51,13 +53,13 @@ export async function POST(req: Request) {
   // Homes with a sale price. RLS: active listings, plus the owner's own TEST rows.
   const { data: rows, error: rowsErr } = await supabase
     .from('property_sale_info')
-    .select('list_price, is_test, properties(id, address, city, state, zip_code, bedrooms, bathrooms, property_type, status)')
+    .select('list_price, is_test, properties(id, address, city, state, zip_code, bedrooms, bathrooms, property_type, status, payment_status)')
     .lte('list_price', prefs.budget_max)
     .returns<SaleRow[]>()
   if (rowsErr) return NextResponse.json({ error: 'Could not load homes' }, { status: 500 })
 
   const candidates: Candidate[] = (rows ?? [])
-    .filter((r) => r.properties && (r.properties.status === 'active' || r.is_test))
+    .filter((r) => r.properties && (isPublished(r.properties.status, r.properties.payment_status) || r.is_test))
     .map((r) => ({
       id: r.properties!.id,
       address: r.properties!.address,

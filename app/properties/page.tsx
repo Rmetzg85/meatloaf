@@ -11,6 +11,7 @@ import SiteFooter from '@/COMPONENTS/SiteFooter'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { PRICE_CAP, isListablePrice, sortPhotos, type PhotoRow } from '@/lib/listing'
+import { PUBLISHED_PAYMENT_STATUSES } from '@/lib/listing-fee'
 import { ListingPhoto } from '@/COMPONENTS/ListingPhoto'
 
 interface Property {
@@ -63,6 +64,8 @@ export default function PropertiesPage() {
         // !inner: homes without a sale-price row are dropped, and the filters below apply to the parent rows.
         .select('*, property_sale_info!inner(list_price), property_photos(storage_path, position)')
         .eq('status', 'active')
+        // Unpaid listings are hidden by RLS too; this also hides an agent's own unpaid homes from their search.
+        .in('payment_status', [...PUBLISHED_PAYMENT_STATUSES])
         .eq('property_sale_info.is_test', false)
         .gt('property_sale_info.list_price', 0)
         .lte('property_sale_info.list_price', PRICE_CAP)

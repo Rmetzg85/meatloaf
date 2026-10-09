@@ -16,6 +16,8 @@ import {
   type ListingErrors, type ListingFormValues, type ListingStatus,
 } from '@/lib/listing-form'
 import { preparePhoto } from '@/lib/photo-prep'
+import { LISTING_FEE_LABEL, type PaymentStatus } from '@/lib/listing-fee'
+import { listingFeeRequired, startListingCheckout } from '@/lib/listing-checkout'
 
 type Photo =
   | { kind: 'saved'; key: string; id: string; storage_path: string; position: number }
@@ -38,7 +40,8 @@ function Field({ id, label, error, hint, children, className = '' }: { id: strin
 }
 
 export default function ListingForm({ user, propertyId }: { user: User; propertyId?: string }) {
-  const t = THEMES[useSiteTheme()]
+  const themeKey = useSiteTheme()
+  const t = THEMES[themeKey]
   const router = useRouter()
   const editing = !!propertyId
   const [values, setValues] = useState<ListingFormValues>(EMPTY_LISTING)
@@ -50,10 +53,19 @@ export default function ListingForm({ user, propertyId }: { user: User; property
   const [readOnly, setReadOnly] = useState(false)
   const [saving, setSaving] = useState<string | null>(null)
   const [preparing, setPreparing] = useState(false)
+  // null = not created yet. New listings follow the database fee switch (unpaid when it's on, waived when off).
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | null>(null)
+  const [feeOn, setFeeOn] = useState(false)
   const fileInput = useRef<HTMLInputElement>(null)
   const previews = useRef<string[]>([])
 
   useEffect(() => () => previews.current.forEach((u) => URL.revokeObjectURL(u)), [])
+
+  useEffect(() => {
+    let alive = true
+    listingFeeRequired().then((on) => { if (alive) setFeeOn(on) })
+    return () => { alive = false }
+  }, [])
 
   useEffect(() => {
     if (!propertyId) return
@@ -74,6 +86,7 @@ export default function ListingForm({ user, propertyId }: { user: User; property
         }
         const sale = (Array.isArray(data.property_sale_info) ? data.property_sale_info[0] : data.property_sale_info) as { list_price: number; is_test: boolean } | null
         setReadOnly(!!sale?.is_test)
+        setPaymentStatus((data.payment_status as PaymentStatus | undefined) ?? 'grandfathered')
         setValues({
           address: data.address ?? '',
           city: data.city ?? '',
@@ -179,6 +192,7 @@ export default function ListingForm({ user, propertyId }: { user: User; property
     const price = parsePrice(values.price)
     const row = toPropertyRow(values)
     let id = propertyId
+    let created: PaymentStatus | null = null
     try {
       setSaving('Saving listing…')
       if (!id) {
@@ -186,10 +200,12 @@ export default function ListingForm({ user, propertyId }: { user: User; property
         const { data, error } = await supabase
           .from('properties')
           .insert({ ...row, landlord_id: user.id, status: 'inactive', monthly_rent: null, security_deposit: null })
-          .select('id')
+          .select('id, payment_status')
           .single()
         if (error || !data) throw error ?? new Error('insert failed')
         id = data.id as string
+        created = data.payment_status as PaymentStatus
+        setPaymentStatus(created)
         const { error: saleErr } = await supabase.from('property_sale_info').insert({ property_id: id, list_price: price, is_test: false })
         if (saleErr) throw saleErr
       } else {
@@ -205,7 +221,22 @@ export default function ListingForm({ user, propertyId }: { user: User; property
       const { error: stErr } = await supabase.from('properties').update({ status: values.status }).eq('id', id!)
       if (stErr) throw stErr
       if (photoFailures) toast.error(`Saved, but ${photoFailures} photo change${photoFailures === 1 ? '' : 's'} failed. Try saving again.`)
-      else toast.success(values.status === 'active' ? 'Listing is live!' : 'Listing saved.')
+      const pay = created ?? paymentStatus
+      if (pay === 'unpaid' && values.status === 'active' && !photoFailures) {
+        // Saved but hidden until the $29 is paid: straight to Stripe Checkout.
+        setSaving('Opening secure checkout…')
+        toast.success('Listing saved. Taking you to checkout…')
+        const err = await startListingCheckout(id!, themeKey)
+        if (!err) return // the browser is leaving for Stripe
+        toast.error(err.error)
+        router.push('/agent/listings')
+        return
+      }
+      if (!photoFailures) {
+        toast.success(
+          values.status !== 'active' ? 'Listing saved.' : pay === 'unpaid' ? `Saved. Pay ${LISTING_FEE_LABEL} to publish it.` : 'Listing is live!',
+        )
+      }
       if (!editing || !photoFailures) router.push(photoFailures ? `/agent/listings/${id}/edit` : '/agent/listings')
     } catch (err) {
       console.error('[listing] save failed', err)
@@ -231,6 +262,9 @@ export default function ListingForm({ user, propertyId }: { user: User; property
     toast.success('Listing deleted.')
     router.push('/agent/listings')
   }
+
+  // Unpaid existing listing, or a new one while the fee is switched on.
+  const needsPayment = paymentStatus === 'unpaid' || (paymentStatus === null && feeOn)
 
   if (loading)
     return (
@@ -273,6 +307,11 @@ export default function ListingForm({ user, propertyId }: { user: User; property
       {readOnly && (
         <p className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900" role="note">
           This is a TEST listing used for development. It&apos;s read-only and never shown publicly.
+        </p>
+      )}
+      {editing && !readOnly && paymentStatus === 'unpaid' && (
+        <p className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900" role="note">
+          Saved, but hidden from buyers until the flat {LISTING_FEE_LABEL} listing fee is paid. Set the status to Active and save to go to checkout.
         </p>
       )}
 
@@ -382,8 +421,12 @@ export default function ListingForm({ user, propertyId }: { user: User; property
             </select>
           </Field>
           <p className="text-xs text-gray-600">
-            By publishing, you confirm you&apos;re authorized to advertise this home, the details are accurate, and the listing complies with fair housing law.
-            The $29 founding-rate listing fee isn&apos;t charged online yet.
+            By publishing, you confirm you&apos;re authorized to advertise this home, the details are accurate, and the listing complies with fair housing law.{' '}
+            {needsPayment
+              ? `Flat ${LISTING_FEE_LABEL} per listing, paid securely through Stripe. It goes live as soon as the payment goes through.`
+              : paymentStatus === 'paid'
+                ? `The ${LISTING_FEE_LABEL} listing fee is paid.`
+                : `The ${LISTING_FEE_LABEL} founding-rate listing fee isn’t charged online yet.`}
           </p>
           <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
             {editing && !readOnly ? (
@@ -393,7 +436,10 @@ export default function ListingForm({ user, propertyId }: { user: User; property
             ) : <span />}
             <button type="submit" disabled={readOnly || !!saving || preparing} className={`inline-flex items-center justify-center gap-2 ${t.gradient} text-white px-8 py-3 rounded-lg font-bold hover:opacity-90 transition disabled:opacity-60`}>
               {saving && <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />}
-              {saving ?? (editing ? 'Save changes' : values.status === 'active' ? 'Publish listing' : 'Save listing')}
+              {saving ??
+                (needsPayment && values.status === 'active'
+                  ? `Save and pay ${LISTING_FEE_LABEL}`
+                  : editing ? 'Save changes' : values.status === 'active' ? 'Publish listing' : 'Save listing')}
             </button>
           </div>
         </section>

@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { isListablePrice, isUuid, sortPhotos, type PhotoRow } from './listing'
+import { PUBLISHED_PAYMENT_STATUSES } from './listing-fee'
 
 export interface ListingDetail {
   id: string
@@ -35,6 +36,7 @@ export const getListing = cache(async (id: string): Promise<ListingDetail | null
     .select('id, landlord_id, address, city, state, zip_code, bedrooms, bathrooms, square_feet, property_type, description, status, property_sale_info!inner(list_price, is_test), property_photos(storage_path, position)')
     .eq('id', id)
     .eq('status', 'active')
+    .in('payment_status', [...PUBLISHED_PAYMENT_STATUSES])
     .eq('property_sale_info.is_test', false)
     .maybeSingle()
   if (error) {
