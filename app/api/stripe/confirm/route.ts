@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { userFromRequest } from '@/lib/api-auth'
-import { fulfillCheckoutSession, getServiceSupabase, getStripe } from '@/lib/stripe-server'
+import { fulfillCheckoutSession, getPaymentDb, getStripe } from '@/lib/stripe-server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   if (!/^cs_(live|test)_[A-Za-z0-9]{10,200}$/.test(sessionId)) return NextResponse.json({ error: 'bad session' }, { status: 400 })
 
   const stripe = getStripe()
-  const db = getServiceSupabase()
+  const db = getPaymentDb()
   if (!stripe || !db) return NextResponse.json({ outcome: 'unavailable' }, { status: 503 })
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId)
