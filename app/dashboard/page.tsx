@@ -95,20 +95,38 @@ function getLevelInfo(points: number) {
 
 const DAILY_GOAL = 50
 
-// Daily quest progress lives in this browser, per account: keys are namespaced by user id so two
-// accounts on one device (or a family computer) never share "XP today" or completed quests.
+// Daily check-in is server-side (public.claim_daily_checkin / daily_checkins): one per account per day.
+// The day is the visitor's local date, which the server accepts within ±1 day of America/New_York.
+const CHECKIN_XP = 10
+
+// Other daily quests (tip, browse, share) are tracked in this browser, per account: keys are
+// namespaced by user id so two accounts on one device never share progress.
 const progressKey = (userId: string) => (name: string) => `ml_${userId}_${name}`
+
+/** Consecutive days (ending today) that have a check-in. Dates are YYYY-MM-DD strings. */
+function countStreak(dates: string[], today: string) {
+  const have = new Set(dates)
+  let n = 0
+  const [y, m, d] = today.split('-').map(Number)
+  const day = new Date(y, m - 1, d)
+  while (have.has(localDay(day)) && n < 400) {
+    n++
+    day.setDate(day.getDate() - 1)
+  }
+  return n
+}
 
 /** YYYY-MM-DD in the visitor's local time zone (days roll over at their midnight, not UTC's). */
 function localDay(d = new Date()) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-/** Remove the old shared (not per-account) progress keys. */
-function dropLegacyProgressKeys() {
+/** Remove older browser-only progress keys (shared ones, and per-account check-in/streak keys now on the server). */
+function dropLegacyProgressKeys(userId: string) {
   try {
+    const mine = new RegExp(`^ml_${userId}_(lastLogin|streak|(xp|missions)_\\d{4}-\\d{2}-\\d{2})$`)
     for (const k of Object.keys(localStorage)) {
-      if (k === 'ml_lastLogin' || k === 'ml_streak' || /^ml_(xp|missions)_\d{4}-\d{2}-\d{2}$/.test(k)) localStorage.removeItem(k)
+      if (k === 'ml_lastLogin' || k === 'ml_streak' || /^ml_(xp|missions)_\d{4}-\d{2}-\d{2}$/.test(k) || mine.test(k)) localStorage.removeItem(k)
     }
   } catch {}
 }
@@ -168,7 +186,7 @@ export default function DashboardPage() {
         .order('created_at', { ascending: false })
       setApplications(appsData || [])
 
-      initDailyProgress(profileData)
+      await initDailyProgress(profileData)
     } catch (error: unknown) {
       console.error('Error:', error)
       toast.error('Failed to load dashboard')
@@ -177,35 +195,42 @@ export default function DashboardPage() {
     }
   }
 
-  const initDailyProgress = (profileData: Profile) => {
-    dropLegacyProgressKeys()
+  const initDailyProgress = async (profileData: Profile) => {
+    dropLegacyProgressKeys(profileData.id)
     const key = progressKey(profileData.id)
-    const yesterday = localDay(new Date(Date.now() - 86400000))
-    const lastLogin = localStorage.getItem(key('lastLogin'))
-    const currentStreak = parseInt(localStorage.getItem(key('streak')) || '0')
-    const todayXP = parseInt(localStorage.getItem(key(`xp_${todayKey}`)) || '0')
-    const todayMissions: string[] = JSON.parse(localStorage.getItem(key(`missions_${todayKey}`)) || '[]')
+    // Tip / browse / share quests are still tracked in this browser (per account).
+    const localQuests: string[] = (JSON.parse(localStorage.getItem(key(`quests_${todayKey}`)) || '[]') as string[]).filter((m) => m !== 'checkin')
+    const localXP = parseInt(localStorage.getItem(key(`questxp_${todayKey}`)) || '0') || 0
 
-    let newStreak = currentStreak
-    if (lastLogin === todayKey) {
-      newStreak = currentStreak
-    } else if (lastLogin === yesterday) {
-      newStreak = currentStreak + 1
+    // Daily check-in is claimed on the server: once per account per day, on any browser or device.
+    // The RPC is atomic and returns the saved points, so the level card and path bar match "XP today".
+    let checkedIn = false
+    const { data, error } = await supabase.rpc('claim_daily_checkin', { p_local_date: todayKey })
+    const row = (Array.isArray(data) ? data[0] : data) as
+      | { awarded: boolean; homeownership_points: number; current_milestone: string }
+      | null
+    if (error || !row) {
+      console.warn('[dashboard] daily check-in failed', error?.code)
     } else {
-      newStreak = 1
+      checkedIn = true
+      const updated = { ...profileData, homeownership_points: row.homeownership_points, current_milestone: row.current_milestone }
+      profileRef.current = updated
+      setProfile(updated)
     }
 
-    localStorage.setItem(key('streak'), newStreak.toString())
-    localStorage.setItem(key('lastLogin'), todayKey)
-    setStreak(newStreak)
-    setDailyXP(todayXP)
-    dailyXPRef.current = todayXP
-    setCompletedMissions(todayMissions)
-    completedRef.current = todayMissions
+    const missions = checkedIn ? ['checkin', ...localQuests] : localQuests
+    const xpToday = (checkedIn ? CHECKIN_XP : 0) + localXP
+    setCompletedMissions(missions)
+    completedRef.current = missions
+    setDailyXP(xpToday)
+    dailyXPRef.current = xpToday
 
-    if (!todayMissions.includes('checkin')) {
-      awardMission('checkin', 10, todayMissions, todayXP, profileData)
-    }
+    // Streak = consecutive days with a server check-in, ending today.
+    const { data: days, error: daysErr } = await supabase
+      .from('daily_checkins').select('local_date').eq('user_id', profileData.id)
+      .lte('local_date', todayKey).order('local_date', { ascending: false }).limit(400)
+    if (daysErr) console.warn('[dashboard] streak lookup failed', daysErr.code)
+    setStreak(countStreak((days ?? []).map((d: { local_date: string }) => d.local_date), todayKey))
   }
 
   const awardMission = async (
@@ -229,18 +254,19 @@ export default function DashboardPage() {
     }).eq('id', profileData.id)
     if (error) {
       console.warn('[dashboard] could not save XP', error.code)
-      if (missionId !== 'checkin') toast.error("Couldn't save your XP. Try again.")
+      toast.error("Couldn't save your XP. Try again.")
       return
     }
 
     const key = progressKey(profileData.id)
     const newMissions = [...currentMissions, missionId]
-    localStorage.setItem(key(`missions_${todayKey}`), JSON.stringify(newMissions))
+    localStorage.setItem(key(`quests_${todayKey}`), JSON.stringify(newMissions.filter((m) => m !== 'checkin')))
     setCompletedMissions(newMissions)
     completedRef.current = newMissions
 
     const newXP = currentXP + xp
-    localStorage.setItem(key(`xp_${todayKey}`), newXP.toString())
+    const questXP = (parseInt(localStorage.getItem(key(`questxp_${todayKey}`)) || '0') || 0) + xp
+    localStorage.setItem(key(`questxp_${todayKey}`), questXP.toString())
     setDailyXP(newXP)
     dailyXPRef.current = newXP
 
@@ -256,6 +282,12 @@ export default function DashboardPage() {
   const handleMissionClick = async (missionId: string, xp: number) => {
     const currentProfile = profileRef.current
     if (!currentProfile || completedRef.current.includes(missionId)) return
+
+    // Check-in is only ever awarded by the server (retry the claim if the first try failed).
+    if (missionId === 'checkin') {
+      await initDailyProgress(currentProfile)
+      return
+    }
 
     if (missionId === 'learn') {
       setActiveTip(tipIndex)
