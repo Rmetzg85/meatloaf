@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type Stripe from 'stripe'
-import { fulfillCheckoutSession, getServiceSupabase, getStripe, missingStripeConfig } from '@/lib/stripe-server'
+import { fulfillCheckoutSession, getPaymentDb, getStripe, missingStripeConfig } from '@/lib/stripe-server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: Request) {
   const missing = missingStripeConfig('webhook')
   const stripe = getStripe()
-  const db = getServiceSupabase()
+  const db = getPaymentDb()
   if (missing.length || !stripe || !db) {
     console.warn('[stripe-webhook] not configured; missing env:', missing.join(', '))
     return NextResponse.json({ error: 'not configured' }, { status: 503 })
