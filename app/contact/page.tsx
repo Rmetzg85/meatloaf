@@ -5,6 +5,7 @@ import SiteNav from '@/COMPONENTS/SiteNav'
 import { THEMES } from '@/COMPONENTS/theme'
 import { useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import SiteFooter from '@/COMPONENTS/SiteFooter'
+import { CONTACT_EMAIL } from '@/lib/site'
 
 export default function ContactPage() {
   const siteTheme = useSiteTheme()
@@ -51,7 +52,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
-                    <a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a>
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a>
                   </div>
                 </div>
 
@@ -187,7 +188,7 @@ export default function ContactPage() {
 
                   <p className="text-gray-600 text-sm text-center">
                     We respond within 1–2 business days. For urgent matters email us directly at{' '}
-                    <a href="mailto:RMetzgar@REMVentures.Tech" className="text-blue-600 hover:underline">RMetzgar@REMVentures.Tech</a>.
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a>.
                   </p>
                 </form>
               )}

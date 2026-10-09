@@ -3,3 +3,6 @@
 export const SITE_URL = 'https://www.meatloafhomes.com'
 
 // The old meatloaf.rent redirect lives in next.config.ts.
+
+// Public contact address shown across the site (footer, contact, Terms, Privacy, mailto links).
+export const CONTACT_EMAIL = 'Ryan@meatloafhomes.com'
