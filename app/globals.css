@@ -12,11 +12,46 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* The site is designed light in both themes. Don't let an OS dark mode turn
+   text (and typed form text) light on our light cards. */
+:root {
+  color-scheme: light;
+}
+
+/* Readable form fields site-wide (Meatloaf and Mimosa). In the base layer so a
+   field can still opt into other colors with a utility class. */
+@layer base {
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']):not([type='file']),
+  textarea,
+  select {
+    color: #111827;
+    caret-color: #111827;
+    background-color: #ffffff;
+    -webkit-text-fill-color: #111827;
   }
+  input::placeholder,
+  textarea::placeholder {
+    color: #6b7280;
+    -webkit-text-fill-color: #6b7280;
+    opacity: 1;
+  }
+  select option {
+    color: #111827;
+    background-color: #ffffff;
+  }
+}
+
+/* Browser autofill (Chrome/Safari paint their own colors). */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #111827;
+  caret-color: #111827;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  transition: background-color 9999s ease-out 0s;
 }
 
 body {
