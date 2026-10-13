@@ -16,6 +16,7 @@ import { readThemeCookie, useSiteTheme } from '@/COMPONENTS/useSiteTheme'
 import { landingFor } from '@/lib/auth'
 import { brandHomeUrl } from '@/lib/seo'
 import { THEMES } from '@/COMPONENTS/theme'
+import HouseHop from '@/COMPONENTS/HouseHop'
 
 interface Profile {
   id: string
@@ -629,6 +630,8 @@ export default function DashboardPage() {
             <p className="text-sm text-white/80 mt-1">{levelInfo.emoji} {levelInfo.name}</p>
           </div>
         </div>
+
+        <HouseHop theme={siteTheme} />
 
         {/* Path to Homeownership */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
