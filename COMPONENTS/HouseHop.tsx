@@ -3,11 +3,13 @@
 // House Hop: a tiny Doodle-Jump-style game inside the free credit game.
 // The doodle auto-bounces from roof to roof; steer with tilt (phones),
 // arrow keys / A-D (desktop), or the on-screen buttons (fallback).
-// Landing on a new house shows a general credit tip. Nothing is stored or sent:
-// the best score lives only in component state for this visit.
+// Landing on a new house shows a general credit tip. The only thing saved is
+// your best score + nickname on the public leaderboard (via a checked RPC).
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ThemeKey } from './theme'
+import { supabase } from '@/lib/supabase'
+import HouseHopLeaderboard from './HouseHopLeaderboard'
 
 const W = 360
 const H = 540
@@ -185,6 +187,8 @@ export default function HouseHop({ theme }: { theme: ThemeKey }) {
   const [score, setScore] = useState(0)
   const [best, setBest] = useState(0)
   const [tip, setTip] = useState<string | null>(null)
+  const [boardKey, setBoardKey] = useState(0)
+  const runStart = useRef(0)
   const [motion, setMotion] = useState<'unknown' | 'on' | 'denied' | 'none'>('unknown')
   const modeRef = useRef<Mode>('idle')
   const keys = useRef({ left: false, right: false })
@@ -336,6 +340,12 @@ export default function HouseHop({ theme }: { theme: ThemeKey }) {
       if (s.y - s.camY > H + 60) {
         setBest((b) => Math.max(b, s.score))
         setM('over')
+        const finalScore = s.score
+        const ms = Math.round(performance.now() - runStart.current)
+        if (finalScore > 0)
+          supabase.rpc('submit_house_hop_score', { p_score: finalScore, p_duration_ms: ms }).then(({ error }) => {
+            if (!error) setBoardKey((k) => k + 1)
+          })
       }
     }
 
@@ -393,6 +403,7 @@ export default function HouseHop({ theme }: { theme: ThemeKey }) {
   const start = async () => {
     if (motion === 'unknown') await enableMotion() // must run inside the tap for iOS
     reset()
+    runStart.current = performance.now()
     setM('playing')
     canvasRef.current?.focus()
   }
@@ -480,8 +491,9 @@ export default function HouseHop({ theme }: { theme: ThemeKey }) {
         <p className="text-xs text-gray-500 text-center mt-2">Motion is off, so use the ◀ ▶ buttons. To tilt on iPhone, reload the page and tap Allow when asked.</p>
       )}
       <p className="text-xs text-gray-500 text-center mt-3">
-        General education only, not financial advice. The game saves nothing about you.
+        General education only, not financial advice. Only your best score and nickname are saved.
       </p>
+      <HouseHopLeaderboard refreshKey={boardKey} accent={pal.accent} />
     </div>
   )
 }
