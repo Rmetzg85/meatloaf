@@ -6,3 +6,5 @@ export const SITE_URL = 'https://www.meatloafhomes.com'
 
 // Public contact address shown across the site (footer, contact, Terms, Privacy, mailto links).
 export const CONTACT_EMAIL = 'Ryan@meatloafhomes.com'
+// Founder's direct address, shown next to CONTACT_EMAIL on the About page and footer.
+export const FOUNDER_EMAIL = 'Ryan@remventures.tech'
