@@ -29,7 +29,7 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Introduction</h2>
               <p>
-                REMVentures LLC ("we," "us," or "our") operates Meatloaf.Rent (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform. By using our Service, you agree to the collection and use of information in accordance with this policy.
+                REM Ventures ("we," "us," or "our") operates Meatloaf.Rent (the "Service"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform. By using our Service, you agree to the collection and use of information in accordance with this policy.
               </p>
             </div>
 
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Contact Us</h2>
               <p>If you have questions about this Privacy Policy, please contact us:</p>
               <div className="mt-4 bg-white/85 ring-1 ring-black/5 rounded-xl p-6">
-                <p className="font-semibold text-gray-900">REMVentures LLC</p>
+                <p className="font-semibold text-gray-900">REM Ventures</p>
                 <p className="text-gray-600">Operating as Meatloaf.Rent</p>
                 <p className="text-gray-600">Baltimore, MD</p>
                 <p className="mt-2"><a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a></p>

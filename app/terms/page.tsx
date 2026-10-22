@@ -29,14 +29,14 @@ export default function TermsPage() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Agreement to Terms</h2>
               <p>
-                By accessing or using Meatloaf.Rent (the "Service") operated by REMVentures LLC ("Company," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service.
+                By accessing or using Meatloaf.Rent (the "Service") operated by REM Ventures ("Company," "we," "us," or "our"), you agree to be bound by these Terms of Service. If you do not agree to these terms, do not use the Service.
               </p>
             </div>
 
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Service</h2>
               <p className="mb-4">
-                Meatloaf is an educational and home-search platform operated by REMVentures LLC. Our services include:
+                Meatloaf is an educational and home-search platform operated by REM Ventures. Our services include:
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Free credit and homebuying education, including a credit game that uses simulated practice scores</li>
@@ -81,7 +81,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-6 space-y-2">
                 <li>You must hold all required licenses and certifications in your jurisdiction</li>
                 <li>You are solely responsible for the advice and services you provide to users</li>
-                <li>Your participation on the platform does not constitute an endorsement by REMVentures LLC</li>
+                <li>Your participation on the platform does not constitute an endorsement by REM Ventures</li>
               </ul>
             </div>
 
@@ -124,14 +124,14 @@ export default function TermsPage() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Limitation of Liability</h2>
               <p>
-                To the maximum extent permitted by law, REMVentures LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to loss of profits, data, or goodwill, even if we have been advised of the possibility of such damages. Our total liability to you for any claims arising from the Service shall not exceed the amount you paid us in the 12 months preceding the claim.
+                To the maximum extent permitted by law, REM Ventures shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to loss of profits, data, or goodwill, even if we have been advised of the possibility of such damages. Our total liability to you for any claims arising from the Service shall not exceed the amount you paid us in the 12 months preceding the claim.
               </p>
             </div>
 
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Intellectual Property</h2>
               <p>
-                All content, features, and functionality of the Service — including text, graphics, logos, and software — are owned by REMVentures LLC and protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written consent.
+                All content, features, and functionality of the Service — including text, graphics, logos, and software — are owned by REM Ventures and protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written consent.
               </p>
             </div>
 
@@ -153,7 +153,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact Us</h2>
               <p>For questions about these Terms, contact us:</p>
               <div className="mt-4 bg-white/85 ring-1 ring-black/5 rounded-xl p-6">
-                <p className="font-semibold text-gray-900">REMVentures LLC</p>
+                <p className="font-semibold text-gray-900">REM Ventures</p>
                 <p className="text-gray-600">Operating as Meatloaf.Rent</p>
                 <p className="text-gray-600">Baltimore, MD</p>
                 <p className="mt-2"><a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-600 hover:underline">{CONTACT_EMAIL}</a></p>

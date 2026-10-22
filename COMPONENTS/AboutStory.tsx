@@ -3,6 +3,7 @@ import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
 import ThemeSetter from './ThemeSetter'
 import { THEMES, type ThemeKey } from './theme'
+import { CONTACT_EMAIL, FOUNDER_EMAIL } from '@/lib/site'
 
 export default function AboutStory({ theme }: { theme: ThemeKey }) {
   const t = THEMES[theme]
@@ -109,7 +110,10 @@ export default function AboutStory({ theme }: { theme: ThemeKey }) {
                 I&apos;m not a Silicon Valley founder with venture backing and a Stanford degree. I&apos;m a millennial who lived in his parents&apos; basement, paid off student loans, and decided to build the solution I wish existed when I was 22.
               </p>
               <p>
-                {t.name} is operated by REMVentures LLC. It isn&apos;t funded by VCs (yet). It&apos;s built by someone who knows what it feels like to be stuck, to be told you did everything right, and to realize the system was rigged against you from the start.
+                {t.name} is operated by REM Ventures. It isn&apos;t funded by VCs (yet). It&apos;s built by someone who knows what it feels like to be stuck, to be told you did everything right, and to realize the system was rigged against you from the start.
+              </p>
+              <p>
+                Contact: <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a> or <a href={`mailto:${FOUNDER_EMAIL}`} className="underline">{FOUNDER_EMAIL}</a>
               </p>
             </div>
           </div>

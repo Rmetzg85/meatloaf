@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { THEMES, CONTACT_EMAIL, footerDisclaimer, type ThemeKey } from './theme'
+import { FOUNDER_EMAIL } from '@/lib/site'
 import { useSiteTheme } from './useSiteTheme'
 import ShareButtons from './ShareButtons'
 
@@ -48,6 +49,9 @@ export default function SiteFooter({ theme }: { theme?: ThemeKey }) {
             <p className="text-gray-400 text-sm mb-2">
               <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white transition">{CONTACT_EMAIL}</a>
             </p>
+            <p className="text-gray-400 text-sm mb-2">
+              <a href={`mailto:${FOUNDER_EMAIL}`} className="hover:text-white transition">{FOUNDER_EMAIL}</a>
+            </p>
             <p className="text-gray-400 text-sm">Baltimore, MD</p>
           </div>
         </div>
@@ -57,7 +61,7 @@ export default function SiteFooter({ theme }: { theme?: ThemeKey }) {
         <p className="text-gray-500 text-xs leading-relaxed border-t border-gray-800 pt-6 mb-6">{footerDisclaimer(t.name)}</p>
 
         <div className="text-center text-gray-400 text-sm">
-          © 2026 REMVentures LLC. All rights reserved.
+          © 2026 REM Ventures. All rights reserved.
           <span className="mx-2" aria-hidden>·</span>
           <Link href={t.switchHref} className="hover:text-white transition">{t.switchLabel}</Link>
         </div>
