@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { THEMES, CONTACT_EMAIL, type ThemeKey } from './theme'
+import { THEMES, type ThemeKey } from './theme'
 import { useAuthState } from './useAuthState'
 import { canListHomes } from '@/lib/auth'
 
@@ -26,7 +26,7 @@ export default function AgentsCTA({ theme }: { theme: ThemeKey }) {
             Create a listing
           </Link>
         </div>
-        <p className="text-gray-600 text-sm mt-4">Online listing checkout is coming soon. Nothing is charged when you publish.</p>
+        <p className="text-gray-600 text-sm mt-4">Free for the first 90 days. Publish goes live as soon as you save — no checkout.</p>
       </div>
     )
   }
@@ -34,16 +34,16 @@ export default function AgentsCTA({ theme }: { theme: ThemeKey }) {
   // Hidden (but laid out) until the session is known, so agents don't see the sign-up pitch flash.
   return (
     <div data-testid="agents-cta-public" className={auth.status === 'unknown' ? 'invisible' : ''}>
-      <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('List a home (founding rate)')}`} className={btn}>
-        List a Home
-      </a>
+      <Link href={`/auth/signup?role=agent&next=${encodeURIComponent('/agent/listings/new')}`} className={btn}>
+        List a Home — Free for 90 Days
+      </Link>
       <p className="text-gray-700 mt-5">
         Already have a Real Estate Agent account?{' '}
         <Link href="/agent/listings/new" className={`${t.labelText} font-semibold underline hover:no-underline`}>Create your listing</Link>
         {' '}or{' '}
-        <Link href={`/auth/signup?role=agent&next=${encodeURIComponent('/agent/listings/new')}`} className={`${t.labelText} font-semibold underline hover:no-underline`}>sign up as an agent</Link>.
+        <Link href="/auth/login" className={`${t.labelText} font-semibold underline hover:no-underline`}>sign in</Link>.
       </p>
-      <p className="text-gray-600 text-sm mt-4">Online listing checkout is coming soon. Email us to reserve the founding rate.</p>
+      <p className="text-gray-600 text-sm mt-4">No listing fee for the first 90 days. Sign up, confirm your email, and you can upload right away.</p>
     </div>
   )
 }

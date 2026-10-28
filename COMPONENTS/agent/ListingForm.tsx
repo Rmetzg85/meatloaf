@@ -426,7 +426,7 @@ export default function ListingForm({ user, propertyId }: { user: User; property
               ? `Flat ${LISTING_FEE_LABEL} per listing, paid securely through Stripe. It goes live as soon as the payment goes through.`
               : paymentStatus === 'paid'
                 ? `The ${LISTING_FEE_LABEL} listing fee is paid.`
-                : `The ${LISTING_FEE_LABEL} founding-rate listing fee isn’t charged online yet.`}
+                : 'Free for the first 90 days — your listing goes live as soon as you publish. No checkout.'}
           </p>
           <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
             {editing && !readOnly ? (

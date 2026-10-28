@@ -315,11 +315,11 @@ export default function Landing({ theme }: { theme: ThemeKey }) {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">Have a home under $300K? Put it in front of first-time buyers.</h2>
           <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-            Founding rate: <strong>$29 per home for 90 days.</strong> List it with your brokerage and the official listing link. Buyers who ask about your home come straight to you.
+            <strong>Free for the first 90 days.</strong> List it with your brokerage and the official listing link. Buyers who ask about your home come straight to you.
           </p>
           <AgentsCTA theme={theme} />
           <p className="text-gray-600 text-xs mt-4">
-            Listing fee is a flat advertising fee. It&apos;s not contingent on leads, showings, or closings. No guarantee of inquiries or sales. Listings must comply with fair housing law.
+            Free for the first 90 days (then a flat advertising fee). Not contingent on leads, showings, or closings. No guarantee of inquiries or sales. Listings must comply with fair housing law.
           </p>
         </div>
       </section>

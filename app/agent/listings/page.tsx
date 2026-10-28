@@ -175,7 +175,7 @@ function MyListings({ user }: { user: User }) {
       <p className="text-xs text-gray-600 mt-8">
         {feeOn
           ? `Flat ${LISTING_FEE_LABEL} per listing, paid securely through Stripe. No referral fees or commissions. Listings must comply with fair housing law.`
-          : 'Founding rate: $29 per home for 90 days. Online checkout isn’t live yet; nothing is charged here. Listings must comply with fair housing law.'}
+          : 'Free for the first 90 days — no checkout. Listings must comply with fair housing law.'}
       </p>
     </div>
   )
